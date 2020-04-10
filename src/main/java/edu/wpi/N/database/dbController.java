@@ -1,6 +1,7 @@
 package edu.wpi.N.database;
 
 import java.util.LinkedList;
+import edu.wpi.N.models.Node;
 
 public class dbController {
 
@@ -71,6 +72,24 @@ public class dbController {
     }
 
     /**
+     * Gets the graph-style node with the specified nodeID with a score of zero
+     * @param nodeID the nodeID of the node to fetch
+     * @return the specified graph-style Node
+     */
+    public static Node getGNode(String nodeID){
+        return null;
+    }
+
+    /**
+     * Gets the graph-style nodes of all nodes adjacent to the specified Node
+     * @param nodeID
+     * @return
+     */
+    public static LinkedList<Node> getGAdjacent(String nodeID){
+        return null;
+    }
+
+    /**
      * Gets a list of all the nodes matching the specified query
      * @param query The query with which to search the nodes
      * @return A list of all nodes with a long name containing the query
@@ -93,7 +112,7 @@ public class dbController {
      * @param nodeID The nodeID of the node for which you want the edges
      * @return All the nodes directly connected to the passed-in one
      */
-    public static LinkedList<DbNode> getAdjacents(String nodeID){
+    public static LinkedList<DbNode> getAdjacent(String nodeID){
         return null;
     }
 
