@@ -120,7 +120,7 @@ public class Pathfinder {
    * @param initialPath: list which needs to be reversed
    * @return: reversed list
    */
-  private static LinkedList<Node> reversePath(LinkedList<Node> initialPath) {
+  private LinkedList<Node> reversePath(LinkedList<Node> initialPath) {
     LinkedList<Node> reversedPath = new LinkedList<Node>();
 
     // iterate through initial path in descending order
