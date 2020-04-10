@@ -3,14 +3,7 @@ package edu.wpi.N.models;
 import java.util.*;
 
 public class Pathfinder {
-  private Graph graph;
-  private Node start, end;
 
-  public Pathfinder(Graph graph, Node start, Node end) {
-    this.graph = graph;
-    this.start = start;
-    this.end = end;
-  }
 
   /**
    * Function calculates Euclidean distance between the next Node and current Node (cost of given
@@ -26,6 +19,7 @@ public class Pathfinder {
             + Math.pow(nextNode.getY() - currNode.getY(), 2));
   }
 
+
   /**
    * Function calculates Manhatten distance between goal and current Node
    *
@@ -36,12 +30,13 @@ public class Pathfinder {
     return Math.abs(end.getX() - currNode.getX()) + Math.abs(end.getY() - currNode.getY());
   }
 
+
   /**
    * Finds the shortest path from Start to Goal node
    *
    * @return Path object indicating the shortest path to the goal Node from Start Node
    */
-  public Path findPath() {
+  public static Path findPath(Node start, Node end) {
     // Initialize variables
     PriorityQueue<Node> frontier = new PriorityQueue<Node>();
     frontier.add(start);
@@ -61,8 +56,9 @@ public class Pathfinder {
       }
 
       // for every node (next node), current node has edge to:
-      for (String nextNodeID : graph.getEdges(current.ID)) {
-        Node nextNode = graph.getNode(nextNodeID);
+      for (String nextNodeID : GraphDatabaseWrapper.getEdges(current.ID)) {
+        Node nextNode = GraphDatabaseWrapper.getNode(nextNodeID);
+
         // calculate the cost of next node
         double newCost = costSoFar.get(current.ID) + cost(nextNode, current);
 
@@ -71,7 +67,9 @@ public class Pathfinder {
           costSoFar.put(nextNodeID, newCost);
           // calculate and update the Score of nextNode
           double priority = newCost + heuristic(nextNode, end);
-          nextNode = graph.getNode(nextNodeID);
+
+          nextNode = GraphDatabaseWrapper.getNode(nextNodeID);
+
           nextNode.score = priority;
           // add to the priority queue
           frontier.add(nextNode);
@@ -83,25 +81,26 @@ public class Pathfinder {
     }
 
     // Generate and return the path in proper order
-    return this.generatePath(cameFrom);
+
+    return generatePath(start, end, cameFrom);
   }
 
   /**
    * Helper function which generates Path given a Map
    *
-   * @param came_from: Map, where key: NodeID, value: came-from-NodeID
+   * @param cameFrom: Map, where key: NodeID, value: came-from-NodeID
    * @return Path object containing generated path
    */
-  private Path generatePath(Map<String, String> came_from) {
+  private static Path generatePath(Node start, Node end, Map<String, String> cameFrom) {
 
     String currentID = end.ID;
     LinkedList<Node> path = new LinkedList<Node>();
-    path.add(this.graph.getNode(currentID));
+    path.add(GraphDatabaseWrapper.getNode(currentID));
 
     try {
       while (!currentID.equals(start.ID)) {
-        currentID = came_from.get(currentID);
-        path.add(this.graph.getNode(currentID));
+        currentID = cameFrom.get(currentID);
+        path.add(GraphDatabaseWrapper.getNode(currentID));
       }
     } catch (NullPointerException e) {
       System.out.println("Location was not found.");
@@ -120,7 +119,7 @@ public class Pathfinder {
    * @param initialPath: list which needs to be reversed
    * @return: reversed list
    */
-  private LinkedList<Node> reversePath(LinkedList<Node> initialPath) {
+  private static LinkedList<Node> reversePath(LinkedList<Node> initialPath) {
     LinkedList<Node> reversedPath = new LinkedList<Node>();
 
     // iterate through initial path in descending order
