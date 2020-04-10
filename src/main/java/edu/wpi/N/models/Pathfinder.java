@@ -3,14 +3,7 @@ package edu.wpi.N.models;
 import java.util.*;
 
 public class Pathfinder {
-  private Graph graph;
-  private Node start, end;
 
-  public Pathfinder(Graph graph, Node start, Node end) {
-    this.graph = graph;
-    this.start = start;
-    this.end = end;
-  }
 
   /**
    * Function calculates Euclidean distance between the next Node and current Node (cost of given
@@ -41,14 +34,14 @@ public class Pathfinder {
    *
    * @return Path object indicating the shortest path to the goal Node from Start Node
    */
-  public Path findPath() {
+  public static Path findPath(Node start, Node end) {
     // Initialize variables
     PriorityQueue<Node> frontier = new PriorityQueue<Node>();
     frontier.add(start);
-    Map<String, String> came_from = new HashMap<String, String>();
-    Map<String, Double> cost_so_far = new HashMap<String, Double>();
-    came_from.put(start.ID, "");
-    cost_so_far.put(start.ID, 0.0);
+    Map<String, String> cameFrom = new HashMap<String, String>();
+    Map<String, Double> costSoFar = new HashMap<String, Double>();
+    cameFrom.put(start.ID, "");
+    costSoFar.put(start.ID, 0.0);
     start.score = 0;
 
     // While priority queue is not empty, get the node with highest Score (priority)
@@ -61,47 +54,47 @@ public class Pathfinder {
       }
 
       // for every node (next node), current node has edge to:
-      for (String nextNodeID : graph.getEdges(current.ID)) {
-        Node next_node = graph.getNode(nextNodeID);
+      for (String nextNodeID : GraphDatabaseWrapper.getEdges(current.ID)) {
+        Node nextNode = GraphDatabaseWrapper.getNode(nextNodeID);
         // calculate the cost of next node
-        double new_cost = cost_so_far.get(current.ID) + cost(next_node, current);
+        double newCost = costSoFar.get(current.ID) + cost(nextNode, current);
 
-        if (!cost_so_far.containsKey(nextNodeID) || new_cost < cost_so_far.get(nextNodeID)) {
+        if (!costSoFar.containsKey(nextNodeID) || newCost < costSoFar.get(nextNodeID)) {
           // update the cost of nextNode
-          cost_so_far.put(nextNodeID, new_cost);
+          costSoFar.put(nextNodeID, newCost);
           // calculate and update the Score of nextNode
-          double priority = new_cost + heuristic(next_node, end);
-          next_node = graph.getNode(nextNodeID);
-          next_node.score = priority;
+          double priority = newCost + heuristic(nextNode, end);
+          nextNode = GraphDatabaseWrapper.getNode(nextNodeID);
+          nextNode.score = priority;
           // add to the priority queue
-          frontier.add(next_node);
+          frontier.add(nextNode);
           // keep track of where nodes come from
           // to generate the path to goal node
-          came_from.put(nextNodeID, current.ID);
+          cameFrom.put(nextNodeID, current.ID);
         }
       }
     }
 
     // Generate and return the path in proper order
-    return this.generatePath(came_from);
+    return generatePath(start, end, cameFrom);
   }
 
   /**
    * Helper function which generates Path given a Map
    *
-   * @param came_from: Map, where key: NodeID, value: came-from-NodeID
+   * @param cameFrom: Map, where key: NodeID, value: came-from-NodeID
    * @return Path object containing generated path
    */
-  private Path generatePath(Map<String, String> came_from) {
+  private static Path generatePath(Node start, Node end, Map<String, String> cameFrom) {
 
     String currentID = end.ID;
     LinkedList<Node> path = new LinkedList<Node>();
-    path.add(this.graph.getNode(currentID));
+    path.add(GraphDatabaseWrapper.getNode(currentID));
 
     try {
       while (!currentID.equals(start.ID)) {
-        currentID = came_from.get(currentID);
-        path.add(this.graph.getNode(currentID));
+        currentID = cameFrom.get(currentID);
+        path.add(GraphDatabaseWrapper.getNode(currentID));
       }
     } catch (NullPointerException e) {
       System.out.println("Location was not found.");
