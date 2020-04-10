@@ -1,6 +1,7 @@
 package edu.wpi.N.models;
 
 import com.opencsv.CSVReader;
+import edu.wpi.N.database.dbController;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -52,18 +53,17 @@ public class CSVParser {
    */
   static void parseNodeRow(String[] row) {
     try {
-      String nodeId = row[0];
-      double xcoord = Double.parseDouble(row[1]);
-      double ycoord = Double.parseDouble(row[2]);
+      int xcoord = Integer.parseInt(row[1]);
+      int ycoord = Integer.parseInt(row[2]);
       int floor = Integer.parseInt(row[3]);
       String building = row[4];
       String nodeType = row[5];
       String longName = row[6];
       String shortName = row[7];
-      String teamAssigned = row[8];
+      char teamAssigned = row[8].charAt(0);
 
-      // TODO: Add Node to Graph (Database)
-      // this.graphFromCSV.addNode(node);
+      dbController.addNode(
+          xcoord, ycoord, floor, building, nodeType, longName, shortName, teamAssigned);
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -81,7 +81,7 @@ public class CSVParser {
       String startNodeId = row[1];
       String endNodeId = row[2];
 
-      // TODO: add edge to Graph (Database)
+      dbController.addEdge(startNodeId, endNodeId);
 
     } catch (Exception e) {
       e.printStackTrace();

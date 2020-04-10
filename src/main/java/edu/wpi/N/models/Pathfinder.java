@@ -1,9 +1,10 @@
 package edu.wpi.N.models;
 
+import edu.wpi.N.database.dbController;
+
 import java.util.*;
 
 public class Pathfinder {
-
 
   /**
    * Function calculates Euclidean distance between the next Node and current Node (cost of given
@@ -19,7 +20,6 @@ public class Pathfinder {
             + Math.pow(nextNode.getY() - currNode.getY(), 2));
   }
 
-
   /**
    * Function calculates Manhatten distance between goal and current Node
    *
@@ -29,7 +29,6 @@ public class Pathfinder {
   static double heuristic(Node currNode, Node end) {
     return Math.abs(end.getX() - currNode.getX()) + Math.abs(end.getY() - currNode.getY());
   }
-
 
   /**
    * Finds the shortest path from Start to Goal node
@@ -56,8 +55,8 @@ public class Pathfinder {
       }
 
       // for every node (next node), current node has edge to:
-      for (String nextNodeID : GraphDatabaseWrapper.getEdges(current.ID)) {
-        Node nextNode = GraphDatabaseWrapper.getNode(nextNodeID);
+      for (Node nextNode : dbController.getGAdjacent(current.ID)) {
+        String nextNodeID = nextNode.ID;
 
         // calculate the cost of next node
         double newCost = costSoFar.get(current.ID) + cost(nextNode, current);
@@ -68,7 +67,7 @@ public class Pathfinder {
           // calculate and update the Score of nextNode
           double priority = newCost + heuristic(nextNode, end);
 
-          nextNode = GraphDatabaseWrapper.getNode(nextNodeID);
+          nextNode = dbController.getGNode(nextNodeID);
 
           nextNode.score = priority;
           // add to the priority queue
@@ -95,12 +94,12 @@ public class Pathfinder {
 
     String currentID = end.ID;
     LinkedList<Node> path = new LinkedList<Node>();
-    path.add(GraphDatabaseWrapper.getNode(currentID));
+    path.add(dbController.getGNode(currentID));
 
     try {
       while (!currentID.equals(start.ID)) {
         currentID = cameFrom.get(currentID);
-        path.add(GraphDatabaseWrapper.getNode(currentID));
+        path.add(dbController.getGNode(currentID));
       }
     } catch (NullPointerException e) {
       System.out.println("Location was not found.");
