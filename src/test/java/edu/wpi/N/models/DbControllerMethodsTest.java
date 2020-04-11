@@ -1,7 +1,9 @@
 package edu.wpi.N.models;
 
-public class GraphMethodsTest {
+public class DbControllerMethodsTest {
   //
+  //  TODO: initialize database, then call Parser with the test CSV file you need
+    // Then, conduct the tests
   //  InputStream input = Main.class.getResourceAsStream("csv/MapCoordinates.csv");
   //  CSVParser parser = new CSVParser();
   //  Graph testGraph = parser.parseCSV(input);
