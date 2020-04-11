@@ -53,6 +53,7 @@ public class CSVParser {
    */
   static void parseNodeRow(String[] row) {
     try {
+      String nodeID = row[0];
       int xcoord = Integer.parseInt(row[1]);
       int ycoord = Integer.parseInt(row[2]);
       int floor = Integer.parseInt(row[3]);
@@ -63,7 +64,7 @@ public class CSVParser {
       char teamAssigned = row[8].charAt(0);
 
       dbController.addNode(
-          xcoord, ycoord, floor, building, nodeType, longName, shortName, teamAssigned);
+          nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName, teamAssigned);
 
     } catch (Exception e) {
       e.printStackTrace();
