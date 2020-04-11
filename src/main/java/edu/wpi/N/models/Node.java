@@ -1,5 +1,7 @@
 package edu.wpi.N.models;
 
+// Node = Graph Node (limited data)
+// Needed for A* algorithm
 public class Node implements Comparable<Node> {
   private double xcoord, ycoord;
   public double score;

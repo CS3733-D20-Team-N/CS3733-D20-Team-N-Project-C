@@ -1,10 +1,9 @@
 package edu.wpi.N.database;
 
-import java.util.LinkedList;
 import edu.wpi.N.models.Node;
+import java.util.LinkedList;
 
 public class dbController {
-
     /**
      *Initializes the database, should be run before interfacing with it.
      */
@@ -151,7 +150,4 @@ public class dbController {
     public static boolean removeEdge(String edgeID){
         return false;
     }
-
-
-
 }
