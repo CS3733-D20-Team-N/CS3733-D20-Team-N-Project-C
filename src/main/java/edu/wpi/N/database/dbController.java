@@ -2,10 +2,7 @@ package edu.wpi.N.database;
 
 import edu.wpi.N.models.Node;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import java.util.LinkedList;
 
@@ -238,8 +235,21 @@ public class dbController {
    * @param nodeID2 the nodeID of the second edge
    * @return True if valid and successful, false otherwise
    */
-  public static boolean addEdge(String nodeID1, String nodeID2) {
-    return false;
+  public static boolean addEdge(String nodeID1, String nodeID2) throws SQLException {
+    String edgeID = nodeID1 + "_" + nodeID2;
+
+    String query = "SELECT * FROM edges WHERE edgeID = '" + edgeID + "'";
+    ResultSet result = statement.executeQuery(query);
+
+    if(result.next()){
+      return false;
+    }
+
+    query = "INSERT INTO edges " +
+            "VALUES ('" + edgeID + "', '" + nodeID1 + "', '" + nodeID2 + "')";
+    statement.execute(query);
+
+    return true;
   }
 
   /**
