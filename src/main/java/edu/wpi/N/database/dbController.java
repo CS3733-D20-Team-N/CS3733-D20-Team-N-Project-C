@@ -1,13 +1,32 @@
 package edu.wpi.N.database;
 
 import edu.wpi.N.models.Node;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import java.util.LinkedList;
 
 public class dbController {
+
+    private static Statement statement;
     /**
      *Initializes the database, should be run before interfacing with it.
      */
-    public static void initDB() {}
+    public static void initDB() throws ClassNotFoundException, SQLException {
+        Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+        Connection connection;
+        String URL;
+
+        URL = "jdbc:derby:MapDB;create=true";
+        connection = DriverManager.getConnection(URL);
+        statement = connection.createStatement();
+
+        String query = "CREATE TABLE nodes (); CREATE TABLE edges ();";
+        statement.execute(query);
+    }
 
     /**
      * Adds a node to the database, the NodeID is generated automatically and the teamAssigned is I indicating a node added through the interface.
