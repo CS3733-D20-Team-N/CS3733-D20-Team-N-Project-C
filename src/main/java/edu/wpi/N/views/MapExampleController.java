@@ -18,6 +18,7 @@ public class MapExampleController {
   @FXML AnchorPane pane_mapClickTarg;
   @FXML Button btn_zoomIn, btn_zoomOut;
   @FXML Button btn_cardiology, btn_mohs, btn_neurology, btn_urology, btn_admin, btn_backToKiosk;
+  @FXML Button btn_import;
   private double clickStartX, clickStartY;
   private final double MIN_MAP_SCALE = 1; // pane_map scale when zoomed out fully
   private final double MAX_MAP_SCALE = 3.5; // pane_map scale when zoomed in fully
@@ -92,5 +93,16 @@ public class MapExampleController {
     double lerpedScale = MIN_MAP_SCALE + mapScaleAlpha * (MAX_MAP_SCALE - MIN_MAP_SCALE);
     pane_map.setScaleX(lerpedScale);
     pane_map.setScaleY(lerpedScale);
+  }
+
+  @FXML
+  private void onImportClicked(MouseEvent event) throws Exception {
+    Stage stage;
+    Parent root;
+    stage = (Stage) btn_import.getScene().getWindow();
+    root = FXMLLoader.load(getClass().getResource("dataEditor.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
   }
 }
