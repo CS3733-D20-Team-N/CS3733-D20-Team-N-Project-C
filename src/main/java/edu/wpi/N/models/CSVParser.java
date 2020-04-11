@@ -2,8 +2,8 @@ package edu.wpi.N.models;
 
 import com.opencsv.CSVReader;
 import edu.wpi.N.database.dbController;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
+import java.io.*;
 
 public class CSVParser {
 
@@ -87,5 +87,20 @@ public class CSVParser {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+
+  /**
+   * @param pathToFile
+   * @return
+   * @throws FileNotFoundException
+   */
+  public static void parseCSVfromPath(String pathToFile) throws FileNotFoundException {
+
+    File initialFile = new File(pathToFile);
+    InputStream input = new FileInputStream(initialFile);
+
+    CSVParser csvParser = new CSVParser();
+    csvParser.parseCSV(input);
   }
 }

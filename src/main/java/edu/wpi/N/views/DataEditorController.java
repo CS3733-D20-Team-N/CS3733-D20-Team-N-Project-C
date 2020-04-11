@@ -1,6 +1,8 @@
 package edu.wpi.N.views;
 
 import java.io.File;
+
+import edu.wpi.N.models.CSVParser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
