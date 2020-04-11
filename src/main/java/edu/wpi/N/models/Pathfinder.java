@@ -35,7 +35,9 @@ public class Pathfinder {
    *
    * @return Path object indicating the shortest path to the goal Node from Start Node
    */
-  public static Path findPath(Node start, Node end) {
+  public static Path findPath(String startID, String endID) {
+    Node start = dbController.getGNode(startID);
+    Node end = dbController.getGNode(endID);
     // Initialize variables
     PriorityQueue<Node> frontier = new PriorityQueue<Node>();
     frontier.add(start);
