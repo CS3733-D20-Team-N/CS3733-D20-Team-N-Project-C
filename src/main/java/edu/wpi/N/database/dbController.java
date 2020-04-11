@@ -11,7 +11,23 @@ public class dbController {
     public static void initDB() {}
 
     /**
-     * Adds a node to the database
+     * Adds a node to the database, the NodeID is generated automatically and the teamAssigned is I indicating a node added through the interface.
+     * @param x The x coordinate of the node
+     * @param y The y coordinate of the node
+     * @param floor The floor of the node
+     * @param building The building the node is in
+     * @param nodeType The node's type
+     * @param longName The node's longName
+     * @param shortName The node's shortName
+     * @return True if valid and inserted properly, false otherwise.
+     */
+    public static boolean addNode(int x, int y,  int floor, String building, String nodeType, String longName, String shortName){
+        return false;
+    }
+
+    /**
+     * Adds a node to the database including the nodeID for importing from the CSV
+     * @param nodeID The node ID
      * @param x The x coordinate of the node
      * @param y The y coordinate of the node
      * @param floor The floor of the node
@@ -22,7 +38,7 @@ public class dbController {
      * @param teamAssigned The team assigned to the Node
      * @return True if valid and inserted properly, false otherwise.
      */
-    public static boolean addNode(int x, int y,  int floor, String building, String nodeType, String longName, String shortName, char teamAssigned){
+    public static boolean addNode(String nodeID, int x, int y,  int floor, String building, String nodeType, String longName, String shortName, char teamAssigned){
         return false;
     }
 
@@ -101,9 +117,10 @@ public class dbController {
     /**
      * Gets a list of all the nodes on the specified floor
      * @param floor the floor from which you want to get all the nodes
+     * @param building the building which has the floor from which you want to get all the nodes
      * @return a list of all the nodes with the specified floor
      */
-    public static LinkedList<DbNode> floorNodes(int floor){
+    public static LinkedList<DbNode> floorNodes(int floor, String building){
         return null;
     }
 
