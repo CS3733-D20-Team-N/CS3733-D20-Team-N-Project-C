@@ -51,7 +51,7 @@ public class KioskHomeController {
         root = FXMLLoader.load(getClass().getResource("popupWindow.fxml"));
       } else {
         stage = (Stage) btn_moreServices.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("homePage.fxml"));
+        root = FXMLLoader.load(getClass().getResource("downloadMapCSVPage.fxml"));
       }
       Scene scene = new Scene(root);
       stage.setScene(scene);
