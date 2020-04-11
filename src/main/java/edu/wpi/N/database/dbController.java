@@ -1,13 +1,16 @@
 package edu.wpi.N.database;
 
 import edu.wpi.N.models.Node;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.LinkedList;
 
 public class dbController {
+
 
   private static Statement statement;
   /** Initializes the database, should be run before interfacing with it. */
