@@ -93,12 +93,15 @@ public class CSVParser {
    * @return
    * @throws FileNotFoundException
    */
-  public static void parseCSVfromPath(String pathToFile) throws FileNotFoundException {
+  public static void parseCSVfromPath(String pathToFile){
+    try{
+      File initialFile = new File(pathToFile);
+      InputStream input = new FileInputStream(initialFile);
 
-    File initialFile = new File(pathToFile);
-    InputStream input = new FileInputStream(initialFile);
-
-    CSVParser csvParser = new CSVParser();
-    csvParser.parseCSV(input);
+      CSVParser csvParser = new CSVParser();
+      csvParser.parseCSV(input);
+    } catch (Exception e){
+      e.printStackTrace();
+    }
   }
 }
