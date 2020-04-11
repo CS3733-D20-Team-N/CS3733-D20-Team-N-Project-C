@@ -2,7 +2,6 @@ package edu.wpi.N.models;
 
 import com.opencsv.CSVReader;
 import edu.wpi.N.database.dbController;
-
 import java.io.*;
 
 public class CSVParser {
@@ -88,7 +87,6 @@ public class CSVParser {
       e.printStackTrace();
     }
   }
-
 
   /**
    * @param pathToFile

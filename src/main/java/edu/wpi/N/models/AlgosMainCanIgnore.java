@@ -1,9 +1,6 @@
 package edu.wpi.N.models;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 public class AlgosMainCanIgnore {
 
@@ -26,5 +23,4 @@ public class AlgosMainCanIgnore {
 
     System.out.println("Set a break point here to see the path in debugger");
   }
-
 }

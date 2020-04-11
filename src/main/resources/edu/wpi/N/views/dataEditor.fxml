@@ -9,6 +9,6 @@
       <Button fx:id="btn_select" layoutX="14.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#onSelectClicked" text="Select File" />
       <Label layoutX="14.0" layoutY="80.0" prefHeight="25.0" prefWidth="99.0" text="Import CSV file:" />
       <Label fx:id="lbl_filePath" disable="true" layoutX="113.0" layoutY="115.0" prefHeight="25.0" prefWidth="368.0" style="-fx-border-color: BLACK;" text="File Path" />
-      <Button layoutX="524.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="62.0" text="Next" />
+      <Button fx:id="btn_done" layoutX="524.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#onDoneClicked" prefHeight="25.0" prefWidth="62.0" text="Done" />
    </children>
 </AnchorPane>

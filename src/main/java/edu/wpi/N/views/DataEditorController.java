@@ -1,8 +1,8 @@
 package edu.wpi.N.views;
 
-import java.io.File;
-
 import edu.wpi.N.models.CSVParser;
+import java.io.File;
+import java.io.FileNotFoundException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,7 +11,7 @@ import javafx.stage.FileChooser;
 
 public class DataEditorController {
   @FXML Button btn_select;
-
+  @FXML Button btn_done;
   @FXML Label lbl_filePath;
 
   @FXML
@@ -25,5 +25,11 @@ public class DataEditorController {
     } else {
       System.out.println("The file is invalid");
     }
+  }
+
+  @FXML
+  public void onDoneClicked(MouseEvent event) throws FileNotFoundException {
+    String path = lbl_filePath.getText();
+    CSVParser.parseCSVfromPath(path);
   }
 }

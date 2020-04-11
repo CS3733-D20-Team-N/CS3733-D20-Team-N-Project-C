@@ -1,7 +1,6 @@
 package edu.wpi.N.models;
 
 import edu.wpi.N.database.DbNode;
-
 import java.util.LinkedList;
 
 public class Path {
