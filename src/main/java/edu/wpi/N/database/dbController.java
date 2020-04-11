@@ -166,7 +166,13 @@ public class dbController {
    * @return
    */
   public static boolean deleteNode(String nodeID) {
-    return false;
+    String query = "DELETE FROM nodes WHERE nodeID ='" + nodeID + "'";
+    try{
+      statement.execute(query);
+      return statement.getUpdateCount() > 0;
+    } catch (SQLException e){
+      return false;
+    }
   }
 
   /**
