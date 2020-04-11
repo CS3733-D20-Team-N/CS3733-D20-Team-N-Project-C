@@ -10,30 +10,32 @@ public class dbController {
 
 
   private static Statement statement;
+
   /** Initializes the database, should be run before interfacing with it. */
   public static void initDB() throws ClassNotFoundException, SQLException {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
     Connection connection;
     String URL;
 
-    URL = "jdbc:derby:MapDB;create=true";
+    URL = "jdbc:derby:memory:MapDB;create=true";
     connection = DriverManager.getConnection(URL);
     statement = connection.createStatement();
     String query;
 
-    try {
-      query = "DROP TABLE nodes";
-      statement.execute(query);
-    } catch (SQLException e) {
-      if (!e.getSQLState().equals("42Y55")) throw e;
-    }
-
-    try {
-      query = "DROP TABLE edges";
-      statement.execute(query);
-    } catch (SQLException e) {
-      if (!e.getSQLState().equals("42Y55")) throw e;
-    }
+    //not necessary when running the database in memory
+//    try {
+//      query = "DROP TABLE nodes";
+//      statement.execute(query);
+//    } catch (SQLException e) {
+//      if (!e.getSQLState().equals("42Y55")) throw e;
+//    }
+//
+//    try {
+//      query = "DROP TABLE edges";
+//      statement.execute(query);
+//    } catch (SQLException e) {
+//      if (!e.getSQLState().equals("42Y55")) throw e;
+//    }
 
     try {
       query =
@@ -235,19 +237,23 @@ public class dbController {
    * @param nodeID2 the nodeID of the second edge
    * @return True if valid and successful, false otherwise
    */
-  public static boolean addEdge(String nodeID1, String nodeID2) throws SQLException {
+  public static boolean addEdge(String nodeID1, String nodeID2){
     String edgeID = nodeID1 + "_" + nodeID2;
+    try {
+      //Look in to a more efficient way to do this, but it's probably OK for now
+      String query = "SELECT * FROM edges WHERE (node1 = '" + nodeID1 + "' AND node2 = '" + nodeID2 + "') OR" +
+              "(node2 = '" + nodeID1 + "' AND node1 = '" + nodeID2 + "')";
+      ResultSet result = statement.executeQuery(query);
 
-    String query = "SELECT * FROM edges WHERE edgeID = '" + edgeID + "'";
-    ResultSet result = statement.executeQuery(query);
-
-    if(result.next()){
+      if(result.next()){
+        return false;
+      }
+        query = "INSERT INTO edges " +
+                "VALUES ('" + edgeID + "', '" + nodeID1 + "', '" + nodeID2 + "')";
+        statement.execute(query);
+    } catch(SQLException e){
       return false;
     }
-
-    query = "INSERT INTO edges " +
-            "VALUES ('" + edgeID + "', '" + nodeID1 + "', '" + nodeID2 + "')";
-    statement.execute(query);
 
     return true;
   }
@@ -255,20 +261,26 @@ public class dbController {
   /**
    * Removes an edge from the graph
    *
-   * @param edgeID the edgeID of the node
+   * @param nodeID1 the nodeID of the first node
+   * @param nodeID2 the nodeID of the second node
    * @return True if valid and successful, false otherwise
    */
-  public static boolean removeEdge(String edgeID) throws SQLException {
-    String query = "SELECT * FROM edges WHERE edgeID = '" + edgeID + "'";
-    ResultSet result = statement.executeQuery(query);
-
-    if(!result.next()){
+  public static boolean removeEdge(String nodeID1, String nodeID2){
+//    String query = "SELECT * FROM edges WHERE edgeID = '" + edgeID + "'";
+//    ResultSet result = statement.executeQuery(query);
+//
+//    if(!result.next()){
+//      return false;
+//    }
+//top method probably works, but is inefficient
+    try {
+      String query = "DELETE FROM edges WHERE (node1 = '" + nodeID1 + "' AND node2 = '" + nodeID2 + "') OR" +
+              "(node2 = '" + nodeID1 + "' AND node1 = '" + nodeID2 + "')";
+      statement.execute(query);
+      return statement.getUpdateCount() > 0;
+    }
+    catch(SQLException e) {
       return false;
     }
-
-    query = "DELETE FROM edges WHERE edgeID = '" + edgeID + "'";
-    statement.execute(query);
-
-    return true;
   }
 }
