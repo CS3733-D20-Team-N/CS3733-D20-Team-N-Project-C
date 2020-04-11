@@ -258,7 +258,17 @@ public class dbController {
    * @param edgeID the edgeID of the node
    * @return True if valid and successful, false otherwise
    */
-  public static boolean removeEdge(String edgeID) {
-    return false;
+  public static boolean removeEdge(String edgeID) throws SQLException {
+    String query = "SELECT * FROM edges WHERE edgeID = '" + edgeID + "'";
+    ResultSet result = statement.executeQuery(query);
+
+    if(!result.next()){
+      return false;
+    }
+
+    query = "DELETE FROM edges WHERE edgeID = '" + edgeID + "'";
+    statement.execute(query);
+
+    return true;
   }
 }
