@@ -9,37 +9,8 @@ import java.util.List;
 
 public class dbController {
 
-    private static Statement statement;
-    /**
-     *Initializes the database, should be run before interfacing with it.
-     */
-    public static void initDB() throws ClassNotFoundException, SQLException {
-        Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-        Connection connection;
-        String URL;
 
-        URL = "jdbc:derby:MapDB;create=true";
-        connection = DriverManager.getConnection(URL);
-        statement = connection.createStatement();
-
-        String query = "CREATE TABLE nodes (); CREATE TABLE edges ();";
-        statement.execute(query);
-    }
-
-    /**
-     * Adds a node to the database, the NodeID is generated automatically and the teamAssigned is I indicating a node added through the interface.
-     * @param x The x coordinate of the node
-     * @param y The y coordinate of the node
-     * @param floor The floor of the node
-     * @param building The building the node is in
-     * @param nodeType The node's type
-     * @param longName The node's longName
-     * @param shortName The node's shortName
-     * @return True if valid and inserted properly, false otherwise.
-     */
-    public static boolean addNode(int x, int y,  int floor, String building, String nodeType, String longName, String shortName){
-        return false;
-    }
+  private static Statement statement;
 
     /**
      * Adds a node to the database including the nodeID for importing from the CSV
@@ -135,25 +106,100 @@ public class dbController {
             return null;
         }
 
+  /** Initializes the database, should be run before interfacing with it. */
+  public static void initDB() throws ClassNotFoundException, SQLException {
+    Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+    Connection connection;
+    String URL;
+
+    URL = "jdbc:derby:memory:MapDB;create=true";
+    connection = DriverManager.getConnection(URL);
+    statement = connection.createStatement();
+    String query;
+
+    //not necessary when running the database in memory
+//    try {
+//      query = "DROP TABLE nodes";
+//      statement.execute(query);
+//    } catch (SQLException e) {
+//      if (!e.getSQLState().equals("42Y55")) throw e;
+//    }
+//
+//    try {
+//      query = "DROP TABLE edges";
+//      statement.execute(query);
+//    } catch (SQLException e) {
+//      if (!e.getSQLState().equals("42Y55")) throw e;
+//    }
+
+    try {
+      query =
+          "CREATE TABLE nodes ("
+              + "nodeID VARCHAR(10) NOT NULL PRIMARY KEY, "
+              + "xcoord INT NOT NULL, "
+              + "ycoord INT NOT NULL, "
+              + "floor INT NOT NULL, "
+              + "building VARCHAR(255) NOT NULL, "
+              + "nodeType VARCHAR(4) NOT NULL, "
+              + "longName VARCHAR(255) NOT NULL, "
+              + "shortName VARCHAR(255) NOT NULL, "
+              + "teamAssigned CHAR(1) NOT NULL"
+              + ")";
+      statement.execute(query);
+    } catch (SQLException e) {
+      if (!e.getSQLState().equals("X0Y32")) throw e;
     }
 
-    /**
-     * Gets the graph-style node with the specified nodeID with a score of zero
-     * @param nodeID the nodeID of the node to fetch
-     * @return the specified graph-style Node
-     */
-    public static Node getGNode(String nodeID){
-        return null;
+    try {
+      query =
+          "CREATE TABLE edges ("
+              + "edgeID VARCHAR(21) NOT NULL PRIMARY KEY, "
+              + "node1 VARCHAR(10) NOT NULL, "
+              + "node2 VARCHAR(10) NOT NULL, "
+              + "FOREIGN KEY (node1) REFERENCES nodes(nodeID), "
+              + "FOREIGN KEY (node2) REFERENCES nodes(nodeID)"
+              + ")";
+      statement.execute(query);
+    } catch (SQLException e) {
+      if (!e.getSQLState().equals("X0Y32")) throw e;
     }
+  }
 
-    /**
-     * Gets the graph-style nodes of all nodes adjacent to the specified Node
-     * @param nodeID
-     * @return
-     */
-    public static LinkedList<Node> getGAdjacent(String nodeID){
-        return null;
+  private static String nextAvailNum(String nodeType) throws SQLException{
+      return null;
+  }
+  /**
+   * Adds a node to the database, the NodeID is generated automatically and the teamAssigned is I
+   * indicating a node added through the interface.
+   *
+   * @param x The x coordinate of the node
+   * @param y The y coordinate of the node
+   * @param floor The floor of the node
+   * @param building The building the node is in
+   * @param nodeType The node's type
+   * @param longName The node's longName
+   * @param shortName The node's shortName
+   * @return True if valid and inserted properly, false otherwise.
+   */
+  public static boolean addNode(
+      int x,
+      int y,
+      int floor,
+      String building,
+      String nodeType,
+      String longName,
+      String shortName) {
+    try {
+      String nodeID = "I" + nodeType.toUpperCase() + nextAvailNum(nodeType) + "0" + floor;
+      String query = "INSERT INTO nodes VALUES ('" + nodeID + "', " + x + "," + y + "," + floor + ",'" + building +
+              "','" + nodeType + "','" + longName + "','" + shortName + "','I')";
+      statement.execute(query);
+    } catch(SQLException e){
+      return false;
     }
+    return true;
+  }
+
 
     /**
      * Gets a list of all the nodes matching the specified query
@@ -175,41 +221,98 @@ public class dbController {
         }
     }
 
-    /**
-     * Gets a list of all the nodes on the specified floor
-     * @param floor the floor from which you want to get all the nodes
-     * @param building the building which has the floor from which you want to get all the nodes
-     * @return a list of all the nodes with the specified floor
-     */
-    public static LinkedList<DbNode> floorNodes(int floor, String building){
-        return null;
-    }
+  /**
+   * Gets the graph-style node with the specified nodeID with a score of zero
+   *
+   * @param nodeID the nodeID of the node to fetch
+   * @return the specified graph-style Node
+   */
+  public static Node getGNode(String nodeID) {
+    return null;
+  }
 
-    /**
-     * Gets a list of all the nodes with an edge to the specified node
-     * @param nodeID The nodeID of the node for which you want the edges
-     * @return All the nodes directly connected to the passed-in one
-     */
-    public static LinkedList<DbNode> getAdjacent(String nodeID){
-        return null;
-    }
+  /**
+   * Gets the graph-style nodes of all nodes adjacent to the specified Node
+   *
+   * @param nodeID
+   * @return
+   */
+  public static LinkedList<Node> getGAdjacent(String nodeID) {
+    return null;
+  }
 
-    /**
-     * Adds an edge to the graph
-     * @param nodeID1 the nodeID of the first edge
-     * @param nodeID2 the nodeID of the second edge
-     * @return True if valid and successful, false otherwise
-     */
-    public static boolean addEdge(String nodeID1, String nodeID2){
+  /**
+   * Gets a list of all the nodes on the specified floor
+   *
+   * @param floor the floor from which you want to get all the nodes
+   * @param building the building which has the floor from which you want to get all the nodes
+   * @return a list of all the nodes with the specified floor
+   */
+  public static LinkedList<DbNode> floorNodes(int floor, String building) {
+    return null;
+  }
+
+  /**
+   * Gets a list of all the nodes with an edge to the specified node
+   *
+   * @param nodeID The nodeID of the node for which you want the edges
+   * @return All the nodes directly connected to the passed-in one
+   */
+  public static LinkedList<DbNode> getAdjacent(String nodeID) {
+    return null;
+  }
+
+  /**
+   * Adds an edge to the graph
+   *
+   * @param nodeID1 the nodeID of the first edge
+   * @param nodeID2 the nodeID of the second edge
+   * @return True if valid and successful, false otherwise
+   */
+  public static boolean addEdge(String nodeID1, String nodeID2){
+    String edgeID = nodeID1 + "_" + nodeID2;
+    try {
+      //Look in to a more efficient way to do this, but it's probably OK for now
+      String query = "SELECT * FROM edges WHERE (node1 = '" + nodeID1 + "' AND node2 = '" + nodeID2 + "') OR" +
+              "(node2 = '" + nodeID1 + "' AND node1 = '" + nodeID2 + "')";
+      ResultSet result = statement.executeQuery(query);
+
+      if(result.next()){
         return false;
+      }
+      query = "INSERT INTO edges " +
+              "VALUES ('" + edgeID + "', '" + nodeID1 + "', '" + nodeID2 + "')";
+      statement.execute(query);
+    } catch(SQLException e){
+      return false;
     }
 
-    /**
-     * Removes an edge from the graph
-     * @param edgeID the edgeID of the node
-     * @return True if valid and successful, false otherwise
-     */
-    public static boolean removeEdge(String edgeID){
-        return false;
+    return true;
+  }
+
+  /**
+   * Removes an edge from the graph
+   *
+   * @param nodeID1 the nodeID of the first node
+   * @param nodeID2 the nodeID of the second node
+   * @return True if valid and successful, false otherwise
+   */
+  public static boolean removeEdge(String nodeID1, String nodeID2){
+//    String query = "SELECT * FROM edges WHERE edgeID = '" + edgeID + "'";
+//    ResultSet result = statement.executeQuery(query);
+//
+//    if(!result.next()){
+//      return false;
+//    }
+//top method probably works, but is inefficient
+    try {
+      String query = "DELETE FROM edges WHERE (node1 = '" + nodeID1 + "' AND node2 = '" + nodeID2 + "') OR" +
+              "(node2 = '" + nodeID1 + "' AND node1 = '" + nodeID2 + "')";
+      statement.execute(query);
+      return statement.getUpdateCount() > 0;
     }
+    catch(SQLException e) {
+      return false;
+    }
+  }
 }
