@@ -32,13 +32,15 @@ public class KioskHomeController {
   @FXML TextField txt_User;
   @FXML PasswordField pf_Pass;
   @FXML Button btn_Home;
-  // @FXML Button btn_Submit;
+  @FXML Button btn_Submit;
 
   @FXML
-  private void storeData() {
+  private void storeData() throws IOException {
+    System.out.println("error here");
     username = txt_User.getText();
     password = pf_Pass.getText();
     System.out.println("Username: " + username + " Password: " + password);
+    loginCheck(username, password);
   }
 
   @FXML
@@ -99,9 +101,28 @@ public class KioskHomeController {
   }
 
   @FXML
-  private void keyPressSubmission(KeyEvent key) {
+  private void keyPressSubmission(KeyEvent key) throws IOException {
     if (key.getCode() == KeyCode.ENTER) {
       storeData();
+    }
+  }
+
+  @FXML
+  private void loginCheck(String user, String pass) throws IOException {
+    if (username.equals("admin") && password.equals("1234")) {
+      Stage stage;
+      Parent root;
+
+      stage = new Stage();
+      stage.close();
+      root = FXMLLoader.load(getClass().getResource("adminRequestPage.fxml"));
+      Scene scene = new Scene(root);
+      stage.setScene(scene);
+      stage.setTitle("Admin Request");
+      stage.show();
+      System.out.println("Valid Username and Password");
+    } else {
+      System.out.println("Invalid Username or Password");
     }
   }
 }

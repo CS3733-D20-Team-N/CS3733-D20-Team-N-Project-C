@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.N.views.KioskHomeController">
+   <children>
+      <Label layoutX="25.0" layoutY="14.0" text="Service Requests" AnchorPane.leftAnchor="25.0">
+         <font>
+            <Font name="Calibri" size="32.0" />
+         </font>
+      </Label>
+      <Button layoutX="722.0" layoutY="635.0" mnemonicParsing="false" text="Deny" AnchorPane.rightAnchor="25.0" />
+      <Button layoutX="656.0" layoutY="635.0" mnemonicParsing="false" text="Accept" AnchorPane.rightAnchor="94.0" />
+      <Button layoutX="39.0" layoutY="635.0" mnemonicParsing="false" text="Logout" AnchorPane.leftAnchor="25.0" />
+      <TableView layoutX="43.0" layoutY="128.0" prefHeight="500.0" prefWidth="450.0" AnchorPane.leftAnchor="319.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="60.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Time" />
+          <TableColumn prefWidth="75.0" text="Type" />
+            <TableColumn prefWidth="75.0" text="Floor" />
+            <TableColumn prefWidth="75.0" text="Room" />
+            <TableColumn prefWidth="75.0" text="Reasoning" />
+            <TableColumn prefWidth="75.0" text="Language" />
+        </columns>
+      </TableView>
+      <Line endX="100.0" layoutX="135.0" layoutY="51.0" startX="-100.0" AnchorPane.leftAnchor="37.5" AnchorPane.topAnchor="60.0" />
+      <Button layoutX="43.0" layoutY="81.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="190.0" text="Translator Requests" AnchorPane.topAnchor="81.0">
+         <font>
+            <Font name="Calibri" size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="43.0" layoutY="155.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="190.0" text="Laundry Requests">
+         <font>
+            <Font name="Calibri" size="24.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
