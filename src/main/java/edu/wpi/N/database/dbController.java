@@ -48,7 +48,7 @@ public class dbController {
               + "nodeType VARCHAR(4) NOT NULL, "
               + "longName VARCHAR(255) NOT NULL, "
               + "shortName VARCHAR(255) NOT NULL, "
-              + "teamAssigned CHAR NOT NULL"
+              + "teamAssigned CHAR(1) NOT NULL"
               + ")";
       statement.execute(query);
     } catch (SQLException e) {
@@ -70,6 +70,9 @@ public class dbController {
     }
   }
 
+  private static String nextAvailNum(String nodeType) throws SQLException{
+      return null;
+  }
   /**
    * Adds a node to the database, the NodeID is generated automatically and the teamAssigned is I
    * indicating a node added through the interface.
@@ -91,7 +94,15 @@ public class dbController {
       String nodeType,
       String longName,
       String shortName) {
-    return false;
+    try {
+      String nodeID = "I" + nodeType.toUpperCase() + nextAvailNum(nodeType) + "0" + floor;
+      String query = "INSERT INTO nodes VALUES ('" + nodeID + "', " + x + "," + y + "," + floor + ",'" + building +
+              "','" + nodeType + "','" + longName + "','" + shortName + "','I')";
+      statement.execute(query);
+    } catch(SQLException e){
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -254,9 +265,9 @@ public class dbController {
       if(result.next()){
         return false;
       }
-        query = "INSERT INTO edges " +
-                "VALUES ('" + edgeID + "', '" + nodeID1 + "', '" + nodeID2 + "')";
-        statement.execute(query);
+      query = "INSERT INTO edges " +
+              "VALUES ('" + edgeID + "', '" + nodeID1 + "', '" + nodeID2 + "')";
+      statement.execute(query);
     } catch(SQLException e){
       return false;
     }
