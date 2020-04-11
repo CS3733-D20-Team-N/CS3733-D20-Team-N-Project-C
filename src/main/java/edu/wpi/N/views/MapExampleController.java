@@ -110,7 +110,7 @@ public class MapExampleController {
   private void mapScrollHandler(ScrollEvent event) throws IOException {
     if (event.getSource() == pane_mapClickTarg) {
       double deltaY = event.getDeltaY();
-      zoom(deltaY * 0.01);
+      zoom(deltaY * 0.005);
     }
   }
 
