@@ -1,7 +1,6 @@
 package edu.wpi.N.models;
 
 import edu.wpi.N.database.dbController;
-
 import java.util.*;
 
 public class Pathfinder {
