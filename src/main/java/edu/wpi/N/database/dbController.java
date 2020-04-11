@@ -2,12 +2,10 @@ package edu.wpi.N.database;
 
 import edu.wpi.N.models.Node;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class dbController {
 
@@ -56,8 +54,13 @@ public class dbController {
      * @param teamAssigned The team assigned to the Node
      * @return True if valid and inserted properly, false otherwise.
      */
-    public static boolean addNode(String nodeID, int x, int y,  int floor, String building, String nodeType, String longName, String shortName, char teamAssigned){
-        return false;
+    public static boolean addNode(String nodeID, int x, int y,  int floor, String building, String nodeType, String longName, String shortName, char teamAssigned) throws SQLException {
+        String query = "INSERT INTO nodes(" +
+                "+nodeID, x, y, floor, building, nodeType, longName, shortName, teamAssigned) VALUES" +
+                "'"+nodeID+"', "+x+", "+y+", "+floor+", '"+building+"', '"+nodeType+"', '"+longName+"', '"+shortName+"', ''+teamAssigned+''";
+        statement.execute(query);
+        System.out.println("Values Inserted");
+        return true;
     }
 
     /**
@@ -72,8 +75,12 @@ public class dbController {
      * @param teamAssigned The new team assigned to the Node
      * @return
      */
-    public static boolean modifyNode(String nodeID, int x, int y,  int floor, String building, String nodeType, String longName, String shortName, char teamAssigned){
-        return false;
+    public static boolean modifyNode(String nodeID, int x, int y,  int floor, String building, String nodeType, String longName, String shortName, char teamAssigned) throws SQLException {
+        String query= "UPDATE nodes SET x = "+x+", y = "+y+", floor = "+floor+", building = '"+ building +"', nodeType = '"+nodeType+"', " +
+                "longName = '"+longName+"', shortName = '"+shortName+"', teamAssigned = ''+TeamAssigned+'' "+
+                "WHERE nodeID = '"+nodeID+"'";
+        statement.execute(query);
+        return true;
     }
 
     /**
@@ -84,7 +91,13 @@ public class dbController {
      * @return True if valid and successful, false otherwise.
      */
     public static boolean moveNode(String nodeID, int x, int y){
-        return false;
+        try{
+            String query = "UPDATE nodes SET x = '"+x+"', y = '"+y+"' WHERE nodeID = '"+nodeID+"'";
+            statement.executeQuery(query);
+            return true;
+        }catch(SQLException e){
+            return false;
+        }
     }
 
     /**
@@ -93,7 +106,14 @@ public class dbController {
      * @return
      */
     public static boolean deleteNode(String nodeID){
-        return false;
+        try{
+            String query = "DELETE FROM nodes WHERE (nodeID = '"+nodeID+"')";
+            statement.executeQuery(query);
+            return true;
+        }catch(SQLException e){
+            return false;
+        }
+
     }
 
     /**
@@ -102,7 +122,19 @@ public class dbController {
      * @return the specified node
      */
     public static DbNode getNode(String nodeID){
-        return null;
+
+        try{
+            String query ="SELECT * FROM nodes WHERE (nodeID = '"+nodeID+"')";
+            ResultSet rs = statement.executeQuery(query);
+            while(rs.next()){
+                DbNode sample = new DbNode(rs.getString("nodeID"), rs.getInt("x"), rs.getInt("y"), rs.getInt("floor"), rs.getString("building"), rs.getString("nodeType"), rs.getString("longName"), rs.getString("shortName"), rs.getString("teamAssigned").charAt(0));
+                return sample;
+            }
+        }
+        catch(SQLException e){
+            return null;
+        }
+
     }
 
     /**
@@ -129,7 +161,18 @@ public class dbController {
      * @return A list of all nodes with a long name containing the query
      */
     public static LinkedList<DbNode> searchNode(String query){
-        return null;
+        List<DbNode> searchList= new LinkedList<DbNode>();
+        try{
+            String result = "SELECT nodeID FROM * WHERE EXISTS" +
+                    "(SELECT nodeID FROM '"+query+"' WHERE *.nodeID = '"+query+"'.nodeID";
+            ResultSet rs = statement.executeQuery(result);
+            while(rs.next()){
+                DbNode chosenOne = new DbNode(rs.getString("nodeID"), rs.getInt("x"), rs.getInt("y"), rs.getInt("floor"), rs.getString("building"), rs.getString("nodeType"), rs.getString("longName"), rs.getString("shortName"), rs.getString("teamAssigned").charAt(0));
+                searchList.add(chosenOne);
+            }
+        }catch(SQLException e){
+            return null;
+        }
     }
 
     /**

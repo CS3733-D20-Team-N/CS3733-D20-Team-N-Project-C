@@ -106,4 +106,16 @@ public class DbNode {
     this.shortName = shortName;
     this.teamAssigned = teamAssigned;
   }
+
+  public DbNode(){
+    this.nodeID = null;
+    this.x = 0;
+    this.y = 0;
+    this.floor = 0;
+    this.building = null;
+    this.nodeType = null;
+    this.longName = null;
+    this.shortName = null;
+    this.teamAssigned = '\0';
+  }
 }
