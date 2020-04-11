@@ -1,5 +1,6 @@
 package edu.wpi.N.models;
 
+import edu.wpi.N.database.DbNode;
 import edu.wpi.N.database.dbController;
 
 import java.util.*;
@@ -95,20 +96,20 @@ public class Pathfinder {
   private static Path generatePath(Node start, Node end, Map<String, String> cameFrom) {
 
     String currentID = end.ID;
-    LinkedList<Node> path = new LinkedList<Node>();
-    path.add(dbController.getGNode(currentID));
+    LinkedList<DbNode> path = new LinkedList<DbNode>();
+    path.add(dbController.getNode(currentID));
 
     try {
       while (!currentID.equals(start.ID)) {
         currentID = cameFrom.get(currentID);
-        path.add(dbController.getGNode(currentID));
+        path.add(dbController.getNode(currentID));
       }
     } catch (NullPointerException e) {
       System.out.println("Location was not found.");
       throw e;
     }
     // reverse the path, so it stores nodes in proper order
-    LinkedList<Node> reversedPath = reversePath(path);
+    LinkedList<DbNode> reversedPath = reversePath(path);
     Path finalPath = new Path(reversedPath);
 
     return finalPath;
@@ -120,14 +121,14 @@ public class Pathfinder {
    * @param initialPath: list which needs to be reversed
    * @return: reversed list
    */
-  private static LinkedList<Node> reversePath(LinkedList<Node> initialPath) {
-    LinkedList<Node> reversedPath = new LinkedList<Node>();
+  private static LinkedList<DbNode> reversePath(LinkedList<DbNode> initialPath) {
+    LinkedList<DbNode> reversedPath = new LinkedList<DbNode>();
 
     // iterate through initial path in descending order
     Iterator i = initialPath.descendingIterator();
     while (i.hasNext()) {
       // add nodes to reversed path
-      reversedPath.add((Node) i.next());
+      reversedPath.add((DbNode) i.next());
     }
     return reversedPath;
   }

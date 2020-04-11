@@ -1,16 +1,18 @@
 package edu.wpi.N.models;
 
+import edu.wpi.N.database.DbNode;
+
 import java.util.LinkedList;
 
 public class Path {
-  private LinkedList<Node> path;
+  private LinkedList<DbNode> path;
 
   // constructor
-  public Path(LinkedList<Node> path) {
+  public Path(LinkedList<DbNode> path) {
     this.path = path;
   }
 
-  public LinkedList<Node> getPath() {
+  public LinkedList<DbNode> getPath() {
     return this.path;
   }
 }
