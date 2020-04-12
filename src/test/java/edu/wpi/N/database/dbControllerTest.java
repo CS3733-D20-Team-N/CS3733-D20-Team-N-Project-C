@@ -1,11 +1,13 @@
 package edu.wpi.N.database;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class dbControllerTest {
     @BeforeAll
@@ -75,7 +77,18 @@ public class dbControllerTest {
 
     //Nick
     @Test
-    public void testAddEdge(){}
+    public void testAddEdge(){
+        assertTrue(dbController.addEdge("NHALL00104", "NHALL00204"));
+        LinkedList<DbNode> adj = dbController.getAdjacent("NHALL00204");
+        assertNotNull(adj);
+        assertTrue(adj.contains(new DbNode(
+                "NHALL00104", 1250, 850, 4, "Faulkner", "HALL", "Hall 1", "Hall 1", 'N')));
+
+        adj = dbController.getAdjacent("NHALL00104");
+        assertNotNull(adj);
+        assertTrue(adj.contains(new DbNode(
+                "NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N')));
+    }
 
     //Nick
     @Test
