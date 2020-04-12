@@ -180,8 +180,8 @@ public class dbController {
         sample =
             new DbNode(
                 rs.getString("nodeID"),
-                rs.getInt("x"),
-                rs.getInt("y"),
+                rs.getInt("xcoord"),
+                rs.getInt("ycoord"),
                 rs.getInt("floor"),
                 rs.getString("building"),
                 rs.getString("nodeType"),
