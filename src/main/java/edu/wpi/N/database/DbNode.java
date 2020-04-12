@@ -107,7 +107,7 @@ public class DbNode {
     this.teamAssigned = teamAssigned;
   }
 
-  public DbNode(){
+  public DbNode() {
     this.nodeID = null;
     this.x = 0;
     this.y = 0;
