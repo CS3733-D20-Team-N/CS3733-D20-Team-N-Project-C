@@ -1,9 +1,9 @@
 nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName,teamAssigned
-AAA,171,851,1,MainBuilding,Office,Arnold,A,E
-BBB,447,672,1,MainBuilding,Office,Bob,B,F
-CCC,776,523,1,MainBuilding,Office,Candie,C,G
-DDD,1039,978,1,MainBuilding,Office,Dj,D,H
-EEE,1244,1381,1,MainBuilding,Office,Eliana,E,I
+AAA,171,851,1,MainBuilding,OFF,Arnold,A,E
+BBB,447,672,1,MainBuilding,OFF,Bob,B,F
+CCC,776,523,1,MainBuilding,OFF,Candie,C,G
+DDD,1039,978,1,MainBuilding,OFF,Dj,D,H
+EEE,1244,1381,1,MainBuilding,OFF,Eliana,E,I
 H1,114,1368,1,MainBuilding,HALL,HALOL,H,J
 H2,206,1267,1,MainBuilding,HALL,HALOL,I,K
 H3,596,1316,1,MainBuilding,HALL,HALOL,J,L
