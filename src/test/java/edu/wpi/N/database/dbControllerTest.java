@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
+
+import edu.wpi.N.models.Node;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -43,23 +45,64 @@ public class dbControllerTest {
 
   // Chris
   @Test
-  public void testAddNodeNoID() {}
+  public void testAddNodeNoID() {
+    /*dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7");
+    assertTrue(dbController.floorNodes(4, "Faulkner").contains());*/
+    assertTrue(dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7"));
+  }
 
   // Chris
   @Test
-  public void testSearchNode() {}
+  public void testSearchNode() {
+    assertEquals(1,dbController.searchNode("Neurology").size());
+    assertTrue(dbController.searchNode("Cardiology").get(0).getNodeID().equals("NDEPT00104"));
+  }
 
   // Chris
   @Test
-  public void testGetGNode() {}
+  public void testGetGNode() {
+    Node sample = dbController.getGNode("NDEPT01005");
+    assertNotNull(sample);
+    assertTrue(sample.getX() == 1300 && sample.getY() == 1200);
+
+  }
 
   // Chris
   @Test
-  public void testGetGAdjacent() {}
+  public void testGetGAdjacent() {
+    dbController.addEdge("NHALL00104", "NHALL00204");
+    dbController.addEdge("NHALL00104", "NDEPT00104");
+    dbController.addEdge("NHALL00104", "NDEPT00204");
+
+    LinkedList<DbNode> adjList = dbController.getAdjacent("NHALL00104");
+    assertNotNull(adjList);//error here
+
+    assertTrue(adjList.get(0).getNodeID().equals("NHALL00204"));
+    assertTrue(adjList.get(1).getNodeID().equals("NDEPT00104"));
+    assertTrue(adjList.get(2).getNodeID().equals("NDEPT00204"));
+
+    assertTrue(
+            adjList.contains(
+                    new DbNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N')));
+    assertTrue(
+            adjList.contains(
+                    new DbNode(
+                            "NDEPT00104", 1350, 950, 4, "Faulkner", "DEPT", "Cardiology", "Dept 1", 'N')));
+    assertTrue(
+            adjList.contains(
+                    new DbNode(
+                            "NDEPT00204", 1450, 950, 4, "Faulkner", "DEPT", "Neurology", "Dept 2", 'N')));
+
+    assertEquals(3, adjList.size());
+  }
 
   // Chris
   @Test
-  public void testFloorNodes() {}
+  public void testFloorNodes() {
+    LinkedList<DbNode> nodeList = dbController.floorNodes(4, "Faulkner");
+    assertEquals(2, nodeList.size());
+    assertTrue(nodeList.get(0).getNodeID().equals("NDEPT00104"));
+  }
 
   // Nick
   @Test
