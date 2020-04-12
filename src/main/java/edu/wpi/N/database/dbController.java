@@ -34,6 +34,7 @@ public class dbController {
       String shortName,
       char teamAssigned) {
     try {
+
       String query =
           "INSERT INTO nodes VALUES ('"
               + nodeID
@@ -48,9 +49,9 @@ public class dbController {
               + "','"
               + nodeType
               + "','"
-              + longName
+              + longName.replace("\'", "\\'")
               + "','"
-              + shortName
+              + shortName.replace("\'", "\\'")
               + "','"
               + teamAssigned
               + "')";
@@ -110,9 +111,9 @@ public class dbController {
               + nodeType
               + "', "
               + "longName = '"
-              + longName
+              + longName.replace("\'", "\\'")
               + "', shortName = '"
-              + shortName
+              + shortName.replace("\'", "\\'")
               + "', teamAssigned = ''+TeamAssigned+'' "
               + "WHERE nodeID = '"
               + nodeID
@@ -332,9 +333,9 @@ public class dbController {
               + "','"
               + nodeType
               + "','"
-              + longName
+              + longName.replace("\'", "\\'")
               + "','"
-              + shortName
+              + shortName.replace("\'", "\\'")
               + "','I')";
       statement.execute(query);
       return true;
