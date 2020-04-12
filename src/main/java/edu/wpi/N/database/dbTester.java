@@ -3,6 +3,8 @@ package edu.wpi.N.database;
 import static edu.wpi.N.database.dbController.*;
 
 import edu.wpi.N.models.Node;
+
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class dbTester {
@@ -76,6 +78,15 @@ public class dbTester {
     LinkedList<DbNode> testallNodes = allNodes();
     if (testallNodes.get(testallNodes.size() - 1).getNodeID() == "NDEPT01104") {
       System.out.println("allNodes worked");
+    }
+  }
+  private static void printDB(){
+    LinkedList<DbNode> nodes = allNodes();
+    Iterator<DbNode> it = nodes.iterator();
+    DbNode n;
+    while(it.hasNext()){
+      n = it.next();
+      System.out.println(n.getNodeID() + " " + n.getX() + " " + n.getY() + " " + n.getFloor() + " " + n.getBuilding() + " " + n.getNodeType() + " " + n.getLongName() + " " + n.getShortName() + " " + n.getTeamAssigned());
     }
   }
 }
