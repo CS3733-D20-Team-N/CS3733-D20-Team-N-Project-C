@@ -65,7 +65,18 @@ public class dbControllerTest {
 
     //Nick
     @Test
-    public void testVisNodes(){}
+    public void testVisNodes(){
+        LinkedList<DbNode> vis = dbController.allNodes();
+        assertNotNull(vis);
+        assertEquals(3, vis.size());
+
+        assertTrue(vis.contains(new DbNode(
+                "NDEPT00104", 1350, 950, 4, "Faulkner", "DEPT", "Cardiology", "Dept 1", 'N')));
+        assertTrue(vis.contains(new DbNode(
+                "NDEPT00204", 1450, 950, 4, "Faulkner", "DEPT", "Neurology", "Dept 2", 'N')));
+        assertTrue(vis.contains(new DbNode(
+                "NDEPT01005", 1300, 1200, 5, "Faulkner", "DEPT", "Software Engineering", "Dept 10", 'N')));
+    }
 
     //Nick
     @Test
