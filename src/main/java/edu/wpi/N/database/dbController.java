@@ -74,13 +74,13 @@ public class dbController {
     /**
      * Deletes a node from the database
      * @param nodeID the nodeID of the node to be deleted
-     * @return
+     * @return true if delete successful, false otherwise.
      */
     public static boolean deleteNode(String nodeID){
         try{
             String query = "DELETE FROM nodes WHERE (nodeID = '"+nodeID+"')";
             statement.executeQuery(query);
-            return true;
+            return statement.getUpdateCount() > 0;
         }catch(SQLException e){
             return false;
         }
