@@ -48,9 +48,9 @@ public class dbController {
               + "','"
               + nodeType
               + "','"
-              + longName
+              + longName.replace("\'", "\\'")
               + "','"
-              + shortName
+              + shortName.replace("\'", "\\'")
               + "','"
               + teamAssigned
               + "')";
@@ -98,9 +98,9 @@ public class dbController {
       String query =
           "UPDATE nodes SET nodeID = '"
               + newID
-              + "' x = "
+              + "' xcoord = "
               + x
-              + ", y = "
+              + ", ycoord = "
               + y
               + ", floor = "
               + floor
@@ -110,9 +110,9 @@ public class dbController {
               + nodeType
               + "', "
               + "longName = '"
-              + longName
+              + longName.replace("\'", "\\'")
               + "', shortName = '"
-              + shortName
+              + shortName.replace("\'", "\\'")
               + "', teamAssigned = ''+TeamAssigned+'' "
               + "WHERE nodeID = '"
               + nodeID
@@ -150,7 +150,7 @@ public class dbController {
   }
 
   /**
-   * Deletes a node from the database
+   * >>>>>>> db-branch Deletes a node from the database
    *
    * @param nodeID the nodeID of the node to be deleted
    * @return true if delete successful, false otherwise.
@@ -180,8 +180,8 @@ public class dbController {
         sample =
             new DbNode(
                 rs.getString("nodeID"),
-                rs.getInt("x"),
-                rs.getInt("y"),
+                rs.getInt("xcoord"),
+                rs.getInt("ycoord"),
                 rs.getInt("floor"),
                 rs.getString("building"),
                 rs.getString("nodeType"),
@@ -261,7 +261,8 @@ public class dbController {
    * @throws SQLException if something goes wrong with the sql
    */
   private static String nextAvailNum(String nodeType) throws SQLException {
-    String query = "SELECT nodeID FROM node WHERE nodeType = '" + nodeType + "'";
+
+    String query = "SELECT nodeID FROM nodes WHERE nodeType = '" + nodeType + "'";
     ResultSet rs = statement.executeQuery(query);
     ArrayList<Integer> nums = new ArrayList<Integer>();
     while (rs.next()) {
@@ -294,6 +295,7 @@ public class dbController {
     }
     return String.format("%03d", lowest);
   }
+
   /**
    * Adds a node to the database, the NodeID is generated automatically and the teamAssigned is I
    * indicating a node added through the interface.
@@ -332,13 +334,15 @@ public class dbController {
               + "','"
               + nodeType
               + "','"
-              + longName
+              + longName.replace("\'", "\\'")
               + "','"
-              + shortName
+              + shortName.replace("\'", "\\'")
               + "','I')";
       statement.execute(query);
       return true;
     } catch (SQLException e) {
+
+      e.printStackTrace();
 
       return false;
     }
@@ -351,7 +355,9 @@ public class dbController {
    * @return A list of all nodes with a long name containing the searchQuery
    */
   public static LinkedList<DbNode> searchNode(String searchQuery) {
-    String query = "SELECT * FROM node WHERE longName LIKE '%" + searchQuery + "%'";
+
+    String query = "SELECT * FROM nodes WHERE longName LIKE '%" + searchQuery + "%'";
+
     return getAllNodesSQL(query);
   }
 
@@ -371,6 +377,9 @@ public class dbController {
       rs =
           statement.executeQuery(
               "SELECT xcoord, ycoord, nodeID FROM nodes WHERE nodeID = '" + nodeID + "'");
+
+      rs.next();
+
       x = rs.getInt("xcoord");
       y = rs.getInt("ycoord");
       id = rs.getString("nodeID");
@@ -426,7 +435,8 @@ public class dbController {
    */
   public static LinkedList<DbNode> floorNodes(int floor, String building) {
     String query =
-        "SELECT * FROM node WHERE floor = " + floor + "AND building = '" + building + "'";
+        "SELECT * FROM nodes WHERE floor = " + floor + "AND building = '" + building + "'";
+
     return getAllNodesSQL(query);
   }
 
@@ -439,7 +449,7 @@ public class dbController {
    */
   public static LinkedList<DbNode> visNodes(int floor, String building) {
     String query =
-        "SELECT * FROM node WHERE floor = "
+        "SELECT * FROM nodes WHERE floor = "
             + floor
             + "AND building = '"
             + building
@@ -454,7 +464,9 @@ public class dbController {
    */
   public static LinkedList<DbNode> allNodes() {
     LinkedList<DbNode> nodes = new LinkedList<DbNode>();
-    String query = "SELECT * FROM node";
+
+    String query = "SELECT * FROM nodes";
+
     return getAllNodesSQL(query);
   }
 
@@ -472,8 +484,8 @@ public class dbController {
         nodes.add(
             new DbNode(
                 rs.getString("nodeID"),
-                rs.getInt("x"),
-                rs.getInt("y"),
+                rs.getInt("xcoord"),
+                rs.getInt("ycoord"),
                 rs.getInt("floor"),
                 rs.getString("building"),
                 rs.getString("nodeType"),
