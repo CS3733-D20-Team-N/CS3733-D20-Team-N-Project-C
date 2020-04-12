@@ -27,9 +27,8 @@ public class dbController {
      */
     public static boolean addNode(String nodeID, int x, int y,  int floor, String building, String nodeType, String longName, String shortName, char teamAssigned){
         try {
-            String query = "INSERT INTO nodes(" +
-                    "+nodeID, x, y, floor, building, nodeType, longName, shortName, teamAssigned) VALUES" +
-                    "'" + nodeID + "', " + x + ", " + y + ", " + floor + ", '" + building + "', '" + nodeType + "', '" + longName + "', '" + shortName + "', ''+teamAssigned+''";
+            String query = "INSERT INTO nodes VALUES ('" + nodeID + "', " + x + "," + y + "," + floor + ",'" + building +
+                    "','" + nodeType + "','" + longName + "','" + shortName + "','" + teamAssigned + "')";
             statement.execute(query);
             //System.out.println("Values Inserted");
             return true;
