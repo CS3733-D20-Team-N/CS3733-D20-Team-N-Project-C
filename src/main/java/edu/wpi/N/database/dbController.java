@@ -262,7 +262,7 @@ public class dbController {
    * @throws SQLException if something goes wrong with the sql
    */
   private static String nextAvailNum(String nodeType) throws SQLException {
-    String query = "SELECT nodeID FROM node WHERE nodeType = '" + nodeType + "'";
+    String query = "SELECT nodeID FROM nodes WHERE nodeType = '" + nodeType + "'";
     ResultSet rs = statement.executeQuery(query);
     ArrayList<Integer> nums = new ArrayList<Integer>();
     while (rs.next()) {
@@ -340,6 +340,7 @@ public class dbController {
       statement.execute(query);
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
@@ -351,7 +352,7 @@ public class dbController {
    * @return A list of all nodes with a long name containing the searchQuery
    */
   public static LinkedList<DbNode> searchNode(String searchQuery) {
-    String query = "SELECT * FROM node WHERE longName LIKE '%" + searchQuery + "%'";
+    String query = "SELECT * FROM nodes WHERE longName LIKE '%" + searchQuery + "%'";
     return getAllNodesSQL(query);
   }
 
