@@ -21,6 +21,7 @@ public class dbControllerTest {
         dbController.addNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N');
         dbController.addNode(
                 "NDEPT01005", 1300, 1200, 5, "Faulkner", "DEPT", "Software Engineering", "Dept 10", 'N');
+        dbController.addEdge("NHALL00204", "NDEPT00104");
     }
 
     //Noah
@@ -79,6 +80,7 @@ public class dbControllerTest {
     @Test
     public void testAddEdge(){
         assertTrue(dbController.addEdge("NHALL00104", "NHALL00204"));
+
         LinkedList<DbNode> adj = dbController.getAdjacent("NHALL00204");
         assertNotNull(adj);
         assertTrue(adj.contains(new DbNode(
@@ -92,6 +94,18 @@ public class dbControllerTest {
 
     //Nick
     @Test
-    public void testRemoveEdge(){}
+    public void testRemoveEdge(){
+        assertTrue(dbController.removeEdge("NHALL00204", "NDEPT00104"));
+
+        LinkedList<DbNode> adj = dbController.getAdjacent("NHALL00204");
+        assertNotNull(adj);
+        assertFalse(adj.contains(new DbNode(
+                "NDEPT00104", 1350, 950, 4, "Faulkner", "DEPT", "Cardiology", "Dept 1", 'N')));
+
+        adj = dbController.getAdjacent("NDEPT00104");
+        assertNotNull(adj);
+        assertFalse(adj.contains(new DbNode(
+                "NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N')));
+    }
 
 }
