@@ -24,8 +24,8 @@ public class DbControllerMethodsTest {
     dbController.initDB();
     InputStream input = Main.class.getResourceAsStream("csv/MapEnodes.csv");
     CSVParser.parseCSV(input);
-
-    System.out.println("test");
+    InputStream input2 = Main.class.getResourceAsStream("csv/MapEedges.csv");
+    CSVParser.parseCSV(input2);
   }
 
   // Then, conduct the tests
@@ -95,8 +95,8 @@ public class DbControllerMethodsTest {
    */
   @Test
   public void addEdgesEmptyNodeTester() {
-   dbController.addEdge("TESTNODE2", "Elevator");
-  LinkedList<Node> testNodeEdges = new LinkedList<Node>();
+    dbController.addEdge("TESTNODE2", "Elevator");
+    LinkedList<Node> testNodeEdges = new LinkedList<Node>();
   testNodeEdges.add(dbController.getGNode("Elevator"));
   Assertions.assertEquals(dbController.getGAdjacent("TESTNODE2"), testNodeEdges);
    }
