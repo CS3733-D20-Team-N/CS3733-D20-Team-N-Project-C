@@ -3,28 +3,37 @@ package edu.wpi.N.database;
 import static edu.wpi.N.database.dbController.*;
 
 import edu.wpi.N.models.Node;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 import java.util.LinkedList;
 
 public class dbTester {
   public static void main(String[] args) throws Exception {
     initDB();
-    Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-    Connection connection;
-    String URL;
+    //    Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+    //    Connection connection;
+    //    String URL;
+    //
+    //    URL = "jdbc:derby:memory:MapDB;create=true";
+    //    connection = DriverManager.getConnection(URL);
+    //    Statement statement = connection.createStatement();
+    //    String query =
+    //        "INSERT INTO nodes VALUES ('NHALL00104', 1250, 850, 4, 'Faulkner', 'HALL', 'Hall 1',
+    // 'Hall 1', 'N'), "
+    //            + "('NDEPT00104', 1350, 950, 4, 'Faulkner', 'DEPT', 'Cardiology', 'Dept 1', 'N'),
+    // "
+    //            + "('NDEPT00204', 1450, 950, 4, 'Faulkner', 'DEPT', 'Neurology', 'Dept 2', 'N'), "
+    //            + "('NHALL00204', 1350, 1250, 4, 'Faulkner', 'HALL', 'Hall 2', 'Hall 2', 'N'), "
+    //            + "('NDEPT01005', 1300, 1200, 5, 'Faulkner', 'DEPT', 'Software Engineering', 'Dept
+    // 10', 'N')";
+    //    statement.execute(query);
 
-    URL = "jdbc:derby:memory:MapDB;create=true";
-    connection = DriverManager.getConnection(URL);
-    Statement statement = connection.createStatement();
-    String query =
-        "INSERT INTO nodes VALUES ('NHALL00104', 1250, 850, 4, 'Faulkner', 'HALL', 'Hall 1', 'Hall 1', 'N'), "
-            + "('NDEPT00104', 1350, 950, 4, 'Faulkner', 'DEPT', 'Cardiology', 'Dept 1', 'N'), "
-            + "('NDEPT00204', 1450, 950, 4, 'Faulkner', 'DEPT', 'Neurology', 'Dept 2', 'N'), "
-            + "('NHALL00204', 1350, 1250, 4, 'Faulkner', 'HALL', 'Hall 2', 'Hall 2', 'N'), "
-            + "('NDEPT01005', 1300, 1200, 5, 'Faulkner', 'DEPT', 'Software Engineering', 'Dept 10', 'N')";
-    statement.execute(query);
+    dbController.addNode("NHALL00104", 1250, 850, 4, "Faulkner", "HALL", "Hall 1", "Hall 1", 'N');
+    dbController.addNode(
+        "NDEPT00104", 1350, 950, 4, "Faulkner", "DEPT", "Cardiology", "Dept 1", 'N');
+    dbController.addNode(
+        "NDEPT00204", 1450, 950, 4, "Faulkner", "DEPT", "Neurology", "Dept 2", 'N');
+    dbController.addNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N');
+    dbController.addNode(
+        "NDEPT01005", 1300, 1200, 5, "Faulkner", "DEPT", "Software Engineering", "Dept 10", 'N');
     boolean testaddNode =
         addNode("NDEPT00304", 1550, 1200, 4, "Faulkner", "DEPT", "epistemology", "Dept 3", 'N');
     if (testaddNode) {

@@ -142,7 +142,6 @@ public class dbController {
       statement.execute(query);
       return true;
     } catch (SQLException e) {
-      e.printStackTrace();
       return false;
     }
   }
@@ -156,7 +155,7 @@ public class dbController {
   public static boolean deleteNode(String nodeID) {
     try {
       String query = "DELETE FROM nodes WHERE (nodeID = '" + nodeID + "')";
-      statement.executeQuery(query);
+      statement.execute(query);
       return statement.getUpdateCount() > 0;
     } catch (SQLException e) {
       return false;
