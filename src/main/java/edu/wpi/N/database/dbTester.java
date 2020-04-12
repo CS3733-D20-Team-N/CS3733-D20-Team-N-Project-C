@@ -63,7 +63,7 @@ public class dbTester {
       System.out.println("getNode Worked");
     }
     Node testGNode = getGNode("NDEPT01005");
-    if (testGNode.getX() == 1500 && testGNode.getY() == 1100) {
+    if (testGNode.getX() == 1300 && testGNode.getY() == 1200) {
       System.out.println("getGNode worked");
     }
     LinkedList<DbNode> testfloorNodes = floorNodes(5, "Faulkner");
