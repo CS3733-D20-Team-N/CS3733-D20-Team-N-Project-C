@@ -98,7 +98,7 @@ public class dbController {
       String query =
           "UPDATE nodes SET nodeID = '"
               + newID
-              + "' xcoord = "
+              + "', xcoord = "
               + x
               + ", ycoord = "
               + y
@@ -113,7 +113,9 @@ public class dbController {
               + longName.replace("\'", "\\'")
               + "', shortName = '"
               + shortName.replace("\'", "\\'")
-              + "', teamAssigned = ''+TeamAssigned+'' "
+              + "', teamAssigned = '"
+              + teamAssigned
+              + "'"
               + "WHERE nodeID = '"
               + nodeID
               + "'";
@@ -135,14 +137,8 @@ public class dbController {
   public static boolean moveNode(String nodeID, int x, int y) {
     try {
       String query =
-          "UPDATE nodes SET xcoord = '"
-              + x
-              + "', ycoord = '"
-              + y
-              + "' WHERE nodeID = '"
-              + nodeID
-              + "'";
-      statement.executeQuery(query);
+          "UPDATE nodes SET xcoord = " + x + ", ycoord = " + y + " WHERE nodeID = '" + nodeID + "'";
+      statement.execute(query);
       return true;
     } catch (SQLException e) {
       return false;
@@ -158,7 +154,7 @@ public class dbController {
   public static boolean deleteNode(String nodeID) {
     try {
       String query = "DELETE FROM nodes WHERE (nodeID = '" + nodeID + "')";
-      statement.executeQuery(query);
+      statement.execute(query);
       return statement.getUpdateCount() > 0;
     } catch (SQLException e) {
       return false;
@@ -341,9 +337,6 @@ public class dbController {
       statement.execute(query);
       return true;
     } catch (SQLException e) {
-
-      e.printStackTrace();
-
       return false;
     }
   }
