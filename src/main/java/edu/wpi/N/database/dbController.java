@@ -61,7 +61,7 @@ public class dbController {
                 }
             }
             else newID = nodeID;
-            String query= "UPDATE nodes SET nodeID = '" + newID + "' x = "+x+", y = "+y+", floor = "+floor+", building = '"+ building +"', nodeType = '"+nodeType+"', " +
+            String query= "UPDATE nodes SET nodeID = '" + newID + "' xcoord = "+x+", ycoord = "+y+", floor = "+floor+", building = '"+ building +"', nodeType = '"+nodeType+"', " +
                     "longName = '"+longName+"', shortName = '"+shortName+"', teamAssigned = ''+TeamAssigned+'' "+
                     "WHERE nodeID = '"+nodeID+"'";
                 statement.execute(query);
