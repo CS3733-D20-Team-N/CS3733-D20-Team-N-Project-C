@@ -1,7 +1,5 @@
 package edu.wpi.N.models;
 
-import java.io.FileNotFoundException;
-
 public class AlgosMainCanIgnore {
 
   public static void main(String[] args) {
@@ -10,7 +8,6 @@ public class AlgosMainCanIgnore {
     String pathToFile =
         "/Users/Ivan/IdeaProjects/CS3733-D20-Team-N-Project-C/src/main/resources/edu/wpi/N/csv/MapEnodes.csv";
     CSVParser.parseCSVfromPath(pathToFile);
-
 
     //    Graph nodeGraph = parser.parseCSV(input);
     //    Node startNode = nodeGraph.getNode("MOHSClinic");
