@@ -137,11 +137,11 @@ public class DbControllerMethodsTest {
      */
     @Test
     public void getNodeTester() throws SQLException {
-        Node testNode = new Node(5.762, 0.646, "MOHSClinic");
-        Assertions.assertEquals(dbController.getGNode("MOHSClinic"), testNode);
+        Node testNode = new Node(1145, 900, "EDEPT01204");
+        Assertions.assertEquals(dbController.getGNode("EDEPT01204"), testNode);
 
-        Node testNode2 = new Node(6.532, 4.562, "HALL10");
-        Assertions.assertEquals(dbController.getGNode("testNode2"), testNode2);
+        Node testNode2 = new Node(267, 1219, "EHALL00704");
+        Assertions.assertEquals(dbController.getGNode("EHALL00704"), testNode2);
     }
 
     /**
@@ -154,7 +154,7 @@ public class DbControllerMethodsTest {
         Assertions.assertNull(dbController.getGNode("test1"));
 
         // Call getNode on node that exists but not isn't in the graph
-        Node testNode2 = new Node(6.5, 2.0, "test2");
+        Node testNode2 = new Node(60, 20, "test2");
         Assertions.assertNull(dbController.getGNode("test2"));
     }
 
@@ -163,10 +163,12 @@ public class DbControllerMethodsTest {
      */
     @Test
     public void addNodeTester() throws SQLException {
-        Node testNode = new Node(7.3, 4.6, "testNode1");
+        Node testNode = new Node(23, 345, "testNode1");
+        dbController.addNode("testNode1", 23, 345, 4, "Foisie", "sdfkjd", "fskjd", "sdfk", 'N');
         Assertions.assertEquals(dbController.getGNode("testNode1"), testNode);
 
-        Node testNode2 = new Node(10.8, 5.5, "testNode2");
+        Node testNode2 = new Node(25, 365, "testNode2");
+        dbController.addNode("testNode2", 25, 365, 4, "AK", "sdfkjd", "fskjd", "sdfk", 'N');
         Assertions.assertEquals(dbController.getGNode("testNode2"), testNode2);
     }
 
@@ -180,12 +182,11 @@ public class DbControllerMethodsTest {
      *Tests that cost(currNode, nextNode) returns the correct cost value for nodes in the database
      */
     @Test
-
     public void costTester() {
         Assertions.assertEquals(
-                Pathfinder.cost(dbController.getGNode("MOHSClinic"), dbController.getGNode("Neurology")),
-                2.641,
-                0.005);
+                Pathfinder.cost(dbController.getGNode("EDEPT01204"), dbController.getGNode("EDEPT01404")),
+                286.4,
+                0.0001);
     }
 
     /**
