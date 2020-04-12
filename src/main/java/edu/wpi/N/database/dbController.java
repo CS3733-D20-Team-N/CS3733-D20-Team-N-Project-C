@@ -81,7 +81,7 @@ public class dbController {
      */
     public static boolean moveNode(String nodeID, int x, int y){
         try{
-            String query = "UPDATE nodes SET x = '"+x+"', y = '"+y+"' WHERE nodeID = '"+nodeID+"'";
+            String query = "UPDATE nodes SET xcoord = '"+x+"', ycoord = '"+y+"' WHERE nodeID = '"+nodeID+"'";
             statement.executeQuery(query);
             return true;
         }catch(SQLException e){
