@@ -371,6 +371,7 @@ public class dbController {
       rs =
           statement.executeQuery(
               "SELECT xcoord, ycoord, nodeID FROM nodes WHERE nodeID = '" + nodeID + "'");
+      rs.next();
       x = rs.getInt("xcoord");
       y = rs.getInt("ycoord");
       id = rs.getString("nodeID");
