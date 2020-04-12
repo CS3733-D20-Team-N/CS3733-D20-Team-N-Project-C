@@ -92,7 +92,7 @@ public class Pathfinder {
    * @param cameFrom: Map, where key: NodeID, value: came-from-NodeID
    * @return Path object containing generated path
    */
-  private static Path generatePath(Node start, Node end, Map<String, String> cameFrom) {
+  public static Path generatePath(Node start, Node end, Map<String, String> cameFrom) {
 
     String currentID = end.ID;
     LinkedList<DbNode> path = new LinkedList<DbNode>();

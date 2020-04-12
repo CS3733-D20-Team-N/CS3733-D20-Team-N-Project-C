@@ -1,17 +1,29 @@
 package edu.wpi.N.models;
 
+import edu.wpi.N.Main;
+import edu.wpi.N.database.dbController;
+import java.io.InputStream;
+import java.sql.SQLException;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 public class DbControllerMethodsTest {
-  //
-  //  TODO: initialize database, then call Parser with the test CSV file you need
-  // Then, conduct the tests
-  //  InputStream input = Main.class.getResourceAsStream("csv/MapCoordinates.csv");
-  //  CSVParser parser = new CSVParser();
-  //  Graph testGraph = parser.parseCSV(input);
-  //  Node startNode = testGraph.getNode("MOHSClinic");
-  //  Node endNode = testGraph.getNode("HVMANeurology");
-  //  Pathfinder newPath = new Pathfinder(testGraph, startNode, endNode);
-  //  Path myPath = newPath.findPath();
-  //
+
+  @BeforeAll
+  public static void initializeTest() throws SQLException, ClassNotFoundException {
+    dbController.initDB();
+    InputStream input = Main.class.getResourceAsStream("csv/MapEnodes.csv");
+    CSVParser.parseCSV(input);
+
+    System.out.println("test");
+  }
+
+  @Test
+  public void testAddNode() throws SQLException {
+    dbController.addNode("TESTNODE", 23, 345, 4, "Foisie", "sdfkjd", "fskjd", "sdfk", 'N');
+    // assertEquals(dbController.getNode("TESTNODE"), "adssdf");
+  }
+
   //  /** Tests that getEdges(nodeID) returns the correct list of edges for a given node */
   //  @Test
   //  public void getEdgesTester() {
