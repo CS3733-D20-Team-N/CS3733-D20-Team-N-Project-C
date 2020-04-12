@@ -14,10 +14,10 @@ public class DbControllerMethodsTest {
   @BeforeAll
   public static void initializeTest() throws SQLException, ClassNotFoundException {
     dbController.initDB();
-    InputStream input = Main.class.getResourceAsStream("csv/MapEnodes.csv");
-    CSVParser.parseCSV(input);
-    InputStream input2 = Main.class.getResourceAsStream("csv/MapEedges.csv");
-    CSVParser.parseCSV(input2);
+    InputStream inputNodes = Main.class.getResourceAsStream("csv/TestNodes.csv");
+    InputStream inputEdges = Main.class.getResourceAsStream("csv/TestEdges.csv");
+    CSVParser.parseCSV(inputNodes);
+    CSVParser.parseCSV(inputEdges);
   }
 
   /** Tests that getEdges(nodeID) returns the correct list of edges for a given node */
@@ -141,7 +141,7 @@ public class DbControllerMethodsTest {
     // Call getNode on node that doesn't exist at all
     Assertions.assertNull(dbController.getGNode("test1"));
 
-    // Call getNode on node that exists but not isn't in the graph
+    // Call getNode on node that exists but isn't in the graph
     Node testNode2 = new Node(6.5, 2.0, "test2");
     Assertions.assertNull(dbController.getGNode("test2"));
   }
