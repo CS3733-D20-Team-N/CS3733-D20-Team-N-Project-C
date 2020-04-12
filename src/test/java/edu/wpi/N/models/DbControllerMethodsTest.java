@@ -143,13 +143,11 @@ public class DbControllerMethodsTest {
      */
     @Test
     public void getNodeTester() throws SQLException {
-      DbNode testNode = new DbNode("testNode", 23, 345, 4, "Foisie", "sdfkjd", "fskjd", "sdfk", 'N');
-      dbController.addNode("testNode", 23, 345, 4, "Foisie", "sdfkjd", "fskjd", "sdfk", 'N');
-      Assertions.assertEquals(dbController.getNode("MOHSClinic"), testNode);
+      Node testNode = new Node(5.762, 0.646, "MOHSClinic");
+      Assertions.assertEquals(dbController.getGNode("MOHSClinic"), testNode);
 
-      DbNode testNode2 = new DbNode("testNode2", 25, 347, 4, "AK", "sdfkjd", "fskjd", "sdfk", 'N');
-      dbController.addNode("testNode2", 25, 347, 4, "AK", "sdfkjd", "fskjd", "sdfk", 'N');
-      Assertions.assertEquals(dbController.getNode("testNode2"), testNode2);
+      Node testNode2 = new Node(6.532, 4.562, "HALL10");
+      Assertions.assertEquals(dbController.getGNode("testNode2"), testNode2);
     }
 
     /**
@@ -159,23 +157,21 @@ public class DbControllerMethodsTest {
     @Test
     public void getNodeNullTester() {
       // Call getNode on node that doesn't exist at all
-      Assertions.assertNull(dbController.getNode("test1"));
+      Assertions.assertNull(dbController.getGNode("test1"));
 
       // Call getNode on node that exists but not isn't in the graph
-      DbNode testNode = new DbNode("test2", 10, 200, 4, "Fuller", "sdfkjd", "fskjd", "sdfk", 'N');
-      Assertions.assertNull(dbController.getNode("test2"));
+      Node testNode2 = new Node(6.5, 2.0, "test2");
+      Assertions.assertNull(dbController.getGNode("test2"));
     }
 
     /** Tests that addNode(node) adds the given node to the database */
     @Test
     public void addNodeTester() throws SQLException {
-      DbNode testNode1 = new DbNode("testNode1", 20, 340, 4, "Salisbury", "sdfkjd", "fskjd", "sdfk", 'N');
-      dbController.addNode("testNode1", 20, 340, 4, "Salisbury", "sdfkjd", "fskjd", "sdfk", 'N');
-      Assertions.assertEquals(dbController.getNode("testNode1"), testNode1);
+      Node testNode = new Node(7.3, 4.6, "testNode1");
+      Assertions.assertEquals(dbController.getGNode("testNode1"), testNode);
 
-      DbNode testNode2 = new DbNode("testNode2", 15, 330, 4, "Goddard", "sdfkjd", "fskjd", "sdfk", 'N');
-      dbController.addNode("testNode2", 15, 330, 4, "Goddard", "sdfkjd", "fskjd", "sdfk", 'N');
-      Assertions.assertEquals(dbController.getNode("testNode2"), testNode2);
+      Node testNode2 = new Node(10.8, 5.5, "testNode2");
+      Assertions.assertEquals(dbController.getGNode("testNode2"), testNode2);
     }
 
   //
