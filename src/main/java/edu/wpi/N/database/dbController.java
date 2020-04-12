@@ -256,7 +256,26 @@ public class dbController {
    * @return
    */
   public static LinkedList<Node> getGAdjacent(String nodeID) {
-    return null;
+      LinkedList<Node> ret = new LinkedList<Node>();
+
+      ResultSet rs = null;
+      String query = "WITH connected_edges AS(SELECT node1 AS nodeID FROM edges WHERE node2 = '" + nodeID + "' UNION " +
+                                             "SELECT node2 AS nodeID FROM edges WHERE node1 = '" + nodeID + "') " +
+                     "SELECT nodes.xcoord, nodes.ycoord, nodes.nodeID FROM nodes " +
+                     "JOIN connected_edges ON connected_edges.nodeID = nodes.nodeID";
+
+      try{
+          rs = statement.executeQuery(query);
+          while(rs.next()){
+              ret.add(new Node(rs.getInt("nodes.xcoord"),
+                               rs.getInt("nodes.ycoord"),
+                               rs.getString("nodes.nodeID")));
+          }
+      }catch (SQLException e){
+          return null;
+      }
+
+      return ret;
   }
 
   /**
