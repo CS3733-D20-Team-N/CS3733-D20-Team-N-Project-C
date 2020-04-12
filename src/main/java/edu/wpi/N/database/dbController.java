@@ -151,12 +151,12 @@ public class dbController {
     try {
       query =
           "CREATE TABLE nodes ("
-              + "nodeID VARCHAR(10) NOT NULL PRIMARY KEY, "
+              + "nodeID CHAR(10) NOT NULL PRIMARY KEY, "
               + "xcoord INT NOT NULL, "
               + "ycoord INT NOT NULL, "
               + "floor INT NOT NULL, "
               + "building VARCHAR(255) NOT NULL, "
-              + "nodeType VARCHAR(4) NOT NULL, "
+              + "nodeType CHAR(4) NOT NULL, "
               + "longName VARCHAR(255) NOT NULL, "
               + "shortName VARCHAR(255) NOT NULL, "
               + "teamAssigned CHAR(1) NOT NULL"
@@ -169,9 +169,9 @@ public class dbController {
     try {
       query =
           "CREATE TABLE edges ("
-              + "edgeID VARCHAR(21) NOT NULL PRIMARY KEY, "
-              + "node1 VARCHAR(10) NOT NULL, "
-              + "node2 VARCHAR(10) NOT NULL, "
+              + "edgeID CHAR(21) NOT NULL PRIMARY KEY, "
+              + "node1 CHAR(10) NOT NULL, "
+              + "node2 CHAR(10) NOT NULL, "
               + "FOREIGN KEY (node1) REFERENCES nodes(nodeID), "
               + "FOREIGN KEY (node2) REFERENCES nodes(nodeID)"
               + ")";
@@ -261,18 +261,8 @@ public class dbController {
      * @return A list of all nodes with a long name containing the searchQuery
      */
     public static LinkedList<DbNode> searchNode(String searchQuery){
-        LinkedList<DbNode> searchList= new LinkedList<DbNode>();
-        try{
-            String query = "SELECT * FROM node WHERE longName LIKE '%" + searchQuery + "%'";
-            ResultSet rs = statement.executeQuery(query);
-            while(rs.next()){
-                DbNode chosenOne = new DbNode(rs.getString("nodeID"), rs.getInt("x"), rs.getInt("y"), rs.getInt("floor"), rs.getString("building"), rs.getString("nodeType"), rs.getString("longName"), rs.getString("shortName"), rs.getString("teamAssigned").charAt(0));
-                searchList.add(chosenOne);
-            }
-        }catch(SQLException e){
-            return null;
-        }
-        return searchList;
+        String query = "SELECT * FROM node WHERE longName LIKE '%" + searchQuery + "%'";
+        return getAllNodesSQL(query);
     }
 
   /**
@@ -336,7 +326,8 @@ public class dbController {
    * @return a list of all the nodes with the specified floor
    */
   public static LinkedList<DbNode> floorNodes(int floor, String building) {
-    return null;
+      String query = "SELECT * FROM node WHERE floor = " + floor + "AND building = '" + building + "'";
+      return getAllNodesSQL(query);
   }
 
     /**
@@ -346,7 +337,8 @@ public class dbController {
      * @return
      */
   public static LinkedList<DbNode> visNodes(int floor, String building){
-      return null;
+      String query = "SELECT * FROM node WHERE floor = " + floor + "AND building = '" + building + "' AND NOT nodeType = 'HALL'";
+      return getAllNodesSQL(query);
   }
 
     /**
@@ -354,7 +346,31 @@ public class dbController {
      * @return A linked list of all the nodes in the database
      */
   public static LinkedList<DbNode> allNodes(){
-      return null;
+      LinkedList<DbNode> nodes = new LinkedList<DbNode>();
+      String query = "SELECT * FROM node";
+      return getAllNodesSQL(query);
+  }
+
+    /**
+     * Gets all nodes that match a particular sql query returns them as a linked list
+     * @param sqlquery the sql query to select nodes with
+     * @return a linked list of all the DbNodes which match the sql query
+     */
+  private static LinkedList<DbNode> getAllNodesSQL(String sqlquery){
+      try{
+          LinkedList<DbNode> nodes = new LinkedList<DbNode>();
+          ResultSet rs = statement.executeQuery(sqlquery);
+          while (rs.next()) {
+              nodes.add(new DbNode(rs.getString("nodeID"), rs.getInt("x"),
+                      rs.getInt("y"), rs.getInt("floor"),
+                      rs.getString("building"), rs.getString("nodeType"),
+                      rs.getString("longName"), rs.getString("shortName"),
+                      rs.getString("teamAssigned").charAt(0)));
+          }
+          return nodes;
+      }catch(SQLException e){
+          return null;
+      }
   }
 
   /**
