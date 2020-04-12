@@ -1,4 +1,3 @@
 package edu.wpi.N.database;
 
-public class DbNodeTest {
-}
+public class DbNodeTest {}
