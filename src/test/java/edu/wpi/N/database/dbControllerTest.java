@@ -1,10 +1,26 @@
 package edu.wpi.N.database;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
 
+import java.sql.SQLException;
+
 public class dbControllerTest {
+    @BeforeAll
+    public void setup() throws SQLException, ClassNotFoundException {
+        dbController.initDB();
+        dbController.addNode("NHALL00104", 1250, 850, 4, "Faulkner", "HALL", "Hall 1", "Hall 1", 'N');
+        dbController.addNode(
+                "NDEPT00104", 1350, 950, 4, "Faulkner", "DEPT", "Cardiology", "Dept 1", 'N');
+        dbController.addNode(
+                "NDEPT00204", 1450, 950, 4, "Faulkner", "DEPT", "Neurology", "Dept 2", 'N');
+        dbController.addNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N');
+        dbController.addNode(
+                "NDEPT01005", 1300, 1200, 5, "Faulkner", "DEPT", "Software Engineering", "Dept 10", 'N');
+    }
+
     //Noah
     @Test
     public void testAddNodeID(){}
