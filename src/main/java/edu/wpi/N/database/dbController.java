@@ -232,7 +232,21 @@ public class dbController {
    * @return the specified graph-style Node
    */
   public static Node getGNode(String nodeID) {
-    return null;
+      ResultSet rs = null;
+      int x = 0;
+      int y = 0;
+      String id = "";
+
+      try {
+          rs = statement.executeQuery("SELECT xcoord, ycoord, nodeID FROM nodes WHERE nodeID = '" + nodeID + "'");
+          x = rs.getInt("xcoord");
+          y = rs.getInt("ycoord");
+          id = rs.getString("nodeID");
+      } catch (SQLException e) {
+          return null;
+      }
+
+      return new Node(x, y, id);
   }
 
   /**
