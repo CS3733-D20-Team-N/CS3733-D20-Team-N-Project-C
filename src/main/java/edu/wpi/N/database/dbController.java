@@ -92,19 +92,17 @@ public class dbController {
      * @param nodeID nodeID of the node
      * @return the specified node
      */
-    public static DbNode getNode(String nodeID){
-
-        try{
-            String query ="SELECT * FROM nodes WHERE (nodeID = '"+nodeID+"')";
-            ResultSet rs = statement.executeQuery(query);
-            while(rs.next()){
-                DbNode sample = new DbNode(rs.getString("nodeID"), rs.getInt("x"), rs.getInt("y"), rs.getInt("floor"), rs.getString("building"), rs.getString("nodeType"), rs.getString("longName"), rs.getString("shortName"), rs.getString("teamAssigned").charAt(0));
-                return sample;
-            }
-        }
-        catch(SQLException e){
-            return null;
-        }
+    public static DbNode getNode(String nodeID) {
+      try {
+        String query = "SELECT * FROM nodes WHERE (nodeID = '" + nodeID + "')";
+        ResultSet rs = statement.executeQuery(query);
+        DbNode sample = null;
+        if(rs.next()) sample = new DbNode(rs.getString("nodeID"), rs.getInt("x"), rs.getInt("y"), rs.getInt("floor"), rs.getString("building"), rs.getString("nodeType"), rs.getString("longName"), rs.getString("shortName"), rs.getString("teamAssigned").charAt(0));
+        return sample;
+      } catch (SQLException e) {
+        return null;
+      }
+    }
 
   /** Initializes the database, should be run before interfacing with it. */
   public static void initDB() throws ClassNotFoundException, SQLException {
@@ -207,7 +205,7 @@ public class dbController {
      * @return A list of all nodes with a long name containing the query
      */
     public static LinkedList<DbNode> searchNode(String query){
-        List<DbNode> searchList= new LinkedList<DbNode>();
+        LinkedList<DbNode> searchList= new LinkedList<DbNode>();
         try{
             String result = "SELECT nodeID FROM * WHERE EXISTS" +
                     "(SELECT nodeID FROM '"+query+"' WHERE *.nodeID = '"+query+"'.nodeID";
@@ -219,6 +217,7 @@ public class dbController {
         }catch(SQLException e){
             return null;
         }
+        return searchList;
     }
 
   /**
