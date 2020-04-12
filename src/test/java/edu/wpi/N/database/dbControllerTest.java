@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class dbControllerTest {
     @BeforeAll
-    public void setup() throws SQLException, ClassNotFoundException {
+    public static void setup() throws SQLException, ClassNotFoundException {
         dbController.initDB();
         dbController.addNode("NHALL00104", 1250, 850, 4, "Faulkner", "HALL", "Hall 1", "Hall 1", 'N');
         dbController.addNode(
@@ -21,7 +21,6 @@ public class dbControllerTest {
         dbController.addNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N');
         dbController.addNode(
                 "NDEPT01005", 1300, 1200, 5, "Faulkner", "DEPT", "Software Engineering", "Dept 10", 'N');
-        dbController.addEdge("NHALL00204", "NDEPT00104");
     }
 
     //Noah
@@ -74,7 +73,24 @@ public class dbControllerTest {
 
     //Nick
     @Test
-    public void testGetAdjacent(){}
+    public void testGetAdjacent(){
+        dbController.addEdge("NHALL00104", "NHALL00204");
+        dbController.addEdge("NHALL00104", "NDEPT00104");
+        dbController.addEdge("NHALL00104", "NDEPT00204");
+
+        LinkedList<DbNode> adj = dbController.getAdjacent("NHALL00104");
+
+        assertTrue(adj.contains(new DbNode(
+                "NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N')));
+        assertTrue(adj.contains(new DbNode(
+                "NDEPT00104", 1350, 950, 4, "Faulkner", "DEPT", "Cardiology", "Dept 1", 'N')));
+        assertTrue(adj.contains(new DbNode(
+                "NDEPT00204", 1450, 950, 4, "Faulkner", "DEPT", "Neurology", "Dept 2", 'N')));
+
+        dbController.removeEdge("NHALL00104", "NHALL00204");
+        dbController.removeEdge("NHALL00104", "NDEPT00104");
+        dbController.removeEdge("NHALL00104", "NDEPT00204");
+    }
 
     //Nick
     @Test
@@ -90,11 +106,15 @@ public class dbControllerTest {
         assertNotNull(adj);
         assertTrue(adj.contains(new DbNode(
                 "NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N')));
+
+        dbController.removeEdge("NHALL00104", "NHALL00204");
     }
 
     //Nick
     @Test
     public void testRemoveEdge(){
+        dbController.addEdge("NHALL00204", "NDEPT00104");
+
         assertTrue(dbController.removeEdge("NHALL00204", "NDEPT00104"));
 
         LinkedList<DbNode> adj = dbController.getAdjacent("NHALL00204");
