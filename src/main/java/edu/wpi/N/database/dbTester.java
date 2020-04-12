@@ -51,7 +51,7 @@ public class dbTester {
     if (testgetNode.getX() == 1450 && testgetNode.getY() == 950) {
       System.out.println("getNode Worked");
     }
-    Node testGNode = getGNode("NDEPT00304");
+    Node testGNode = getGNode("NDEPT01005");
     if (testGNode.getX() == 1500 && testGNode.getY() == 1100) {
       System.out.println("getGNode worked");
     }
