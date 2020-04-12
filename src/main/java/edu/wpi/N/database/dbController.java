@@ -99,7 +99,7 @@ public class dbController {
       String query =
           "UPDATE nodes SET nodeID = '"
               + newID
-              + "' xcoord = "
+              + "', xcoord = "
               + x
               + ", ycoord = "
               + y
@@ -114,7 +114,9 @@ public class dbController {
               + longName.replace("\'", "\\'")
               + "', shortName = '"
               + shortName.replace("\'", "\\'")
-              + "', teamAssigned = ''+TeamAssigned+'' "
+              + "', teamAssigned = '"
+              + teamAssigned
+              + "'"
               + "WHERE nodeID = '"
               + nodeID
               + "'";
@@ -340,7 +342,6 @@ public class dbController {
       statement.execute(query);
       return true;
     } catch (SQLException e) {
-      e.printStackTrace();
       return false;
     }
   }
