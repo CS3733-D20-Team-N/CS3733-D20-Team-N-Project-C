@@ -35,25 +35,25 @@ public class dbController {
       char teamAssigned) {
     try {
       String query =
-          "INSERT INTO nodes("
-              + "+nodeID, x, y, floor, building, nodeType, longName, shortName, teamAssigned) VALUES"
-              + "'"
+          "INSERT INTO nodes VALUES ('"
               + nodeID
               + "', "
               + x
-              + ", "
+              + ","
               + y
-              + ", "
+              + ","
               + floor
-              + ", '"
+              + ",'"
               + building
-              + "', '"
+              + "','"
               + nodeType
-              + "', '"
+              + "','"
               + longName
-              + "', '"
+              + "','"
               + shortName
-              + "', ''+teamAssigned+''";
+              + "','"
+              + teamAssigned
+              + "')";
       statement.execute(query);
       // System.out.println("Values Inserted");
       return true;
