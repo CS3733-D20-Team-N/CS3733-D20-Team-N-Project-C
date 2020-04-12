@@ -427,7 +427,7 @@ public class dbController {
    */
   public static LinkedList<DbNode> floorNodes(int floor, String building) {
     String query =
-        "SELECT * FROM node WHERE floor = " + floor + "AND building = '" + building + "'";
+        "SELECT * FROM nodes WHERE floor = " + floor + "AND building = '" + building + "'";
     return getAllNodesSQL(query);
   }
 
@@ -440,7 +440,7 @@ public class dbController {
    */
   public static LinkedList<DbNode> visNodes(int floor, String building) {
     String query =
-        "SELECT * FROM node WHERE floor = "
+        "SELECT * FROM nodes WHERE floor = "
             + floor
             + "AND building = '"
             + building
@@ -455,7 +455,7 @@ public class dbController {
    */
   public static LinkedList<DbNode> allNodes() {
     LinkedList<DbNode> nodes = new LinkedList<DbNode>();
-    String query = "SELECT * FROM node";
+    String query = "SELECT * FROM nodes";
     return getAllNodesSQL(query);
   }
 
@@ -473,8 +473,8 @@ public class dbController {
         nodes.add(
             new DbNode(
                 rs.getString("nodeID"),
-                rs.getInt("x"),
-                rs.getInt("y"),
+                rs.getInt("xcoord"),
+                rs.getInt("ycoord"),
                 rs.getInt("floor"),
                 rs.getString("building"),
                 rs.getString("nodeType"),
