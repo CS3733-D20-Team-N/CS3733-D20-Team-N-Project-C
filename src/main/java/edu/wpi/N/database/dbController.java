@@ -163,6 +163,12 @@ public class dbController {
     }
   }
 
+    /**
+     * Gets the next available number for a particular node type for the purposes of making the nodeID
+     * @param nodeType the node type to search for
+     * @return A formatted string with three digits and leading zeros for the next available number
+     * @throws SQLException if something goes wrong with the sql
+     */
   private static String nextAvailNum(String nodeType) throws SQLException{
       return null;
   }
@@ -249,6 +255,24 @@ public class dbController {
    */
   public static LinkedList<DbNode> floorNodes(int floor, String building) {
     return null;
+  }
+
+    /**
+     * Gets a list of all the nodes on a floor except for invisible (HALL) nodes
+     * @param floor
+     * @param building
+     * @return
+     */
+  public static LinkedList<DbNode> visNodes(int floor, String building){
+      return null;
+  }
+
+    /**
+     * Gets a list of all the nodes in the database.
+     * @return A linked list of all the nodes in the database
+     */
+  public static LinkedList<DbNode> allNodes(){
+      return null;
   }
 
   /**
