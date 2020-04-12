@@ -5,7 +5,6 @@ import edu.wpi.N.models.Node;
 import java.sql.*;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class dbController {
 
@@ -206,15 +205,15 @@ public class dbController {
 
 
     /**
-     * Gets a list of all the nodes matching the specified query
-     * @param query The query with which to search the nodes
-     * @return A list of all nodes with a long name containing the query
+     * Gets a list of all the nodes matching the specified searchQuery
+     * @param searchQuery The string with which to search the nodes
+     * @return A list of all nodes with a long name containing the searchQuery
      */
-    public static LinkedList<DbNode> searchNode(String query){
+    public static LinkedList<DbNode> searchNode(String searchQuery){
         LinkedList<DbNode> searchList= new LinkedList<DbNode>();
         try{
             String result = "SELECT nodeID FROM * WHERE EXISTS" +
-                    "(SELECT nodeID FROM '"+query+"' WHERE *.nodeID = '"+query+"'.nodeID";
+                    "(SELECT nodeID FROM '"+ searchQuery +"' WHERE *.nodeID = '"+ searchQuery +"'.nodeID";
             ResultSet rs = statement.executeQuery(result);
             while(rs.next()){
                 DbNode chosenOne = new DbNode(rs.getString("nodeID"), rs.getInt("x"), rs.getInt("y"), rs.getInt("floor"), rs.getString("building"), rs.getString("nodeType"), rs.getString("longName"), rs.getString("shortName"), rs.getString("teamAssigned").charAt(0));
