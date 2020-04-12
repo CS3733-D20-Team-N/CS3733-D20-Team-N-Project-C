@@ -9,11 +9,8 @@ public class AlgosMainCanIgnore {
     // relative path to .csv file
     String pathToFile =
         "/Users/Ivan/IdeaProjects/CS3733-D20-Team-N-Project-C/src/main/resources/edu/wpi/N/csv/MapEnodes.csv";
-    try {
-      CSVParser.parseCSVfromPath(pathToFile);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
+    CSVParser.parseCSVfromPath(pathToFile);
+
 
     //    Graph nodeGraph = parser.parseCSV(input);
     //    Node startNode = nodeGraph.getNode("MOHSClinic");

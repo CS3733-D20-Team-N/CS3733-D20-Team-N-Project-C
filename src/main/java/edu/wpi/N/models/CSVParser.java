@@ -46,26 +46,6 @@ public class CSVParser {
         }
     }
 
-    /**
-     * Parse data from a given row: add Node to the database
-     *
-     * @param row: a row to parse data from
-     */
-    static void parseNodeRow(String[] row) {
-        String nodeID = row[0];
-        int xcoord = Integer.parseInt(row[1]);
-        int ycoord = Integer.parseInt(row[2]);
-        int floor = Integer.parseInt(row[3]);
-        String building = row[4];
-        String nodeType = row[5];
-        String longName = row[6];
-        String shortName = row[7];
-        char teamAssigned = 'i';
-
-        dbController.addNode(
-                nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName, teamAssigned);
-
-    }
 
     /**
      * Parse data from a given row: add Edge to the database
@@ -79,7 +59,33 @@ public class CSVParser {
         String endNodeId = row[2];
 
         dbController.addEdge(startNodeId, endNodeId);
-    }
+  }
+
+  /**
+   * Parse data from a given row: add Node to the database
+   *
+   * @param row: a row to parse data from
+   */
+  static void parseNodeRow(String[] row) {
+      try {
+          String nodeID = row[0];
+          int xcoord = Integer.parseInt(row[1]);
+          int ycoord = Integer.parseInt(row[2]);
+          int floor = Integer.parseInt(row[3]);
+          String building = row[4];
+          String nodeType = row[5];
+          String longName = row[6];
+          String shortName = row[7];
+          char teamAssigned = row[8].charAt(0);
+
+          dbController.addNode(
+                  nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName, teamAssigned);
+
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+  }
+
 
     /**
      * @param pathToFile
@@ -93,7 +99,7 @@ public class CSVParser {
 
             CSVParser csvParser = new CSVParser();
             csvParser.parseCSV(input);
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
