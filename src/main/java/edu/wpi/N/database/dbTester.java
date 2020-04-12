@@ -65,16 +65,16 @@ public class dbTester {
       System.out.println("getGNode worked");
     }
     LinkedList<DbNode> testfloorNodes = floorNodes(5, "Faulkner");
-    if (testfloorNodes.get(0).getNodeID() == "NDEPT01005") {
+    if (testfloorNodes.get(0).getNodeID().equals("NDEPT01005")) {
       System.out.println("floorNode worked");
     }
     LinkedList<DbNode> testvisNodes = visNodes(4, "Faulkner");
-    if (testvisNodes.get(0).getNodeID() == "NDEPT00104") {
+    if (testvisNodes.get(0).getNodeID().equals("NDEPT00204")) {
       System.out.println("visNodes worked");
     }
     addNode("NDEPT01104", 1950, 1200, 4, "Faulkner", "DEPT", "Neucleology", "Dept 11", 'N');
     LinkedList<DbNode> testallNodes = allNodes();
-    if (testallNodes.get(testallNodes.size() - 1).getNodeID() == "NDEPT01104") {
+    if (testallNodes.get(testallNodes.size() - 1).getNodeID().equals("NDEPT01104")) {
       System.out.println("allNodes worked");
     }
   }
