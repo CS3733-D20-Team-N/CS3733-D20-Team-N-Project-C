@@ -9,7 +9,7 @@ public class AlgosMainCanIgnore {
     dbController.initDB();
     // relative path to .csv file
     String pathToFile =
-        "/Users/Ivan/IdeaProjects/CS3733-D20-Team-N-Project-C/src/main/resources/edu/wpi/N/csv/MapEnodes.csv";
+        "C:\\Users\\Tian Yu Fan\\IdeaProjects\\CS3733-D20-Team-N-Project-C\\src\\main\\resources\\edu\\wpi\\N\\csv\\MapEnodes.csv";
     CSVParser.parseCSVfromPath(pathToFile);
 
     //    Graph nodeGraph = parser.parseCSV(input);

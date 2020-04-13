@@ -1,6 +1,11 @@
 package edu.wpi.N.views;
 
+import edu.wpi.N.database.DbNode;
+import edu.wpi.N.database.dbController;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Vector;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +34,33 @@ public class MapExampleController {
   private final double MAX_MAP_SCALE = 3.5; // pane_map scale when zoomed in fully
   private double mapScaleAlpha = 0; // Zoom value between 0 (out) and 1 (in)
   private Vector<Circle> nodeDots;
+
+  HashMap<Circle, DbNode> masterNodes; // stores all the nodes displayed on the map
+  LinkedList<DbNode> nodesList;
+
+  public MapExampleController() {
+    populateMap();
+  }
+
+  public void populateMap() {
+    nodesList = dbController.floorNodes(4, "Faulkner");
+    Iterator iter = nodesList.iterator();
+    while (iter.hasNext()) {
+      DbNode newNode = (DbNode) iter.next();
+      Circle newMapNode = makeNode(newNode);
+      pane_kioskNodes.getChildren().add(newMapNode);
+      masterNodes.put(newMapNode, newNode);
+    }
+  }
+
+  public Circle makeNode(DbNode newNode) {
+    Circle newMapNode = new Circle();
+    newMapNode.setRadius(5);
+    newMapNode.setLayoutX(newNode.getX());
+    newMapNode.setLayoutY(newNode.getY());
+    newMapNode.setFill(Color.DODGERBLUE);
+    return newMapNode;
+  }
 
   @FXML
   private void sideMenuBtnHandler(MouseEvent event) throws IOException {
