@@ -73,7 +73,7 @@ public class dbTester {
     }
   }
 
-  private static void printDB() {
+  public static void printDB() {
     LinkedList<DbNode> nodes = allNodes();
     Iterator<DbNode> it = nodes.iterator();
     DbNode n;

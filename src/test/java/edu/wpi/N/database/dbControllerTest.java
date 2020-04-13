@@ -27,24 +27,44 @@ public class dbControllerTest {
   public void testAddNodeID() {
     assertTrue(
         dbController.addNode(
-            "NDEPT00304", 1000, 1000, 4, "Faulkner", "DEPT", "SampleRoom", "Dept 3", 'N'));
+            "NHALL01404", 771, 123, 4, "Faulkner", "HALL", "HALL 14", "Hall 14", 'N'));
+    dbController.deleteNode("NHALL01404");
   }
 
   // Noah
   @Test
-  public void testModifyNode() {}
+  public void testModifyNode() {
+    dbController.modifyNode("NHALL00204", 123, 771, 3, "Faulkner", "DEPT", "DEPT 3", "Dept 3", 'N');
+    dbTester.printDB();
+    DbNode n = dbController.getNode("NDEPT00304");
+    assertTrue(n.getX() == 123 && n.getNodeType() == "DEPT");
+    dbController.deleteNode("NDEPT00304");
+    dbController.addNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N');
+  }
 
   // Noah
   @Test
-  public void testMoveNode() {}
+  public void testMoveNode() {
+    dbController.moveNode("NHALL00204", 135, 445);
+    DbNode n = dbController.getNode("NHALL00204");
+    assertTrue(n.getX() == 135 && n.getY() == 445);
+    dbController.moveNode("NHALL00204", 1350, 1250);
+  }
 
   // Noah
   @Test
-  public void testDeleteNode() {}
+  public void testDeleteNode() {
+    dbController.addNode("NHALL00704", 1250, 850, 4, "Faulkner", "HALL", "Hall 7", "Hall 7", 'N');
+    dbController.deleteNode("NHALL00204");
+    assertNull(dbController.getNode("NHALL00704"));
+  }
 
   // Noah
   @Test
-  public void testGetNode() {}
+  public void testGetNode() {
+    DbNode n = dbController.getNode("NDEPT00204");
+    assertTrue(n.getX() == 1450 && n.getY() == 950);
+  }
 
   // Chris
   @Test
@@ -85,11 +105,13 @@ public class dbControllerTest {
     dbController.addEdge("NHALL00104", "NDEPT00204");
 
     LinkedList<DbNode> adjList = dbController.getAdjacent("NHALL00104");
+    assertNotNull(adjList); // error here
     // assertNotNull(adjList); // error here
     /*
-    assertTrue(adjList.get(0).getNodeID().equals("NHALL00204"));
-    assertTrue(adjList.get(1).getNodeID().equals("NDEPT00104"));
-    assertTrue(adjList.get(2).getNodeID().equals("NDEPT00204"));*/
+    >>>>>>> 80d099152078b530dc4121269d3cf9028da86af3
+        assertTrue(adjList.get(0).getNodeID().equals("NHALL00204"));
+        assertTrue(adjList.get(1).getNodeID().equals("NDEPT00104"));
+        assertTrue(adjList.get(2).getNodeID().equals("NDEPT00204"));*/
 
     assertTrue(
         adjList.contains(
