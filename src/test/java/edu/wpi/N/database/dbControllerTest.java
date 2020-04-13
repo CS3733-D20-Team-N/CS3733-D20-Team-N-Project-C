@@ -53,11 +53,18 @@ public class dbControllerTest {
 
   // Noah
   @Test
-  public void testDeleteNode() {}
+  public void testDeleteNode() {
+    dbController.addNode("NHALL00704", 1250, 850, 4, "Faulkner", "HALL", "Hall 7", "Hall 7", 'N');
+    dbController.deleteNode("NHALL00204");
+    assertNull(dbController.getNode("NHALL00704"));
+  }
 
   // Noah
   @Test
-  public void testGetNode() {}
+  public void testGetNode() {
+    DbNode n = dbController.getNode("NDEPT00204");
+    assertTrue(n.getX() == 1450 && n.getY() == 950);
+  }
 
   // Chris
   @Test
@@ -101,10 +108,10 @@ public class dbControllerTest {
     assertNotNull(adjList); // error here
     // assertNotNull(adjList); // error here
     /*
->>>>>>> 80d099152078b530dc4121269d3cf9028da86af3
-    assertTrue(adjList.get(0).getNodeID().equals("NHALL00204"));
-    assertTrue(adjList.get(1).getNodeID().equals("NDEPT00104"));
-    assertTrue(adjList.get(2).getNodeID().equals("NDEPT00204"));*/
+    >>>>>>> 80d099152078b530dc4121269d3cf9028da86af3
+        assertTrue(adjList.get(0).getNodeID().equals("NHALL00204"));
+        assertTrue(adjList.get(1).getNodeID().equals("NDEPT00104"));
+        assertTrue(adjList.get(2).getNodeID().equals("NDEPT00204"));*/
 
     assertTrue(
         adjList.contains(
