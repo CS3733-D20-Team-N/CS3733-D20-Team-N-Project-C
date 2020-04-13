@@ -87,7 +87,7 @@ public class dbController {
       char teamAssigned) {
     String newID;
     try {
-      if ((nodeID.substring(0, 5) + nodeID.substring(8))
+      if (!(nodeID.substring(0, 5) + nodeID.substring(8))
           .equals(teamAssigned + nodeType.toUpperCase() + String.format("%02d", floor))) {
         if (nodeID.substring(1, 5).equals(nodeType)) {
           newID = teamAssigned + nodeID.substring(1, 8) + String.format("%02d", floor);
@@ -95,6 +95,7 @@ public class dbController {
           newID = teamAssigned + nodeType.toUpperCase() + nextAvailNum(nodeType) + "0" + floor;
         }
       } else newID = nodeID;
+      System.out.println(newID);
       String query =
           "UPDATE nodes SET nodeID = '"
               + newID
@@ -146,8 +147,7 @@ public class dbController {
   }
 
   /**
->>>>>>> 244323def286ea6969588df22b7d1d49bbce118f
-   * Deletes a node from the database
+   * >>>>>>> 244323def286ea6969588df22b7d1d49bbce118f Deletes a node from the database
    *
    * @param nodeID the nodeID of the node to be deleted
    * @return true if delete successful, false otherwise.
@@ -273,7 +273,7 @@ public class dbController {
     int nextVal;
     int lowest;
     for (int i = 0; i < size; i++) {
-      if (nums.get(i) <= 0 || nums.get(i) < size) continue;
+      if (nums.get(i) <= 0 || nums.get(i) > size) continue;
       val = nums.get(i);
       while (nums.get(val - 1) != val) {
         nextVal = nums.get(val - 1);
