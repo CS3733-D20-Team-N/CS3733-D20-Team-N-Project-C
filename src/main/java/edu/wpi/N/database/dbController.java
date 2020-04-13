@@ -395,30 +395,56 @@ public class dbController {
     LinkedList<Node> ret = new LinkedList<Node>();
     try {
       ResultSet rs = null;
+      //      String query =
+      //          "CREATE VIEW connected_edges (edge_nodeID)"
+      //              + "AS SELECT node1 FROM edges WHERE node2 = '"
+      //              + nodeID
+      //              + "' UNION "
+      //              + "SELECT node2 FROM edges WHERE node1 = '"
+      //              + nodeID
+      //              + "'";
+      //      statement.execute(query);
+      //      query =
+      //          "SELECT nodes.nodeID, nodes.xcoord, nodes.ycoord FROM nodes "
+      //              + "JOIN connected_edges ON connected_edges.nodeID = nodes.nodeID";
       String query =
-          "CREATE VIEW connected_edges (edge_nodeID)"
-              + "AS SELECT node1 FROM edges WHERE node2 = '"
+          "(SELECT node1 AS nID FROM edges WHERE node2 = '"
               + nodeID
-              + "' UNION "
-              + "SELECT node2 FROM edges WHERE node1 = '"
+              + "') "
+              + "UNION (SELECT node2 As nID FROM edges WHERE node1 = '"
               + nodeID
-              + "'";
-      statement.execute(query);
-      query =
-          "SELECT nodes.nodeID, nodes.xcoord, nodes.ycoord FROM nodes "
-              + "JOIN connected_edges ON connected_edges.nodeID = nodes.nodeID";
+              + "')";
+      rs = statement.executeQuery(query);
+      System.out.println(query);
+      while (rs.next()) {
+        System.out.println(rs.getString("nId"));
+      }
 
+      //      query =
+      //          "SELECT nodes.nodeID, nodes.xcoord, nodes.ycoord FROM nodes, ((SELECT node1 AS nID
+      // FROM edges WHERE node2 = '"
+      //              + nodeID
+      //              + "') "
+      //              + "UNION (SELECT node2 As nID FROM edges WHERE node1 = '"
+      //              + nodeID
+      //              + "')) WHERE nodes.nodeID = nID";
+      query =
+          "SELECT nodeID, xcoord, ycoord FROM nodes, edges "
+              + "WHERE (edges.node1 = '"
+              + nodeID
+              + "' AND nodes.nodeID = edges.node2) OR "
+              + "(edges.node2 = '"
+              + nodeID
+              + "' AND nodes.nodeID = edges.node1)";
+      System.out.println(query);
       rs = statement.executeQuery(query);
       while (rs.next()) {
-        ret.add(
-            new Node(
-                rs.getInt("nodes.xcoord"),
-                rs.getInt("nodes.ycoord"),
-                rs.getString("nodes.nodeID")));
+        ret.add(new Node(rs.getInt("xcoord"), rs.getInt("ycoord"), rs.getString("nodeID")));
       }
-      query = "DROP VIEW connected_edges";
-      statement.executeUpdate(query);
+      // query = "DROP VIEW connected_edges";
+      // statement.executeUpdate(query);
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
 
@@ -506,34 +532,43 @@ public class dbController {
    */
   public static LinkedList<DbNode> getAdjacent(String nodeID) {
     LinkedList<DbNode> ret = new LinkedList<DbNode>();
+    //    try {
+    //      String query = "DROP VIEW connected_edges";
+    //      statement.executeUpdate(query);
+    //    } catch (SQLException e) {
+    //      System.out.println("Doesn't exist");
+    //    }
     try {
 
       ResultSet rs = null;
       String query =
-          "CREATE VIEW connected_edges (edge_nodeID)"
+          "CREATE VIEW connected_edges (nodeID) "
               + "AS SELECT node1 FROM edges WHERE node2 = '"
               + nodeID
               + "' UNION "
               + "SELECT node2 FROM edges WHERE node1 = '"
               + nodeID
               + "'";
-      statement.execute(query);
+      System.out.println(query);
+      statement.executeUpdate(query);
       query =
-          "SELECT nodes.* FROM nodes "
-              + "JOIN connected_edges ON connected_edges.nodeID = nodes.nodeID";
+          "SELECT nodes.* FROM nodes, connected_edges "
+              + "WHERE connected_edges.nodeID = nodes.NODEID";
+      System.out.println(query);
       rs = statement.executeQuery(query);
+      System.out.println("wait");
       while (rs.next()) {
         ret.add(
             new DbNode(
-                rs.getString("nodes.nodeID"),
-                rs.getInt("nodes.xcoord"),
-                rs.getInt("nodes.ycoord"),
-                rs.getInt("nodes.floor"),
-                rs.getString("nodes.building"),
-                rs.getString("nodes.nodeType"),
-                rs.getString("nodes.longName"),
-                rs.getString("nodes.shortName"),
-                rs.getString("nodes.teamAssigned").charAt(0)));
+                rs.getString("nodeID"),
+                rs.getInt("xcoord"),
+                rs.getInt("ycoord"),
+                rs.getInt("floor"),
+                rs.getString("building"),
+                rs.getString("nodeType"),
+                rs.getString("longName"),
+                rs.getString("shortName"),
+                rs.getString("teamAssigned").charAt(0)));
       }
       query = "DROP VIEW connected_edges";
       statement.executeUpdate(query);

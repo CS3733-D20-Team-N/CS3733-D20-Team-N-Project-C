@@ -21,7 +21,7 @@ public class PathfinderMethodsTest {
     CSVParser.parseCSV(inputEdges);
   }
 
-  /** Tests that findPath returns a Path object with the best route from H10 to EEE */
+  /** Tests that findPath returns a Path object with the best route from H9 to EEE */
   @Test
   public void findPathNormalCase() {
     LinkedList<DbNode> actualPath = new LinkedList<DbNode>();
@@ -35,7 +35,7 @@ public class PathfinderMethodsTest {
 
     for (int i = 0; i < actualPath.size(); i++) {
       Assertions.assertEquals(
-          testingPath.getPath().get(i).getNodeID(), actualPath.get(i).getNodeID());
+          actualPath.get(i).getNodeID(), testingPath.getPath().get(i).getNodeID());
     }
   }
 

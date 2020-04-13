@@ -57,7 +57,8 @@ public class Pathfinder {
       }
 
       // for every node (next node), current node has edge to:
-      for (Node nextNode : dbController.getGAdjacent(current.ID)) {
+      LinkedList<Node> adjacentToCurrent = dbController.getGAdjacent(current.ID);
+      for (Node nextNode : adjacentToCurrent) {
         String nextNodeID = nextNode.ID;
 
         // calculate the cost of next node
