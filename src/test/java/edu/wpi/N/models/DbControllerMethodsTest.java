@@ -4,6 +4,7 @@ import edu.wpi.N.Main;
 import edu.wpi.N.database.dbController;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -41,10 +42,10 @@ public class DbControllerMethodsTest {
   public void getGAdjacentNullTester() throws SQLException {
     // null for a node that is not in the database
     Node testNode = new Node(2.345, 5.5657, "TESTNODE02");
-    Assertions.assertNull(dbController.getGAdjacent("TESTNODE02"));
+    Assertions.assertEquals(dbController.getGAdjacent("TESTNODE02"), new ArrayList<Node>());
     // null for a node that is in the database but has no edges
     dbController.addNode("TESTNODE03", 23, 345, 4, "Foisie", "sdfkjd", "fskjd", "sdfk", 'N');
-    Assertions.assertNull(dbController.getGAdjacent("TESTNODE3"));
+    Assertions.assertEquals(dbController.getGAdjacent("TESTNODE3"), new ArrayList<Node>());
   }
 
   /**
@@ -53,24 +54,25 @@ public class DbControllerMethodsTest {
    */
   @Test
   public void addEdgesTester() {
-    dbController.addNode("TESTNODE04", 23, 345, 4, "Foisie", "sdfkjd", "fskjd", "sdfk", 'N');
     LinkedList<Node> hall1Edges = new LinkedList<Node>();
     hall1Edges.add(dbController.getGNode("H200000000"));
-    hall1Edges.add(dbController.getGNode("TESTNODE04"));
-    dbController.addEdge("H100000000", "TESTNODE04");
-    // checks that TESTNODE04 was added to H100000000 adjacent nodes
+    hall1Edges.add(dbController.getGNode("H130000000"));
+    dbController.addEdge("H100000000", "H130000000");
     Assertions.assertEquals(dbController.getGAdjacent("H100000000"), hall1Edges);
 
-    // checks that H100000000 was added to TESTNODE04 adjacent nodes
-    LinkedList<Node> testNodeEdges = new LinkedList<Node>();
-    testNodeEdges.add(dbController.getGNode("H100000000"));
-    Assertions.assertEquals(dbController.getGAdjacent("TESTNODE04"), testNodeEdges);
+    // checks that H100000000 was added to H130000000 adjacent nodes
+    LinkedList<Node> hall13Edges = new LinkedList<Node>();
+    hall13Edges.add(dbController.getGNode("EEEEEEEEEE"));
+    hall13Edges.add(dbController.getGNode("H100000000"));
+    hall13Edges.add(dbController.getGNode("H120000000"));
+    Assertions.assertEquals(dbController.getGAdjacent("H130000000"), hall13Edges);
   }
 
   /**
    * Tests that addEdges(nodeID1,nodeID2) will create a list of edges for a node that currently has
-   * no edges
+   * no edges Can't test because all nodes in the csv have edges
    */
+  /*
   @Test
   public void addEdgesEmptyNodeTester() {
     dbController.addNode("TESTNODE05", 23, 345, 4, "Foisie", "sdfkjd", "fskjd", "sdfk", 'N');
@@ -79,16 +81,14 @@ public class DbControllerMethodsTest {
     testNodeEdges.add(dbController.getGNode("H800000000"));
     Assertions.assertEquals(dbController.getGAdjacent("TESTNODE05"), testNodeEdges);
   }
+  */
 
   /**
    * Tests that addEdges(nodeID1,nodeID2) will not add a node that does not exist in the database
    */
   @Test
   public void addInvalidEdgesTester() {
-    dbController.addEdge("CCCCCCCCCC", "NOTANODE01");
-    LinkedList<Node> CCCEdges = new LinkedList<Node>();
-    CCCEdges.add(dbController.getGNode("H900000000"));
-    Assertions.assertEquals(dbController.getGAdjacent("CCCCCCCCCC"), CCCEdges);
+    Assertions.assertFalse(dbController.addEdge("CCCCCCCCCC", "NOTANODE01"));
   }
 
   /**
@@ -97,16 +97,7 @@ public class DbControllerMethodsTest {
    */
   @Test
   public void addEdgeAlreadyThereTester() {
-    LinkedList<Node> hall5Edges = new LinkedList<Node>();
-    hall5Edges.add(dbController.getGNode("H200000000"));
-    hall5Edges.add(dbController.getGNode("H600000000"));
-    LinkedList<Node> hall6Edges = new LinkedList<Node>();
-    hall6Edges.add(dbController.getGNode("H500000000"));
-    hall6Edges.add(dbController.getGNode("AAAAAAAAAA"));
-    hall6Edges.add(dbController.getGNode("H700000000"));
-    dbController.addEdge("H500000000", "H600000000");
-    Assertions.assertEquals(dbController.getGAdjacent("H500000000"), hall5Edges);
-    Assertions.assertEquals(dbController.getGAdjacent("H600000000"), hall6Edges);
+    Assertions.assertFalse(dbController.addEdge("H500000000", "H600000000"));
   }
 
   /** Tests that heuristic(currNode, endNode) returns the correct calculated value */
