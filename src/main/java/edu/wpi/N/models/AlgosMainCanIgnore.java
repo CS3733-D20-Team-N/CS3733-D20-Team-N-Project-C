@@ -1,19 +1,16 @@
 package edu.wpi.N.models;
 
-import java.io.FileNotFoundException;
+import edu.wpi.N.database.dbController;
+import java.sql.SQLException;
 
 public class AlgosMainCanIgnore {
 
-  public static void main(String[] args) {
-
+  public static void main(String[] args) throws SQLException, ClassNotFoundException {
+    dbController.initDB();
     // relative path to .csv file
     String pathToFile =
         "/Users/Ivan/IdeaProjects/CS3733-D20-Team-N-Project-C/src/main/resources/edu/wpi/N/csv/MapEnodes.csv";
-    try {
-      CSVParser.parseCSVfromPath(pathToFile);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
+    CSVParser.parseCSVfromPath(pathToFile);
 
     //    Graph nodeGraph = parser.parseCSV(input);
     //    Node startNode = nodeGraph.getNode("MOHSClinic");

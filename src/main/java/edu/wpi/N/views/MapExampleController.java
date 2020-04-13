@@ -2,7 +2,6 @@ package edu.wpi.N.views;
 
 import java.io.IOException;
 import java.util.Vector;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
@@ -100,6 +99,7 @@ public class MapExampleController {
     newNode.setLayoutY(point.getY());
     newNode.setFill(Color.DODGERBLUE);
   }
+
   private void removeNodeFromMap(Circle nodeClicked) {
     if (nodeDots.contains(nodeClicked)) {
       nodeDots.remove(nodeClicked);
@@ -110,7 +110,7 @@ public class MapExampleController {
   private void mapScrollHandler(ScrollEvent event) throws IOException {
     if (event.getSource() == pane_mapClickTarg) {
       double deltaY = event.getDeltaY();
-      zoom(deltaY * 0.01);
+      zoom(deltaY * 0.005);
     }
   }
 
