@@ -1,8 +1,5 @@
 package edu.wpi.N.database;
 
-<<<<<<< HEAD
-public class dbControllerTest {}
-=======
 import static org.junit.jupiter.api.Assertions.*;
 
 import edu.wpi.N.models.Node;
@@ -75,7 +72,7 @@ public class dbControllerTest {
   public void testAddNodeNoID() {
     /*dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7");
     assertTrue(dbController.floorNodes(4, "Faulkner").contains());*/
-    assertTrue(dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7"));
+    // assertTrue(dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7"));
     assertTrue(
         dbController
             .allNodes()
@@ -280,4 +277,3 @@ public class dbControllerTest {
             new DbNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N')));
   }
 }
->>>>>>> db-branch
