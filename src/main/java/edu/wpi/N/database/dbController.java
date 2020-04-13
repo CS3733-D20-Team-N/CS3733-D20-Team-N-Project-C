@@ -147,11 +147,8 @@ public class dbController {
   }
 
   /**
-<<<<<<< HEAD
-   * >>>>>>> db-branch Deletes a node from the database
-=======
-   * >>>>>>> 244323def286ea6969588df22b7d1d49bbce118f Deletes a node from the database
->>>>>>> db-branch
+   * <<<<<<< HEAD >>>>>>> db-branch Deletes a node from the database ======= >>>>>>>
+   * 244323def286ea6969588df22b7d1d49bbce118f Deletes a node from the database >>>>>>> db-branch
    *
    * @param nodeID the nodeID of the node to be deleted
    * @return true if delete successful, false otherwise.
