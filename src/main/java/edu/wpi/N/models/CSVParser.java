@@ -19,10 +19,8 @@ public class CSVParser {
       // create csvReader object passing
       CSVReader csvReader = new CSVReader(new InputStreamReader(pathToFile, "UTF-8"));
 
-      String[] nextLine;
-
       // Read header
-      nextLine = csvReader.readNext();
+      String[] nextLine = csvReader.readNext();
 
       // Check if it is EdgeCSV
       if (nextLine[0].toLowerCase().equals("edgeid")
@@ -85,15 +83,16 @@ public class CSVParser {
    * @param pathToFile full path to file
    * @throws FileNotFoundException
    */
-  public static void parseCSVfromPath(String pathToFile) {
+  public static void parseCSVfromPath(String pathToFile) throws FileNotFoundException {
     try {
       File initialFile = new File(pathToFile);
       InputStream input = new FileInputStream(initialFile);
 
       CSVParser csvParser = new CSVParser();
-      csvParser.parseCSV(input);
+      CSVParser.parseCSV(input);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
+      throw (e);
     }
   }
 }
