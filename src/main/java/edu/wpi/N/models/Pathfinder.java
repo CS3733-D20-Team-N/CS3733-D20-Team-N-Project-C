@@ -14,7 +14,7 @@ public class Pathfinder {
    * @param nextNode: next Node
    * @return: Euclidean distance from the start
    */
-  static double cost(Node currNode, Node nextNode) {
+  public static double cost(Node currNode, Node nextNode) {
     return Math.sqrt(
         Math.pow(nextNode.getX() - currNode.getX(), 2)
             + Math.pow(nextNode.getY() - currNode.getY(), 2));
@@ -26,7 +26,7 @@ public class Pathfinder {
    * @param currNode: current Node
    * @return: Manhattan distance to the goal Node
    */
-  static double heuristic(Node currNode, Node end) {
+  public static double heuristic(Node currNode, Node end) {
     return Math.abs(end.getX() - currNode.getX()) + Math.abs(end.getY() - currNode.getY());
   }
 
@@ -92,7 +92,7 @@ public class Pathfinder {
    * @param cameFrom: Map, where key: NodeID, value: came-from-NodeID
    * @return Path object containing generated path
    */
-  private static Path generatePath(Node start, Node end, Map<String, String> cameFrom) {
+  public static Path generatePath(Node start, Node end, Map<String, String> cameFrom) {
 
     String currentID = end.ID;
     LinkedList<DbNode> path = new LinkedList<DbNode>();
