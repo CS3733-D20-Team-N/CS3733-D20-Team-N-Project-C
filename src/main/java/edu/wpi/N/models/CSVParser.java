@@ -11,7 +11,7 @@ public class CSVParser {
    *
    * @param pathToFile: path to the CSV file as an InputStream
    */
-  private static void parseCSV(InputStream pathToFile) {
+  public static void parseCSV(InputStream pathToFile) {
     try {
       // Assume that it is NodeCSV
       Boolean isNodeCSV = true;
