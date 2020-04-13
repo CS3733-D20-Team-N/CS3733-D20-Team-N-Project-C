@@ -34,15 +34,15 @@ public class DbControllerMethodsTest {
   }
 
   /**
-   * Tests that getGAdjacent(nodeID) will return null if the node is not in the graph and if the node
-   * does not have any edges
+   * Tests that getGAdjacent(nodeID) will return null if the node is not in the graph and if the
+   * node does not have any edges
    */
   @Test
   public void getGAdjacentNullTester() throws SQLException {
-    //null for a node that is not in the database
+    // null for a node that is not in the database
     Node testNode = new Node(2.345, 5.5657, "TESTNODE02");
     Assertions.assertNull(dbController.getGAdjacent("TESTNODE02"));
-    //null for a node that is in the database but has no edges
+    // null for a node that is in the database but has no edges
     dbController.addNode("TESTNODE03", 23, 345, 4, "Foisie", "sdfkjd", "fskjd", "sdfk", 'N');
     Assertions.assertNull(dbController.getGAdjacent("TESTNODE3"));
   }
@@ -58,10 +58,10 @@ public class DbControllerMethodsTest {
     hall1Edges.add(dbController.getGNode("H200000000"));
     hall1Edges.add(dbController.getGNode("TESTNODE04"));
     dbController.addEdge("H100000000", "TESTNODE04");
-    //checks that TESTNODE04 was added to H100000000 adjacent nodes
+    // checks that TESTNODE04 was added to H100000000 adjacent nodes
     Assertions.assertEquals(dbController.getGAdjacent("H100000000"), hall1Edges);
 
-    //checks that H100000000 was added to TESTNODE04 adjacent nodes
+    // checks that H100000000 was added to TESTNODE04 adjacent nodes
     LinkedList<Node> testNodeEdges = new LinkedList<Node>();
     testNodeEdges.add(dbController.getGNode("H100000000"));
     Assertions.assertEquals(dbController.getGAdjacent("TESTNODE04"), testNodeEdges);
@@ -84,11 +84,11 @@ public class DbControllerMethodsTest {
    * Tests that addEdges(nodeID1,nodeID2) will not add a node that does not exist in the database
    */
   @Test
-  public void addInvalidEdgesTester(){
-    dbController.addEdge("CCCCCCCCCC","NOTANODE01");
+  public void addInvalidEdgesTester() {
+    dbController.addEdge("CCCCCCCCCC", "NOTANODE01");
     LinkedList<Node> CCCEdges = new LinkedList<Node>();
     CCCEdges.add(dbController.getGNode("H900000000"));
-    Assertions.assertEquals(dbController.getGAdjacent("CCCCCCCCCC"),CCCEdges);
+    Assertions.assertEquals(dbController.getGAdjacent("CCCCCCCCCC"), CCCEdges);
   }
 
   /**
@@ -113,11 +113,11 @@ public class DbControllerMethodsTest {
   @Test
   public void heuristicTester() {
     Assertions.assertEquals(
-        Pathfinder.heuristic(dbController.getGNode("AAAAAAAAAA"), dbController.getGNode("BBBBBBBBBB")),
+        Pathfinder.heuristic(
+            dbController.getGNode("AAAAAAAAAA"), dbController.getGNode("BBBBBBBBBB")),
         455,
         0.01);
   }
-
 
   /**
    * Tests that getGNode(nodeID) returns the correct node when given a nodeID that is in the
