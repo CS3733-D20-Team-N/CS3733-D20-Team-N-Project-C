@@ -1,4 +1,3 @@
-
 package edu.wpi.N.models;
 
 import edu.wpi.N.Main;
@@ -26,13 +25,13 @@ public class PathfinderMethodsTest {
   @Test
   public void findPathNormalCase() {
     LinkedList<DbNode> actualPath = new LinkedList<DbNode>();
-    actualPath.add(dbController.getNode("H10"));
-    actualPath.add(dbController.getNode("H9"));
-    actualPath.add(dbController.getNode("H12"));
-    actualPath.add(dbController.getNode("H13"));
-    actualPath.add(dbController.getNode("EEE"));
+    actualPath.add(dbController.getNode("H100000001"));
+    actualPath.add(dbController.getNode("H900000000"));
+    actualPath.add(dbController.getNode("H120000000"));
+    actualPath.add(dbController.getNode("H130000000"));
+    actualPath.add(dbController.getNode("EEEEEEEEEE"));
 
-    Path testingPath = Pathfinder.findPath("H10", "EEE");
+    Path testingPath = Pathfinder.findPath("H100000001", "EEEEEEEEEE");
 
     for (int i = 0; i < actualPath.size(); i++) {
       Assertions.assertEquals(
@@ -49,10 +48,10 @@ public class PathfinderMethodsTest {
 
     LinkedList<DbNode> actualPath = new LinkedList<DbNode>();
 
-    actualPath.add(dbController.getNode("H12"));
-    actualPath.add(dbController.getNode("H13"));
+    actualPath.add(dbController.getNode("H120000000"));
+    actualPath.add(dbController.getNode("H130000000"));
 
-    Path testingPath = Pathfinder.findPath("H12", "H13");
+    Path testingPath = Pathfinder.findPath("H120000000", "H130000000");
 
     for (int i = 0; i < actualPath.size(); i++) {
       Assertions.assertEquals(
@@ -67,7 +66,7 @@ public class PathfinderMethodsTest {
   @Test
   public void findPathDestinationNotFound() {
     Assertions.assertThrows(
-        NullPointerException.class, () -> Pathfinder.findPath("H12", "NonExistentNode"));
+        NullPointerException.class, () -> Pathfinder.findPath("H120000000", "NonExistentNode"));
   }
 
   /**
@@ -77,7 +76,7 @@ public class PathfinderMethodsTest {
   @Test
   public void findPathStartNodeHasNoEdges() {
     Assertions.assertThrows(
-        NullPointerException.class, () -> Pathfinder.findPath("NonExistentNode", "H12"));
+        NullPointerException.class, () -> Pathfinder.findPath("NonExistentNode", "H120000000"));
   }
 
   /**
@@ -88,8 +87,8 @@ public class PathfinderMethodsTest {
   public void findPathEndIsStartNode() {
     LinkedList<DbNode> actualPath = new LinkedList<DbNode>();
 
-    actualPath.add(dbController.getNode("H12"));
-    Path testingPath = Pathfinder.findPath("H12", "H12");
+    actualPath.add(dbController.getNode("H120000000"));
+    Path testingPath = Pathfinder.findPath("H120000000", "H120000000");
 
     for (int i = 0; i < actualPath.size(); i++) {
       Assertions.assertEquals(
