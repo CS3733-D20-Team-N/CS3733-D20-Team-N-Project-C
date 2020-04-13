@@ -35,7 +35,7 @@ public class dbController {
       throws SQLException {
     String query =
         "INSERT INTO nodes("
-            + "+nodeID, x, y, floor, building, nodeType, longName, shortName, teamAssigned) VALUES"
+            + "nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName, teamAssigned) VALUES ("
             + "'"
             + nodeID
             + "', "
@@ -52,8 +52,12 @@ public class dbController {
             + longName
             + "', '"
             + shortName
-            + "', ''+teamAssigned+''";
+            + "', '"
+            + teamAssigned
+            + "')";
+    System.out.println(query);
     statement.execute(query);
+
     System.out.println("Values Inserted");
     return true;
   }
