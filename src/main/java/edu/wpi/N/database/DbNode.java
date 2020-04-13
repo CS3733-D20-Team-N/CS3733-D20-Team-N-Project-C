@@ -106,4 +106,35 @@ public class DbNode {
     this.shortName = shortName;
     this.teamAssigned = teamAssigned;
   }
+
+  public DbNode() {
+    this.nodeID = null;
+    this.x = 0;
+    this.y = 0;
+    this.floor = 0;
+    this.building = null;
+    this.nodeType = null;
+    this.longName = null;
+    this.shortName = null;
+    this.teamAssigned = '\0';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof DbNode)) {
+      return false;
+    }
+
+    DbNode other = (DbNode) o;
+
+    return nodeID.equals(other.nodeID)
+        && x == other.x
+        && y == other.y
+        && floor == other.floor
+        && building.equals(other.building)
+        && nodeType.equals(other.nodeType)
+        && longName.equals(other.longName)
+        && shortName.equals(other.shortName)
+        && teamAssigned == other.teamAssigned;
+  }
 }
