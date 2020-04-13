@@ -120,67 +120,80 @@ public class DbControllerMethodsTest {
 
 
   /**
-   * Tests that getNode(nodeID) returns the correct node when given a nodeID that is in the database
+   * Tests that getGNode(nodeID) returns the correct node when given a nodeID that is in the
+   * database
    */
   @Test
   public void getNodeTester() throws SQLException {
-    Node testNode = new Node(5.762, 0.646, "MOHSClinic");
-    Assertions.assertEquals(dbController.getGNode("MOHSClinic"), testNode);
+    Node testNode3 = new Node(447, 672, "BBBBBBBBBB");
+    Assertions.assertEquals(dbController.getGNode("BBBBBBBBBB"), testNode3);
+  }
 
-    Node testNode2 = new Node(6.532, 4.562, "HALL10");
-    Assertions.assertEquals(dbController.getGNode("testNode2"), testNode2);
+  /** Second test for getGNode(nodeID) */
+  @Test
+  public void getNodeTester2() throws SQLException {
+    Node testNode4 = new Node(517, 904, "H700000000");
+    Assertions.assertEquals(dbController.getGNode("H700000000"), testNode4);
+  }
+
+  /** Tests that getGNode(nodeID) returns null when given an nodeID that isn't in the database */
+  @Test
+  public void getNodeNullTester() {
+    // Change in future to reflect getting an exception/error
+    Assertions.assertNull(dbController.getGNode("test1"));
   }
 
   /**
-   * Tests that getGNode(nodeID) returns null when given an nodeID that isn't in the database or
-   * doesn't exist at all
+   * Tests that addNode(nodeID, x, y, floor, building, nodeType, longName, shortName, teamAssigned)
+   * takes the given information and makes it into a node in the database
    */
   @Test
-  public void getNodeNullTester() {
-    // Call getNode on node that doesn't exist at all
-    Assertions.assertNull(dbController.getGNode("test1"));
-
-    // Call getNode on node that exists but isn't in the graph
-    Node testNode2 = new Node(6.5, 2.0, "test2");
-    Assertions.assertNull(dbController.getGNode("test2"));
+  public void addNodeTester() throws SQLException {
+    Node testNode5 = new Node(25, 30, "testNodeT5");
+    dbController.addNode("testNodeT5", 25, 30, 4, "Buil", "OFFI", "TESTNODE5", "T5", 'Z');
+    Assertions.assertEquals(dbController.getGNode("testNodeT5"), testNode5);
+    dbController.deleteNode("testNodeT5");
   }
 
-  /** Tests that addNode(node) adds the given node to the database */
+  /**
+   * Second test for addNode(nodeID, x, y, floor, building, nodeType, longName, shortName,
+   * teamAssigned)
+   */
   @Test
-  public void addNodeTester() throws SQLException {
-    Node testNode = new Node(7.3, 4.6, "testNode1");
-    Assertions.assertEquals(dbController.getGNode("testNode1"), testNode);
-
-    Node testNode2 = new Node(10.8, 5.5, "testNode2");
-    Assertions.assertEquals(dbController.getGNode("testNode2"), testNode2);
+  public void addNodeTester2() throws SQLException {
+    Node testNode6 = new Node(108, 55, "testNodeT6");
+    dbController.addNode("testNodeT6", 108, 55, 4, "Buil", "OFFI", "TESTNODE6", "T6", 'Z');
+    Assertions.assertEquals(dbController.getGNode("testNodeT6"), testNode6);
+    dbController.deleteNode("testNodeT6");
   }
 
   //
   //  /**
   //   * Tests that addNode(node) doesn't add the given node to the database if it has the same ID
-  // as
-  //   * another node in the database (future test to implement once functionality is added)
+  //   * as another node in the database
+  //   * (future test to implement once that functionality is added)
   //   */
   //
+
   /**
    * Tests that cost(currNode, nextNode) returns the correct cost value for nodes in the database
    */
   @Test
   public void costTester() {
     Assertions.assertEquals(
-        Pathfinder.cost(dbController.getGNode("MOHSClinic"), dbController.getGNode("Neurology")),
-        2.641,
-        0.005);
+        Pathfinder.cost(dbController.getGNode("AAAAAAAAAA"), dbController.getGNode("EEEEEEEEEE")),
+        1196.75,
+        0.05);
   }
 
   /**
    * Tests that cost(currNode, nextNode) returns the correct value for nodes even if they aren't in
-   * a database
+   * the database
    */
   @Test
   public void costNotInGraphTester() {
-    Node testNode = new Node(0, 0, "node1");
-    Node testNode2 = new Node(3, 4, "node2");
-    Assertions.assertEquals(Pathfinder.cost(testNode, testNode2), 5, 0.0001);
+    Node testNode7 = new Node(0, 0, "node7");
+    Node testNode8 = new Node(3, 4, "node8");
+    Assertions.assertEquals(Pathfinder.cost(testNode7, testNode8), 5, 0.0001);
   }
 }
