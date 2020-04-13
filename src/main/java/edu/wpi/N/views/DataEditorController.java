@@ -1,8 +1,9 @@
 package edu.wpi.N.views;
 
+import edu.wpi.N.database.dbController;
 import edu.wpi.N.models.CSVParser;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,8 +29,11 @@ public class DataEditorController {
   }
 
   @FXML
-  public void onDoneClicked(MouseEvent event) throws FileNotFoundException {
+  public void onDoneClicked(MouseEvent event) throws SQLException, ClassNotFoundException {
+    dbController.initDB();
     String path = lbl_filePath.getText();
     CSVParser.parseCSVfromPath(path);
+    //    MapExampleController mapController = new MapExampleController();
+    //    mapController.populateMap();
   }
 }

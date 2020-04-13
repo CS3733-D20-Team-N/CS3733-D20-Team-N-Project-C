@@ -2,7 +2,9 @@ package edu.wpi.N.views;
 
 import edu.wpi.N.database.DbNode;
 import edu.wpi.N.database.dbController;
+import edu.wpi.N.models.CSVParser;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,8 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -25,7 +26,8 @@ public class MapExampleController {
 
   @FXML StackPane pane_map;
   @FXML AnchorPane pane_mapClickTarg;
-  @FXML AnchorPane pane_kioskNodes, pane_pathNodes;
+  @FXML AnchorPane pane_kioskNodes;
+  @FXML AnchorPane pane_pathNodes;
   @FXML Button btn_zoomIn, btn_zoomOut;
   @FXML Button btn_cardiology, btn_mohs, btn_neurology, btn_urology, btn_admin, btn_backToKiosk;
   @FXML Button btn_import;
@@ -38,12 +40,25 @@ public class MapExampleController {
   HashMap<Circle, DbNode> masterNodes; // stores all the nodes displayed on the map
   LinkedList<DbNode> nodesList;
 
-  public MapExampleController() {
+  public void initialize() throws SQLException, ClassNotFoundException {
+    dbController.initDB();
+    String pathToFile =
+        "C:\\Users\\Tian Yu Fan\\IdeaProjects\\CS3733-D20-Team-N-Project-C\\src\\main\\resources\\edu\\wpi\\N\\csv\\MapEnodes.csv";
+    CSVParser.parseCSVfromPath(pathToFile);
     populateMap();
   }
+  //  public MapExampleController() throws SQLException, ClassNotFoundException {
+  //    dbController.initDB();
+  //    String pathToFile =
+  //        "C:\\Users\\Tian Yu
+  // Fan\\IdeaProjects\\CS3733-D20-Team-N-Project-C\\src\\main\\resources\\edu\\wpi\\N\\csv\\MapEnodes.csv";
+  //    CSVParser.parseCSVfromPath(pathToFile);
+  //    populateMap();
+  //  }
 
-  public void populateMap() {
+  public void populateMap() throws SQLException, ClassNotFoundException {
     nodesList = dbController.floorNodes(4, "Faulkner");
+    masterNodes = new HashMap<Circle, DbNode>();
     Iterator iter = nodesList.iterator();
     while (iter.hasNext()) {
       DbNode newNode = (DbNode) iter.next();
@@ -58,7 +73,7 @@ public class MapExampleController {
     newMapNode.setRadius(5);
     newMapNode.setLayoutX(newNode.getX());
     newMapNode.setLayoutY(newNode.getY());
-    newMapNode.setFill(Color.DODGERBLUE);
+    newMapNode.setFill(Color.PURPLE);
     return newMapNode;
   }
 
