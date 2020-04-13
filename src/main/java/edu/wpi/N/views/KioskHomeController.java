@@ -36,10 +36,9 @@ public class KioskHomeController {
 
   @FXML
   private void storeData() throws IOException {
-    System.out.println("error here");
     username = txt_User.getText();
     password = pf_Pass.getText();
-    System.out.println("Username: " + username + " Password: " + password);
+    // System.out.println("Username: " + username + " Password: " + password);
     loginCheck(username, password);
   }
 
@@ -112,9 +111,8 @@ public class KioskHomeController {
     if (username.equals("admin") && password.equals("1234")) {
       Stage stage;
       Parent root;
-
       stage = new Stage();
-      stage.close();
+      stage.getScene();
       root = FXMLLoader.load(getClass().getResource("adminRequestPage.fxml"));
       Scene scene = new Scene(root);
       stage.setScene(scene);
