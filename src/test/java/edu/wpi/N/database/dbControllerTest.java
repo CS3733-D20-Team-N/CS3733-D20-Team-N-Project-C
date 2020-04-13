@@ -72,7 +72,8 @@ public class dbControllerTest {
   public void testAddNodeNoID() {
     /*dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7");
     assertTrue(dbController.floorNodes(4, "Faulkner").contains());*/
-    assertTrue(dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7"));
+    DbNode node = dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7");
+    assertTrue(node.getNodeID() != null);
     assertTrue(
         dbController
             .allNodes()
@@ -135,7 +136,7 @@ public class dbControllerTest {
   @Test
   public void testFloorNodes() {
     LinkedList<DbNode> nodeList = dbController.floorNodes(4, "Faulkner");
-    assertEquals(5, nodeList.size());
+    assertEquals(6, nodeList.size());
     // assertTrue(nodeList.get(0).getNodeID().equals("NDEPT01005"));
   }
 
