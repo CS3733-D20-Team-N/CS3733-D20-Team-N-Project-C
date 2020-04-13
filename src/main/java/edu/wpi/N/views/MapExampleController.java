@@ -2,7 +2,6 @@ package edu.wpi.N.views;
 
 import edu.wpi.N.database.DbNode;
 import edu.wpi.N.database.dbController;
-import edu.wpi.N.models.CSVParser;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -41,20 +40,13 @@ public class MapExampleController {
   LinkedList<DbNode> nodesList;
 
   public void initialize() throws SQLException, ClassNotFoundException {
-    dbController.initDB();
-    String pathToFile =
-        "C:\\Users\\Tian Yu Fan\\IdeaProjects\\CS3733-D20-Team-N-Project-C\\src\\main\\resources\\edu\\wpi\\N\\csv\\MapEnodes.csv";
-    CSVParser.parseCSVfromPath(pathToFile);
+    //    String pathToFile =
+    //        "C:\\Users\\Tian Yu
+    // Fan\\IdeaProjects\\CS3733-D20-Team-N-Project-C\\src\\main\\resources\\edu\\wpi\\N\\csv\\MapEnodes.csv";
+    //
+    //    CSVParser.parseCSVfromPath(pathToFile);
     populateMap();
   }
-  //  public MapExampleController() throws SQLException, ClassNotFoundException {
-  //    dbController.initDB();
-  //    String pathToFile =
-  //        "C:\\Users\\Tian Yu
-  // Fan\\IdeaProjects\\CS3733-D20-Team-N-Project-C\\src\\main\\resources\\edu\\wpi\\N\\csv\\MapEnodes.csv";
-  //    CSVParser.parseCSVfromPath(pathToFile);
-  //    populateMap();
-  //  }
 
   public void populateMap() throws SQLException, ClassNotFoundException {
     nodesList = dbController.floorNodes(4, "Faulkner");

@@ -3,12 +3,17 @@ package edu.wpi.N.views;
 import edu.wpi.N.database.dbController;
 import edu.wpi.N.models.CSVParser;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class DataEditorController {
   @FXML Button btn_select;
@@ -29,11 +34,17 @@ public class DataEditorController {
   }
 
   @FXML
-  public void onDoneClicked(MouseEvent event) throws SQLException, ClassNotFoundException {
+  public void onDoneClicked(MouseEvent event)
+      throws SQLException, ClassNotFoundException, IOException {
     dbController.initDB();
     String path = lbl_filePath.getText();
     CSVParser.parseCSVfromPath(path);
-    //    MapExampleController mapController = new MapExampleController();
-    //    mapController.populateMap();
+    Stage stage;
+    Parent root;
+    stage = (Stage) btn_done.getScene().getWindow();
+    root = FXMLLoader.load(getClass().getResource("KioskHome.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
   }
 }

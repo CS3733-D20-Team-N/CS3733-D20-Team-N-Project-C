@@ -33,6 +33,7 @@ public class KioskHomeController {
   @FXML PasswordField pf_Pass;
   @FXML Button btn_Home;
   @FXML Button btn_Submit;
+  @FXML Button btn_import;
 
   @FXML
   private void storeData() throws IOException {
@@ -124,5 +125,16 @@ public class KioskHomeController {
     } else {
       System.out.println("Invalid Username or Password");
     }
+  }
+
+  @FXML
+  private void onImportClicked(MouseEvent event) throws Exception {
+    Stage stage;
+    Parent root;
+    stage = (Stage) btn_import.getScene().getWindow();
+    root = FXMLLoader.load(getClass().getResource("dataEditor.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
   }
 }
