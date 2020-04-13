@@ -388,7 +388,7 @@ public class dbController {
 
     ResultSet rs = null;
     String query =
-        "WITH connected_edges AS(SELECT node1 AS nodeID FROM edges WHERE node2 = '"
+        "WITH connected_edges(node) AS(SELECT node1 AS nodeID FROM edges WHERE node2 = '"
             + nodeID
             + "' UNION "
             + "SELECT node2 AS nodeID FROM edges WHERE node1 = '"
@@ -494,7 +494,7 @@ public class dbController {
 
     ResultSet rs = null;
     String query =
-        "WITH connected_edges AS(SELECT node1 AS nodeID FROM edges WHERE node2 = '"
+        "WITH connected_edges(node) AS(SELECT node1 AS nodeID FROM edges WHERE node2 = '"
             + nodeID
             + "' UNION "
             + "SELECT node2 AS nodeID FROM edges WHERE node1 = '"
@@ -519,6 +519,7 @@ public class dbController {
                 rs.getString("nodes.teamAssigned").charAt(0)));
       }
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
 
