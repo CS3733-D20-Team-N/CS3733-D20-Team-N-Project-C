@@ -106,13 +106,7 @@ public class dbControllerTest {
     dbController.addEdge("NHALL00104", "NDEPT00204");
 
     LinkedList<DbNode> adjList = dbController.getAdjacent("NHALL00104");
-    assertNotNull(adjList); // error here
-    // assertNotNull(adjList); // error here
-    /*
-    >>>>>>> 80d099152078b530dc4121269d3cf9028da86af3
-        assertTrue(adjList.get(0).getNodeID().equals("NHALL00204"));
-        assertTrue(adjList.get(1).getNodeID().equals("NDEPT00104"));
-        assertTrue(adjList.get(2).getNodeID().equals("NDEPT00204"));*/
+    assertNotNull(adjList);
 
     assertTrue(
         adjList.contains(
@@ -136,7 +130,7 @@ public class dbControllerTest {
   @Test
   public void testFloorNodes() {
     LinkedList<DbNode> nodeList = dbController.floorNodes(4, "Faulkner");
-    assertEquals(6, nodeList.size());
+    assertEquals(5, nodeList.size());
     // assertTrue(nodeList.get(0).getNodeID().equals("NDEPT01005"));
   }
 

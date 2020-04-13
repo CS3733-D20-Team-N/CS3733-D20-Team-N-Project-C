@@ -510,20 +510,20 @@ public class dbController {
       statement.execute(query);
       query =
           "SELECT nodes.* FROM nodes "
-              + "JOIN connected_edges ON connected_edges.nodeID = nodes.nodeID";
+              + "JOIN connected_edges ON connected_edges.edge_nodeID = nodes.nodeID";
       rs = statement.executeQuery(query);
       while (rs.next()) {
         ret.add(
             new DbNode(
-                rs.getString("nodes.nodeID"),
-                rs.getInt("nodes.xcoord"),
-                rs.getInt("nodes.ycoord"),
-                rs.getInt("nodes.floor"),
-                rs.getString("nodes.building"),
-                rs.getString("nodes.nodeType"),
-                rs.getString("nodes.longName"),
-                rs.getString("nodes.shortName"),
-                rs.getString("nodes.teamAssigned").charAt(0)));
+                rs.getString("nodeID"),
+                rs.getInt("xcoord"),
+                rs.getInt("ycoord"),
+                rs.getInt("floor"),
+                rs.getString("building"),
+                rs.getString("nodeType"),
+                rs.getString("longName"),
+                rs.getString("shortName"),
+                rs.getString("teamAssigned").charAt(0)));
       }
       query = "DROP VIEW connected_edges";
       statement.executeUpdate(query);
