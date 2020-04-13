@@ -72,7 +72,7 @@ public class dbControllerTest {
   public void testAddNodeNoID() {
     /*dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7");
     assertTrue(dbController.floorNodes(4, "Faulkner").contains());*/
-    assertTrue(dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7"));
+    assertNotNull(dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7"));
     assertTrue(
         dbController
             .allNodes()
@@ -104,7 +104,7 @@ public class dbControllerTest {
     dbController.addEdge("NHALL00104", "NDEPT00104");
     dbController.addEdge("NHALL00104", "NDEPT00204");
 
-    LinkedList<DbNode> adjList = dbController.getAdjacent("NHALL00104");
+    LinkedList<Node> adjList = dbController.getGAdjacent("NHALL00104");
     assertNotNull(adjList); // error here
     // assertNotNull(adjList); // error here
     /*
@@ -113,17 +113,9 @@ public class dbControllerTest {
         assertTrue(adjList.get(1).getNodeID().equals("NDEPT00104"));
         assertTrue(adjList.get(2).getNodeID().equals("NDEPT00204"));*/
 
-    assertTrue(
-        adjList.contains(
-            new DbNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N')));
-    assertTrue(
-        adjList.contains(
-            new DbNode(
-                "NDEPT00104", 1350, 950, 4, "Faulkner", "DEPT", "Cardiology", "Dept 1", 'N')));
-    assertTrue(
-        adjList.contains(
-            new DbNode(
-                "NDEPT00204", 1450, 950, 4, "Faulkner", "DEPT", "Neurology", "Dept 2", 'N')));
+    assertTrue(adjList.contains(new Node(1350, 1250, "NHALL00204")));
+    assertTrue(adjList.contains(new Node(1350, 950, "NDEPT00104")));
+    assertTrue(adjList.contains(new Node(1450, 950, "NDEPT00204")));
 
     assertEquals(3, adjList.size());
     dbController.removeEdge("NHALL00104", "NHALL00204");
