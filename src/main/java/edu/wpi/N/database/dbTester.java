@@ -18,9 +18,9 @@ public class dbTester {
     dbController.addNode(
         "NDEPT01005", 1300, 1200, 5, "Faulkner", "DEPT", "Software Engineering", "Dept 10", 'N');
 
-    boolean testaddNode =
+    DbNode testaddNode =
         addNode("NDEPT00304", 1550, 1200, 4, "Faulkner", "DEPT", "epistemology", "Dept 3", 'N');
-    if (testaddNode) {
+    if (testaddNode.getNodeID().equals("NDEPT00304")) {
       System.out.println("addNode Worked");
     }
 

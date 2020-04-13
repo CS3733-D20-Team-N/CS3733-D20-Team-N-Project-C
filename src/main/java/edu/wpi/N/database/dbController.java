@@ -23,7 +23,7 @@ public class dbController {
    * @param teamAssigned The team assigned to the Node
    * @return True if valid and inserted properly, false otherwise.
    */
-  public static boolean addNode(
+  public static DbNode addNode(
       String nodeID,
       int x,
       int y,
@@ -56,9 +56,9 @@ public class dbController {
               + "')";
       statement.execute(query);
       // System.out.println("Values Inserted");
-      return true;
+      return getNode(nodeID);
     } catch (SQLException e) {
-      return false;
+      return null;
     }
   }
 
