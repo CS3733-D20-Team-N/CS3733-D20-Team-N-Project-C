@@ -11,7 +11,7 @@ public class CSVParser {
    *
    * @param pathToFile: path to the CSV file as an InputStream
    */
-  public static void parseCSV(InputStream pathToFile) {
+  private static void parseCSV(InputStream pathToFile) {
     try {
       // Assume that it is NodeCSV
       Boolean isNodeCSV = true;
@@ -51,7 +51,7 @@ public class CSVParser {
    *
    * @param row: a row to parse data from
    */
-  static void parseEdgesRow(String[] row) throws Exception {
+  private static void parseEdgesRow(String[] row) throws Exception {
     // String edgeID = row[0];
     String startNodeId = row[1];
     String endNodeId = row[2];
@@ -64,7 +64,7 @@ public class CSVParser {
    *
    * @param row: a row to parse data from
    */
-  static void parseNodeRow(String[] row) throws Exception {
+  private static void parseNodeRow(String[] row) throws Exception {
     String nodeID = row[0];
     int xcoord = Integer.parseInt(row[1]);
     int ycoord = Integer.parseInt(row[2]);
