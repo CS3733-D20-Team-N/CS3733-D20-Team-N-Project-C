@@ -23,7 +23,7 @@ public class dbController {
    * @param teamAssigned The team assigned to the Node
    * @return True if valid and inserted properly, false otherwise.
    */
-  public static DbNode addNode(
+  public static boolean addNode(
       String nodeID,
       int x,
       int y,
@@ -56,9 +56,9 @@ public class dbController {
               + "')";
       statement.execute(query);
       // System.out.println("Values Inserted");
-      return getNode(nodeID);
+      return true;
     } catch (SQLException e) {
-      return null;
+      return false;
     }
   }
 
@@ -303,7 +303,7 @@ public class dbController {
    * @param shortName The node's shortName
    * @return True if valid and inserted properly, false otherwise.
    */
-  public static boolean addNode(
+  public static DbNode addNode(
       int x,
       int y,
       int floor,
@@ -333,9 +333,9 @@ public class dbController {
               + shortName.replace("\'", "\\'")
               + "','I')";
       statement.execute(query);
-      return true;
+      return getNode(nodeID);
     } catch (SQLException e) {
-      return false;
+      return null;
     }
   }
 

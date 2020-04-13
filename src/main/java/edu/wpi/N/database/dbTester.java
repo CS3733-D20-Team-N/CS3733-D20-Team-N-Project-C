@@ -18,14 +18,14 @@ public class dbTester {
     dbController.addNode(
         "NDEPT01005", 1300, 1200, 5, "Faulkner", "DEPT", "Software Engineering", "Dept 10", 'N');
 
-    DbNode testaddNode =
+    boolean testaddNode =
         addNode("NDEPT00304", 1550, 1200, 4, "Faulkner", "DEPT", "epistemology", "Dept 3", 'N');
-    if (testaddNode.getNodeID().equals("NDEPT00304")) {
+    if (testaddNode) {
       System.out.println("addNode Worked");
     }
 
-    boolean testaddNode2 = addNode(1250, 950, 4, "Faulkner", "HALL", "Hall 3", "Hall 3");
-    if (testaddNode2) {
+    DbNode testaddNode2 = addNode(1250, 950, 4, "Faulkner", "HALL", "Hall 3", "Hall 3");
+    if (testaddNode2.getLongName().equals("Hall 3")) {
       System.out.println("addNode without nodeID worked");
     }
 
