@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class DbControllerMethodsTest {
 
   @BeforeAll
-  public static void initializeTest() throws SQLException, ClassNotFoundException {
+  public static void initializeTest() throws Exception {
     dbController.initDB();
     InputStream inputNodes = Main.class.getResourceAsStream("csv/TestNodes.csv");
     InputStream inputEdges = Main.class.getResourceAsStream("csv/TestEdges.csv");
