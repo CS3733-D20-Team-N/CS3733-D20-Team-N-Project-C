@@ -87,7 +87,7 @@ public class dbController {
       char teamAssigned) {
     String newID;
     try {
-      if ((nodeID.substring(0, 5) + nodeID.substring(8))
+      if (!(nodeID.substring(0, 5) + nodeID.substring(8))
           .equals(teamAssigned + nodeType.toUpperCase() + String.format("%02d", floor))) {
         if (nodeID.substring(1, 5).equals(nodeType)) {
           newID = teamAssigned + nodeID.substring(1, 8) + String.format("%02d", floor);
@@ -95,6 +95,7 @@ public class dbController {
           newID = teamAssigned + nodeType.toUpperCase() + nextAvailNum(nodeType) + "0" + floor;
         }
       } else newID = nodeID;
+      System.out.println(newID);
       String query =
           "UPDATE nodes SET nodeID = '"
               + newID
@@ -146,7 +147,11 @@ public class dbController {
   }
 
   /**
+<<<<<<< HEAD
    * >>>>>>> db-branch Deletes a node from the database
+=======
+   * >>>>>>> 244323def286ea6969588df22b7d1d49bbce118f Deletes a node from the database
+>>>>>>> db-branch
    *
    * @param nodeID the nodeID of the node to be deleted
    * @return true if delete successful, false otherwise.
@@ -273,7 +278,7 @@ public class dbController {
     int nextVal;
     int lowest;
     for (int i = 0; i < size; i++) {
-      if (nums.get(i) <= 0 || nums.get(i) < size) continue;
+      if (nums.get(i) <= 0 || nums.get(i) > size) continue;
       val = nums.get(i);
       while (nums.get(val - 1) != val) {
         nextVal = nums.get(val - 1);
@@ -305,7 +310,7 @@ public class dbController {
    * @param shortName The node's shortName
    * @return True if valid and inserted properly, false otherwise.
    */
-  public static boolean addNode(
+  public static DbNode addNode(
       int x,
       int y,
       int floor,
@@ -335,9 +340,9 @@ public class dbController {
               + shortName.replace("\'", "\\'")
               + "','I')";
       statement.execute(query);
-      return true;
+      return getNode(nodeID);
     } catch (SQLException e) {
-      return false;
+      return null;
     }
   }
 
@@ -391,19 +396,21 @@ public class dbController {
    */
   public static LinkedList<Node> getGAdjacent(String nodeID) {
     LinkedList<Node> ret = new LinkedList<Node>();
-
-    ResultSet rs = null;
-    String query =
-        "WITH connected_edges AS(SELECT node1 AS nodeID FROM edges WHERE node2 = '"
-            + nodeID
-            + "' UNION "
-            + "SELECT node2 AS nodeID FROM edges WHERE node1 = '"
-            + nodeID
-            + "') "
-            + "SELECT nodes.xcoord, nodes.ycoord, nodes.nodeID FROM nodes "
-            + "JOIN connected_edges ON connected_edges.nodeID = nodes.nodeID";
-
     try {
+      ResultSet rs = null;
+      String query =
+          "CREATE VIEW connected_edges (edge_nodeID)"
+              + "AS SELECT node1 FROM edges WHERE node2 = '"
+              + nodeID
+              + "' UNION "
+              + "SELECT node2 FROM edges WHERE node1 = '"
+              + nodeID
+              + "'";
+      statement.execute(query);
+      query =
+          "SELECT nodes.nodeID, nodes.xcoord, nodes.ycoord FROM nodes "
+              + "JOIN connected_edges ON connected_edges.nodeID = nodes.nodeID";
+
       rs = statement.executeQuery(query);
       while (rs.next()) {
         ret.add(
@@ -412,6 +419,8 @@ public class dbController {
                 rs.getInt("nodes.ycoord"),
                 rs.getString("nodes.nodeID")));
       }
+      query = "DROP VIEW connected_edges";
+      statement.executeUpdate(query);
     } catch (SQLException e) {
       return null;
     }
@@ -500,19 +509,21 @@ public class dbController {
    */
   public static LinkedList<DbNode> getAdjacent(String nodeID) {
     LinkedList<DbNode> ret = new LinkedList<DbNode>();
-
-    ResultSet rs = null;
-    String query =
-        "WITH connected_edges AS(SELECT node1 AS nodeID FROM edges WHERE node2 = '"
-            + nodeID
-            + "' UNION "
-            + "SELECT node2 AS nodeID FROM edges WHERE node1 = '"
-            + nodeID
-            + "') "
-            + "SELECT nodes.* FROM nodes "
-            + "JOIN connected_edges ON connected_edges.nodeID = nodes.nodeID";
-
     try {
+
+      ResultSet rs = null;
+      String query =
+          "CREATE VIEW connected_edges (edge_nodeID)"
+              + "AS SELECT node1 FROM edges WHERE node2 = '"
+              + nodeID
+              + "' UNION "
+              + "SELECT node2 FROM edges WHERE node1 = '"
+              + nodeID
+              + "'";
+      statement.execute(query);
+      query =
+          "SELECT nodes.* FROM nodes "
+              + "JOIN connected_edges ON connected_edges.nodeID = nodes.nodeID";
       rs = statement.executeQuery(query);
       while (rs.next()) {
         ret.add(
@@ -527,7 +538,10 @@ public class dbController {
                 rs.getString("nodes.shortName"),
                 rs.getString("nodes.teamAssigned").charAt(0)));
       }
+      query = "DROP VIEW connected_edges";
+      statement.executeUpdate(query);
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
 
