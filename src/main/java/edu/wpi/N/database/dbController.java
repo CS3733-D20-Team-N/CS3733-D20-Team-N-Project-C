@@ -147,7 +147,7 @@ public class dbController {
   }
 
   /**
-   * Deletes a node from the database
+   * >>>>>>> db-branch Deletes a node from the database
    *
    * @param nodeID the nodeID of the node to be deleted
    * @return true if delete successful, false otherwise.
@@ -258,6 +258,7 @@ public class dbController {
    * @throws SQLException if something goes wrong with the sql
    */
   private static String nextAvailNum(String nodeType) throws SQLException {
+
     String query = "SELECT nodeID FROM nodes WHERE nodeType = '" + nodeType + "'";
     ResultSet rs = statement.executeQuery(query);
     ArrayList<Integer> nums = new ArrayList<Integer>();
@@ -348,7 +349,9 @@ public class dbController {
    * @return A list of all nodes with a long name containing the searchQuery
    */
   public static LinkedList<DbNode> searchNode(String searchQuery) {
+
     String query = "SELECT * FROM nodes WHERE longName LIKE '%" + searchQuery + "%'";
+
     return getAllNodesSQL(query);
   }
 
@@ -368,7 +371,9 @@ public class dbController {
       rs =
           statement.executeQuery(
               "SELECT xcoord, ycoord, nodeID FROM nodes WHERE nodeID = '" + nodeID + "'");
+
       rs.next();
+
       x = rs.getInt("xcoord");
       y = rs.getInt("ycoord");
       id = rs.getString("nodeID");
@@ -425,6 +430,7 @@ public class dbController {
   public static LinkedList<DbNode> floorNodes(int floor, String building) {
     String query =
         "SELECT * FROM nodes WHERE floor = " + floor + "AND building = '" + building + "'";
+
     return getAllNodesSQL(query);
   }
 
@@ -458,7 +464,9 @@ public class dbController {
    */
   public static LinkedList<DbNode> allNodes() {
     LinkedList<DbNode> nodes = new LinkedList<DbNode>();
+
     String query = "SELECT * FROM nodes";
+
     return getAllNodesSQL(query);
   }
 
