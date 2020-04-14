@@ -57,7 +57,8 @@ public class Pathfinder {
       }
 
       // for every node (next node), current node has edge to:
-      for (Node nextNode : dbController.getGAdjacent(current.ID)) {
+      LinkedList<Node> adjacentToCurrent = dbController.getGAdjacent(current.ID);
+      for (Node nextNode : adjacentToCurrent) {
         String nextNodeID = nextNode.ID;
 
         // calculate the cost of next node
@@ -92,7 +93,7 @@ public class Pathfinder {
    * @param cameFrom: Map, where key: NodeID, value: came-from-NodeID
    * @return Path object containing generated path
    */
-  public static Path generatePath(Node start, Node end, Map<String, String> cameFrom) {
+  private static Path generatePath(Node start, Node end, Map<String, String> cameFrom) {
 
     String currentID = end.ID;
     LinkedList<DbNode> path = new LinkedList<DbNode>();
