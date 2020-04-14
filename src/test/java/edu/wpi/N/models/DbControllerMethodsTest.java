@@ -24,10 +24,6 @@ public class DbControllerMethodsTest {
   /** Tests that getGAdjacent(nodeID) returns the correct list of edges for a given node */
   @Test
   public void getGAdjacentTester() {
-    LinkedList<Node> hall1Edges = new LinkedList<Node>();
-    hall1Edges.add(dbController.getGNode("H200000000"));
-    Assertions.assertEquals(dbController.getGAdjacent("H100000000"), hall1Edges);
-
     LinkedList<Node> hall3Edges = new LinkedList<Node>();
     hall3Edges.add(dbController.getGNode("H200000000"));
     hall3Edges.add(dbController.getGNode("H400000000"));
