@@ -105,7 +105,7 @@ public class NodeTableEditorController {
 
   private void getFloorsInBuilding(String building) {
     for (TableNode tn : allNodes) {
-      if (!buildings.contains(tn.floorProperty().getValue())) {
+      if (!floors.contains(tn.floorProperty().getValue())) {
         floors.add(tn.floorProperty().getValue());
         menu_pickFloor.getItems().add(tn.floorProperty().getValue());
       }
