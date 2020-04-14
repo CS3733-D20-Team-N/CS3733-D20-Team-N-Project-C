@@ -142,4 +142,3 @@ public class PathfinderMethodsTest {
   //        NullPointerException.class, () -> Pathfinder.generatePath(start, end, cameFrom));
   //  }
 }
-
