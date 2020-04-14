@@ -2,13 +2,22 @@ package edu.wpi.N.entities;
 
 import edu.wpi.N.database.DbNode;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 // Re-maps DbNode data to a format that automatically updates a JavaFX TableViewer node
 public class TableNode {
 
-  private IntegerProperty x, y, floor;
-  private StringProperty nodeID, building, nodeType, longName, shortName, teamAssigned;
+  private IntegerProperty x = new SimpleIntegerProperty();
+  private IntegerProperty y = new SimpleIntegerProperty();
+  private IntegerProperty floor = new SimpleIntegerProperty();
+  private StringProperty nodeID = new SimpleStringProperty();
+  private StringProperty building = new SimpleStringProperty();
+  private StringProperty nodeType = new SimpleStringProperty();
+  private StringProperty longName = new SimpleStringProperty();
+  private StringProperty shortName = new SimpleStringProperty();
+  private StringProperty teamAssigned = new SimpleStringProperty();
 
   public TableNode(DbNode node) {
     x.set(node.getX());

@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 public class NodeTableEditorController {
   @FXML Button btn_saveChanges, btn_next, btn_back;
   @FXML TableView nodesTable;
-  @FXML ChoiceBox menu_pickBuilding, menu_pickFloor, menu_pickNode;
+  @FXML ChoiceBox menu_pickBuilding, menu_pickFloor; // , menu_pickNode;
   private LinkedList<String> buildings = new LinkedList<>();
   private LinkedList<TableNode> allNodes = new LinkedList<>();
   private ObservableList<TableNode> currentNodes = FXCollections.observableArrayList();
@@ -38,9 +38,9 @@ public class NodeTableEditorController {
 
     System.out.println(dbController.allNodes().size());
 
-    // refreshAllNodes();
-    // getBuildings();
-    // fillTable();
+    refreshAllNodes();
+    getBuildings();
+    fillTable();
   }
 
   @FXML
@@ -119,7 +119,7 @@ public class NodeTableEditorController {
     for (DbNode dn : dbController.floorNodes(floor, building)) {
       TableNode tn = new TableNode(dn);
       currentNodes.add(tn);
-      menu_pickNode.getItems().add(tn.getShortName());
+      // menu_pickNode.getItems().add(tn.getShortName());
     }
   }
 

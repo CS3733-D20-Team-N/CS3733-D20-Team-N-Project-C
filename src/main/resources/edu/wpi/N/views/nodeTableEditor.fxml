@@ -28,18 +28,18 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
+                        <Line layoutX="137.0" layoutY="56.0" startX="-120.0" stroke="#bcbcbc" />
+                        <HBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Building:" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
+                              <ChoiceBox fx:id="menu_pickBuilding" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="80.0" />
+                           </children>
+                        </HBox>
                         <Line layoutX="137.0" layoutY="53.0" startX="-120.0" stroke="#bcbcbc" />
                         <HBox alignment="CENTER" layoutX="10.0" layoutY="66.0" spacing="5.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" text="Floor:" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
-                              <ChoiceBox fx:id="menu_pickFloor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="92.0" />
-                           </children>
-                        </HBox>
-                        <Line layoutX="137.0" layoutY="56.0" startX="-120.0" stroke="#bcbcbc" />
-                        <HBox alignment="CENTER" spacing="5.0">
-                           <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" text="Editing node:" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
-                              <ChoiceBox fx:id="menu_pickNode" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="56.0" />
+                              <ChoiceBox fx:id="menu_pickFloor" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="100.0" />
                            </children>
                         </HBox>
                         <Line layoutX="137.0" layoutY="53.0" startX="-120.0" stroke="#bcbcbc" />
