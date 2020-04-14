@@ -1,5 +1,5 @@
 ID,xcoord,ycoord(raw),ycoord,floor,building,nodeType,longName,shortName,teamAssigned,edgeTo
-MOHSClinic,5.762,6.743,0.646,,,,,,,HALL1
+MOHSClinic,,,,,,,,,,HALL1
 HALL1,6.532,6.743,0.646,,,,,,,"MOHSClinic,HALL2"
 HALL2,6.532,6.246,1.143,,,,,,,"HALL1,HALL3,EntPServ&NurseSuite"
 HALL3,6.532,5.9,1.489,,,,,,,"HALL2,HALL4"

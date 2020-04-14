@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class AlgosMainCanIgnore {
 
-  public static void main(String[] args) throws SQLException, ClassNotFoundException {
+  public static void main(String[] args) throws SQLException, ClassNotFoundException, Exception {git ad
     dbController.initDB();
     // relative path to .csv file
     String pathToFile =
