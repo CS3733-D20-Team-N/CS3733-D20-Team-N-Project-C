@@ -34,12 +34,12 @@ public class dbControllerTest {
   // Noah
   @Test
   public void testModifyNode() {
-    dbController.modifyNode("NHALL00204", 123, 771, 3, "Faulkner", "DEPT", "DEPT 3", "Dept 3", 'N');
+    dbController.modifyNode("NHALL00204", 123, 771, 3, "Faulkner", "SEXY", "DEPT 3", "Dept 3", 'N');
     dbTester.printDB();
-    DbNode n = dbController.getNode("NDEPT00304");
+    DbNode n = dbController.getNode("NSEXY00103");
     assertEquals(123, n.getX());
-    assertEquals("DEPT", n.getNodeType());
-    dbController.deleteNode("NDEPT00304");
+    assertEquals("SEXY", n.getNodeType());
+    dbController.deleteNode("NSEXY00303");
     dbController.addNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N');
   }
 
