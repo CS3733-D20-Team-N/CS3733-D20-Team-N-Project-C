@@ -534,25 +534,29 @@ public class dbController {
     try {
       // Look in to a more efficient way to do this, but it's probably OK for now
       String query =
-          "SELECT * FROM edges WHERE (node1 = '"
-              + nodeID1
-              + "' AND node2 = '"
-              + nodeID2
-              + "') OR"
-              + "(node2 = '"
-              + nodeID1
-              + "' AND node1 = '"
-              + nodeID2
-              + "')";
-      ResultSet result = statement.executeQuery(query);
+          "SELECT * FROM edges WHERE (node1 = ? AND node2 = ?) OR "
+                                  + "(node2 = ? AND node1 = ?)";
+
+      PreparedStatement st = con.prepareStatement(query);
+      st.setNString(1, nodeID1);
+      st.setNString(2, nodeID2);
+      st.setNString(3, nodeID1);
+      st.setNString(4, nodeID2);
+      ResultSet result = st.executeQuery();
 
       if (result.next()) {
         return false;
       }
+
       query =
-          "INSERT INTO edges " + "VALUES ('" + edgeID + "', '" + nodeID1 + "', '" + nodeID2 + "')";
-      statement.execute(query);
-      return true;
+          "INSERT INTO edges VALUES (?, ?, ?)";
+
+      st = con.prepareStatement(query);
+      st.setNString(1, edgeID);
+      st.setNString(2, nodeID1);
+      st.setNString(3, nodeID2);
+
+      return st.executeUpdate() > 0;
     } catch (SQLException e) {
       return false;
     }
@@ -579,9 +583,9 @@ public class dbController {
                                 + "(node2 = ? AND node1 = ?)";
       PreparedStatement st = con.prepareStatement(query);
       st.setNString(1, nodeID1);
-      st.setNString(1, nodeID2);
-      st.setNString(1, nodeID1);
-      st.setNString(1, nodeID2);
+      st.setNString(2, nodeID2);
+      st.setNString(3, nodeID1);
+      st.setNString(4, nodeID2);
       return st.executeUpdate() > 0;
     } catch (SQLException e) {
       return false;
