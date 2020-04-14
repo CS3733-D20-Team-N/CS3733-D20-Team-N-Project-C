@@ -8,6 +8,7 @@ import java.util.LinkedList;
 public class dbController {
 
   private static Statement statement;
+  private static Connection con;
 
   /**
    * Adds a node to the database including the nodeID for importing from the CSV
@@ -194,12 +195,11 @@ public class dbController {
   /** Initializes the database, should be run before interfacing with it. */
   public static void initDB() throws ClassNotFoundException, SQLException {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-    Connection connection;
     String URL;
 
     URL = "jdbc:derby:memory:MapDB;create=true";
-    connection = DriverManager.getConnection(URL);
-    statement = connection.createStatement();
+    con = DriverManager.getConnection(URL);
+    statement = con.createStatement();
     String query;
 
     // not necessary when running the database in memory
