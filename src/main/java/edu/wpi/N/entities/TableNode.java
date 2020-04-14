@@ -5,6 +5,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 
 // Re-maps DbNode data to a format that automatically updates a JavaFX TableViewer node
 public class TableNode {
@@ -31,39 +32,39 @@ public class TableNode {
     teamAssigned.set("" + node.getTeamAssigned());
   }
 
-  public IntegerProperty getX() {
+  public ObservableValue<Number> xProperty() {
     return x;
   }
 
-  public IntegerProperty getY() {
+  public ObservableValue<Number> yProperty() {
     return y;
   }
 
-  public IntegerProperty getFloor() {
+  public ObservableValue<Number> floorProperty() {
     return floor;
   }
 
-  public StringProperty getID() {
+  public ObservableValue<String> nodeIDProperty() {
     return nodeID;
   }
 
-  public StringProperty getBuilding() {
+  public ObservableValue<String> buildingProperty() {
     return building;
   }
 
-  public StringProperty getNodeType() {
+  public ObservableValue<String> nodeTypeProperty() {
     return nodeType;
   }
 
-  public StringProperty getLongName() {
+  public ObservableValue<String> longNameProperty() {
     return longName;
   }
 
-  public StringProperty getShortName() {
+  public ObservableValue<String> shortNameProperty() {
     return shortName;
   }
 
-  public StringProperty getTeamAssigned() {
+  public ObservableValue<String> teamAssignedProperty() {
     return teamAssigned;
   }
 }

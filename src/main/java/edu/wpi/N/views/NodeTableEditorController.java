@@ -27,8 +27,9 @@ public class NodeTableEditorController {
   @FXML ChoiceBox menu_pickBuilding, menu_pickFloor; // , menu_pickNode;
   private LinkedList<String> buildings = new LinkedList<>();
   private LinkedList<TableNode> allNodes = new LinkedList<>();
+  private LinkedList<Number> floors = new LinkedList<>();
   private ObservableList<TableNode> currentNodes = FXCollections.observableArrayList();
-  private int currentFloor, totalFloorsInBuilding;
+  private int currentFloor;
   private String currentBuilding;
 
   @FXML
@@ -94,23 +95,22 @@ public class NodeTableEditorController {
   private void getBuildings() {
     buildings.clear();
     for (TableNode tn : allNodes) {
-      if (!buildings.contains(tn.getBuilding())) {
-        buildings.add(tn.getBuilding().get());
-        menu_pickBuilding.getItems().add(tn.getBuilding());
+      if (!buildings.contains(tn.buildingProperty())) {
+        buildings.add(tn.buildingProperty().getValue());
+        menu_pickBuilding.getItems().add(tn.buildingProperty().getValue());
       }
     }
     getFloorsInBuilding(buildings.getFirst());
   }
 
   private void getFloorsInBuilding(String building) {
-    totalFloorsInBuilding = 0;
     for (TableNode tn : allNodes) {
-      if (tn.getBuilding().get().equals(building)) {
-        totalFloorsInBuilding = Math.max(totalFloorsInBuilding, tn.getFloor().get());
-        menu_pickFloor.getItems().add(tn.getFloor());
+      if (!buildings.contains(tn.floorProperty())) {
+        floors.add(tn.floorProperty().getValue());
+        menu_pickFloor.getItems().add(tn.floorProperty().getValue());
       }
     }
-    getNodesOnFloor(building, totalFloorsInBuilding);
+    getNodesOnFloor(building, floors.getFirst().intValue());
   }
 
   private void getNodesOnFloor(String building, int floor) {
@@ -125,11 +125,9 @@ public class NodeTableEditorController {
 
   private void fillTable() {
 
-    nodesTable.setItems(currentNodes);
-
     TableColumn<TableNode, StringProperty> nameCol = new TableColumn<>("Name");
     TableColumn<TableNode, StringProperty> longNameCol = new TableColumn<>("Long Name");
-    TableColumn<TableNode, StringProperty> idCol = new TableColumn<>("ID");
+    TableColumn<TableNode, StringProperty> idCol = new TableColumn<>("Node ID");
     TableColumn<TableNode, StringProperty> typeCol = new TableColumn<>("Type");
     TableColumn<TableNode, IntegerProperty> xCol = new TableColumn<>("X");
     TableColumn<TableNode, IntegerProperty> yCol = new TableColumn<>("Y");
@@ -137,19 +135,24 @@ public class NodeTableEditorController {
     TableColumn<TableNode, StringProperty> buildingCol = new TableColumn<>("Building");
     TableColumn<TableNode, StringProperty> teamCol = new TableColumn<>("Team");
 
-    nameCol.setCellValueFactory(new PropertyValueFactory("shortName"));
-    longNameCol.setCellValueFactory(new PropertyValueFactory("longName"));
-    idCol.setCellValueFactory(new PropertyValueFactory("nodeID"));
-    typeCol.setCellValueFactory(new PropertyValueFactory("nodeType"));
-    xCol.setCellValueFactory(new PropertyValueFactory("x"));
-    yCol.setCellValueFactory(new PropertyValueFactory("y"));
-    floorCol.setCellValueFactory(new PropertyValueFactory("floor"));
-    buildingCol.setCellValueFactory(new PropertyValueFactory("building"));
-    teamCol.setCellValueFactory(new PropertyValueFactory("teamAssigned"));
+    nameCol.setCellValueFactory(new PropertyValueFactory<TableNode, StringProperty>("shortName"));
+    longNameCol.setCellValueFactory(
+        new PropertyValueFactory<TableNode, StringProperty>("longName"));
+    idCol.setCellValueFactory(new PropertyValueFactory<TableNode, StringProperty>("nodeID"));
+    typeCol.setCellValueFactory(new PropertyValueFactory<TableNode, StringProperty>("nodeType"));
+    xCol.setCellValueFactory(new PropertyValueFactory<TableNode, IntegerProperty>("x"));
+    yCol.setCellValueFactory(new PropertyValueFactory<TableNode, IntegerProperty>("y"));
+    floorCol.setCellValueFactory(new PropertyValueFactory<TableNode, IntegerProperty>("floor"));
+    buildingCol.setCellValueFactory(
+        new PropertyValueFactory<TableNode, StringProperty>("building"));
+    teamCol.setCellValueFactory(
+        new PropertyValueFactory<TableNode, StringProperty>("teamAssigned"));
 
     nodesTable
         .getColumns()
         .setAll(nameCol, longNameCol, idCol, typeCol, xCol, yCol, floorCol, buildingCol, teamCol);
+
+    nodesTable.setItems(currentNodes);
   }
 
   private void saveEdits() {}
