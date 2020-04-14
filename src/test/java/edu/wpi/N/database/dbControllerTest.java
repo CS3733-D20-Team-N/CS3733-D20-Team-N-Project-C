@@ -123,7 +123,7 @@ public class dbControllerTest {
   @Test
   public void testFloorNodes() {
     LinkedList<DbNode> nodeList = dbController.floorNodes(4, "Faulkner");
-    assertEquals(5, nodeList.size());
+    assertEquals(6, nodeList.size());
     // assertTrue(nodeList.get(0).getNodeID().equals("NDEPT01005"));
   }
 
