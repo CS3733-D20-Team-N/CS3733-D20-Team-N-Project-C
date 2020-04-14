@@ -66,9 +66,6 @@ public class CSVParserTest {
     DbNode lastActual =
         new DbNode("H130000000", 1341, 1114, 1, "MainBuil", "HALL", "HALOL", "TT", 'V');
 
-    // Compare with first
-    Assertions.assertTrue(
-        new ReflectionEquals(dbController.getNode("AAAAAAAAAA")).matches(firstActual));
     // Compare center
     Assertions.assertTrue(
         new ReflectionEquals(dbController.getNode("H500000000")).matches(middleActual));
@@ -87,5 +84,30 @@ public class CSVParserTest {
     String path = f.getAbsolutePath();
 
     Assertions.assertThrows(Exception.class, () -> CSVParser.parseCSVfromPath(path));
+  }
+
+  /** Tests that parceCSVfromPath successfully parses Prototype Node file */
+  @Test
+  public void testParseCSVPrototypeNode() throws FileNotFoundException {
+    File f = new File("src/main/resources/edu/wpi/N/csv/PrototypeNodes.csv");
+    String path = f.getAbsolutePath();
+
+    CSVParser.parseCSVfromPath(path);
+
+    DbNode firstExpected =
+        new DbNode(
+            "BCONF00102",
+            2150,
+            1025,
+            2,
+            "45 Francis",
+            "CONF",
+            "Duncan Reid Conference Room",
+            "Conf B0102",
+            'Z');
+
+    // Compare with first
+    Assertions.assertTrue(
+        new ReflectionEquals(dbController.getNode("BCONF00102")).matches(firstExpected));
   }
 }

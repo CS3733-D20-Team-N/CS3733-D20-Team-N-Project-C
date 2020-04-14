@@ -72,7 +72,7 @@ public class CSVParser {
     String longName = row[6];
     String shortName = row[7];
     char teamAssigned = 'Z';
-    if (!row[8].isEmpty()) {
+    if (row.length == 9) {
       teamAssigned = row[8].charAt(0);
     }
 
