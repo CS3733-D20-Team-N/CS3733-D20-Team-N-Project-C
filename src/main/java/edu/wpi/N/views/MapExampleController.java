@@ -1,11 +1,8 @@
 package edu.wpi.N.views;
 
 import edu.wpi.N.database.DbNode;
-import edu.wpi.N.database.dbController;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 import javafx.fxml.FXML;
@@ -39,35 +36,36 @@ public class MapExampleController {
   HashMap<Circle, DbNode> masterNodes; // stores all the nodes displayed on the map
   LinkedList<DbNode> nodesList;
 
-  public void initialize() throws SQLException, ClassNotFoundException {
-    //    String pathToFile =
-    //        "C:\\Users\\Tian Yu
-    // Fan\\IdeaProjects\\CS3733-D20-Team-N-Project-C\\src\\main\\resources\\edu\\wpi\\N\\csv\\MapEnodes.csv";
-    //
-    //    CSVParser.parseCSVfromPath(pathToFile);
-    populateMap();
-  }
-
-  public void populateMap() throws SQLException, ClassNotFoundException {
-    nodesList = dbController.floorNodes(4, "Faulkner");
-    masterNodes = new HashMap<Circle, DbNode>();
-    Iterator iter = nodesList.iterator();
-    while (iter.hasNext()) {
-      DbNode newNode = (DbNode) iter.next();
-      Circle newMapNode = makeNode(newNode);
-      pane_kioskNodes.getChildren().add(newMapNode);
-      masterNodes.put(newMapNode, newNode);
-    }
-  }
-
-  public Circle makeNode(DbNode newNode) {
-    Circle newMapNode = new Circle();
-    newMapNode.setRadius(5);
-    newMapNode.setLayoutX(newNode.getX());
-    newMapNode.setLayoutY(newNode.getY());
-    newMapNode.setFill(Color.PURPLE);
-    return newMapNode;
-  }
+  //  public void initialize() throws SQLException, ClassNotFoundException {
+  //    //    String pathToFile =
+  //    //        "C:\\Users\\Tian Yu
+  //    //
+  // Fan\\IdeaProjects\\CS3733-D20-Team-N-Project-C\\src\\main\\resources\\edu\\wpi\\N\\csv\\MapEnodes.csv";
+  //    //
+  //    //    CSVParser.parseCSVfromPath(pathToFile);
+  //    populateMap();
+  //  }
+  //
+  //  public void populateMap() throws SQLException, ClassNotFoundException {
+  //    nodesList = dbController.floorNodes(4, "Faulkner");
+  //    masterNodes = new HashMap<Circle, DbNode>();
+  //    Iterator iter = nodesList.iterator();
+  //    while (iter.hasNext()) {
+  //      DbNode newNode = (DbNode) iter.next();
+  //      Circle newMapNode = makeNode(newNode);
+  //      pane_kioskNodes.getChildren().add(newMapNode);
+  //      masterNodes.put(newMapNode, newNode);
+  //    }
+  //  }
+  //
+  //  public Circle makeNode(DbNode newNode) {
+  //    Circle newMapNode = new Circle();
+  //    newMapNode.setRadius(5);
+  //    newMapNode.setLayoutX(newNode.getX());
+  //    newMapNode.setLayoutY(newNode.getY());
+  //    newMapNode.setFill(Color.PURPLE);
+  //    return newMapNode;
+  //  }
 
   @FXML
   private void sideMenuBtnHandler(MouseEvent event) throws IOException {

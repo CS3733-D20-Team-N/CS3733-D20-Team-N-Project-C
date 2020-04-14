@@ -19,8 +19,9 @@ public class DataEditorController {
   @FXML Button btn_select;
   @FXML Button btn_done;
   @FXML Label lbl_filePath;
+  @FXML Button btn_select_edges;
+  @FXML Label lbl_filePath_edges;
 
-  @FXML
   public void onSelectClicked(MouseEvent event) {
     FileChooser fc = new FileChooser();
     fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
@@ -33,12 +34,26 @@ public class DataEditorController {
     }
   }
 
+  public void onSelectEdgesClicked(MouseEvent event) {
+    FileChooser fc = new FileChooser();
+    fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+    File selectedFile = fc.showOpenDialog(null);
+    if (selectedFile != null) {
+      lbl_filePath_edges.setText(selectedFile.getAbsolutePath());
+      lbl_filePath_edges.setDisable(false);
+    } else {
+      System.out.println("The file is invalid");
+    }
+  }
+
   @FXML
   public void onDoneClicked(MouseEvent event)
       throws SQLException, ClassNotFoundException, IOException {
     dbController.initDB();
     String path = lbl_filePath.getText();
     CSVParser.parseCSVfromPath(path);
+    String path_edges = lbl_filePath_edges.getText();
+    CSVParser.parseCSVfromPath(path_edges);
     Stage stage;
     Parent root;
     stage = (Stage) btn_done.getScene().getWindow();

@@ -67,6 +67,7 @@
                                     <Font size="15.0" />
                                  </font>
                               </Button>
+                              <Button fx:id="btn_map" mnemonicParsing="false" onMouseClicked="#onDisplayMapClicked" text="Display Map" />
                            </children>
                         </VBox>
                      </children>
