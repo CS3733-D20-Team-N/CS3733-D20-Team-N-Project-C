@@ -130,11 +130,10 @@ public class dbControllerTest {
 
   // Nick
   @Test
-  // TODO: fix
   public void testVisNodes() {
-    LinkedList<DbNode> vis = dbController.allNodes();
+    LinkedList<DbNode> vis = dbController.visNodes(4, "Faulkner");
     assertNotNull(vis);
-    assertEquals(3, vis.size()); // error here
+    assertEquals(2, vis.size());
 
     assertTrue(
         vis.contains(
@@ -144,18 +143,6 @@ public class dbControllerTest {
         vis.contains(
             new DbNode(
                 "NDEPT00204", 1450, 950, 4, "Faulkner", "DEPT", "Neurology", "Dept 2", 'N')));
-    assertTrue(
-        vis.contains(
-            new DbNode(
-                "NDEPT01005",
-                1300,
-                1200,
-                5,
-                "Faulkner",
-                "DEPT",
-                "Software Engineering",
-                "Dept 10",
-                'N')));
   }
 
   // Nick

@@ -433,7 +433,7 @@ public class dbController {
     String query =
         "SELECT * FROM nodes WHERE floor = "
             + floor
-            + "AND building = '"
+            + " AND building = '"
             + building
             + "' AND NOT nodeType = 'HALL'";
     return getAllNodesSQL(query);
