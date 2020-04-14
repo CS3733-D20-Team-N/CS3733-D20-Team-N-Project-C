@@ -24,8 +24,8 @@ public class dbTester {
       System.out.println("addNode Worked");
     }
 
-    boolean testaddNode2 = addNode(1250, 950, 4, "Faulkner", "HALL", "Hall 3", "Hall 3");
-    if (testaddNode2) {
+    DbNode testaddNode2 = addNode(1250, 950, 4, "Faulkner", "HALL", "Hall 3", "Hall 3");
+    if (testaddNode2.getLongName().equals("Hall 3")) {
       System.out.println("addNode without nodeID worked");
     }
 

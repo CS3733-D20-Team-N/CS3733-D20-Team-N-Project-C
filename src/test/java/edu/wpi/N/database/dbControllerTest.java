@@ -34,11 +34,12 @@ public class dbControllerTest {
   // Noah
   @Test
   public void testModifyNode() {
-    dbController.modifyNode("NHALL00204", 123, 771, 3, "Faulkner", "DEPT", "DEPT 3", "Dept 3", 'N');
+    dbController.modifyNode("NHALL00204", 123, 771, 3, "Faulkner", "SEXY", "DEPT 3", "Dept 3", 'N');
     dbTester.printDB();
-    DbNode n = dbController.getNode("NDEPT00304");
-    assertTrue(n.getX() == 123 && n.getNodeType() == "DEPT");
-    dbController.deleteNode("NDEPT00304");
+    DbNode n = dbController.getNode("NSEXY00103");
+    assertEquals(123, n.getX());
+    assertEquals("SEXY", n.getNodeType());
+    dbController.deleteNode("NSEXY00303");
     dbController.addNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N');
   }
 
@@ -53,11 +54,18 @@ public class dbControllerTest {
 
   // Noah
   @Test
-  public void testDeleteNode() {}
+  public void testDeleteNode() {
+    dbController.addNode("NHALL00704", 1250, 850, 4, "Faulkner", "HALL", "Hall 7", "Hall 7", 'N');
+    dbController.deleteNode("NHALL00704");
+    assertNull(dbController.getNode("NHALL00704"));
+  }
 
   // Noah
   @Test
-  public void testGetNode() {}
+  public void testGetNode() {
+    DbNode n = dbController.getNode("NDEPT00204");
+    assertTrue(n.getX() == 1450 && n.getY() == 950);
+  }
 
   // Chris
   @Test
@@ -65,7 +73,9 @@ public class dbControllerTest {
   public void testAddNodeNoID() {
     /*dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7");
     assertTrue(dbController.floorNodes(4, "Faulkner").contains());*/
-    assertTrue(dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7"));
+    assertNotNull(dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7"));
+    DbNode node = dbController.addNode(1300, 1200, 4, "Faulkner", "DEPT", "Database", "Dept 7");
+    assertTrue(node.getNodeID() != null);
     assertTrue(
         dbController
             .allNodes()
@@ -97,26 +107,18 @@ public class dbControllerTest {
     dbController.addEdge("NHALL00104", "NDEPT00104");
     dbController.addEdge("NHALL00104", "NDEPT00204");
 
-    LinkedList<DbNode> adjList = dbController.getAdjacent("NHALL00104");
+    LinkedList<Node> adjList = dbController.getGAdjacent("NHALL00104");
     assertNotNull(adjList); // error here
     // assertNotNull(adjList); // error here
     /*
-    >>>>>>> 80d099152078b530dc4121269d3cf9028da86af3
-        assertTrue(adjList.get(0).getNodeID().equals("NHALL00204"));
-        assertTrue(adjList.get(1).getNodeID().equals("NDEPT00104"));
-        assertTrue(adjList.get(2).getNodeID().equals("NDEPT00204"));*/
 
-    assertTrue(
-        adjList.contains(
-            new DbNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N')));
-    assertTrue(
-        adjList.contains(
-            new DbNode(
-                "NDEPT00104", 1350, 950, 4, "Faulkner", "DEPT", "Cardiology", "Dept 1", 'N')));
-    assertTrue(
-        adjList.contains(
-            new DbNode(
-                "NDEPT00204", 1450, 950, 4, "Faulkner", "DEPT", "Neurology", "Dept 2", 'N')));
+    assertTrue(adjList.get(0).getNodeID().equals("NHALL00204"));
+    assertTrue(adjList.get(1).getNodeID().equals("NDEPT00104"));
+    assertTrue(adjList.get(2).getNodeID().equals("NDEPT00204"));*/
+
+    assertTrue(adjList.contains(new Node(1350, 1250, "NHALL00204")));
+    assertTrue(adjList.contains(new Node(1350, 950, "NDEPT00104")));
+    assertTrue(adjList.contains(new Node(1450, 950, "NDEPT00204")));
 
     assertEquals(3, adjList.size());
     dbController.removeEdge("NHALL00104", "NHALL00204");
@@ -128,7 +130,7 @@ public class dbControllerTest {
   @Test
   public void testFloorNodes() {
     LinkedList<DbNode> nodeList = dbController.floorNodes(4, "Faulkner");
-    assertEquals(5, nodeList.size());
+    assertEquals(6, nodeList.size());
     // assertTrue(nodeList.get(0).getNodeID().equals("NDEPT01005"));
   }
 
