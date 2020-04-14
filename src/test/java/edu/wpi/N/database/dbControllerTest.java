@@ -55,7 +55,7 @@ public class dbControllerTest {
   @Test
   public void testDeleteNode() {
     dbController.addNode("NHALL00704", 1250, 850, 4, "Faulkner", "HALL", "Hall 7", "Hall 7", 'N');
-    dbController.deleteNode("NHALL00204");
+    dbController.deleteNode("NHALL00704");
     assertNull(dbController.getNode("NHALL00704"));
   }
 
