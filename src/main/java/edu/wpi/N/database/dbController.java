@@ -575,18 +575,14 @@ public class dbController {
     // top method probably works, but is inefficient
     try {
       String query =
-          "DELETE FROM edges WHERE (node1 = '"
-              + nodeID1
-              + "' AND node2 = '"
-              + nodeID2
-              + "') OR"
-              + "(node2 = '"
-              + nodeID1
-              + "' AND node1 = '"
-              + nodeID2
-              + "')";
-      statement.execute(query);
-      return statement.getUpdateCount() > 0;
+          "DELETE FROM edges WHERE (node1 = ? AND node2 = ?) OR "
+                                + "(node2 = ? AND node1 = ?)";
+      PreparedStatement st = con.prepareStatement(query);
+      st.setNString(1, nodeID1);
+      st.setNString(1, nodeID2);
+      st.setNString(1, nodeID1);
+      st.setNString(1, nodeID2);
+      return st.executeUpdate() > 0;
     } catch (SQLException e) {
       return false;
     }
