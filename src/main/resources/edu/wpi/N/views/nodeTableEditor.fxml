@@ -72,7 +72,12 @@
                         </Button>
                      </children>
                   </VBox>
-                  <Button fx:id="btn_back" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="&lt;- Back" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                   <Button fx:id="btn_next" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#onNextClicked" text="Next -&gt;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                       <font>
+                           <Font size="16.0" />
+                       </font>
+                   </Button>
+                  <Button fx:id="btn_back" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#onBackClicked" text="&lt;- Back" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <font>
                         <Font size="16.0" />
                      </font>
