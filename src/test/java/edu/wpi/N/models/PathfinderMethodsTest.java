@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // package edu.wpi.N.models;
 //
 // import java.util.LinkedList;
@@ -350,6 +351,8 @@
 //
 // }
 
+=======
+>>>>>>> algos-branch
 package edu.wpi.N.models;
 
 import edu.wpi.N.Main;
@@ -373,6 +376,7 @@ public class PathfinderMethodsTest {
     CSVParser.parseCSV(inputEdges);
   }
 
+<<<<<<< HEAD
   /** Tests that findPath returns a Path object with the best route from H10 to EEE */
   @Test
   public void findPathNormalCase() {
@@ -388,6 +392,23 @@ public class PathfinderMethodsTest {
     for (int i = 0; i < actualPath.size(); i++) {
       Assertions.assertEquals(
           testingPath.getPath().get(i).getNodeID(), actualPath.get(i).getNodeID());
+=======
+  /** Tests that findPath returns a Path object with the best route from H9 to EEE */
+  @Test
+  public void findPathNormalCase() {
+    LinkedList<DbNode> actualPath = new LinkedList<DbNode>();
+    actualPath.add(dbController.getNode("H100000001"));
+    actualPath.add(dbController.getNode("H900000000"));
+    actualPath.add(dbController.getNode("H120000000"));
+    actualPath.add(dbController.getNode("H130000000"));
+    actualPath.add(dbController.getNode("EEEEEEEEEE"));
+
+    Path testingPath = Pathfinder.findPath("H100000001", "EEEEEEEEEE");
+
+    for (int i = 0; i < actualPath.size(); i++) {
+      Assertions.assertEquals(
+          actualPath.get(i).getNodeID(), testingPath.getPath().get(i).getNodeID());
+>>>>>>> algos-branch
     }
   }
 
@@ -400,10 +421,17 @@ public class PathfinderMethodsTest {
 
     LinkedList<DbNode> actualPath = new LinkedList<DbNode>();
 
+<<<<<<< HEAD
     actualPath.add(dbController.getNode("H12"));
     actualPath.add(dbController.getNode("H13"));
 
     Path testingPath = Pathfinder.findPath("H12", "H13");
+=======
+    actualPath.add(dbController.getNode("H120000000"));
+    actualPath.add(dbController.getNode("H130000000"));
+
+    Path testingPath = Pathfinder.findPath("H120000000", "H130000000");
+>>>>>>> algos-branch
 
     for (int i = 0; i < actualPath.size(); i++) {
       Assertions.assertEquals(
@@ -418,7 +446,11 @@ public class PathfinderMethodsTest {
   @Test
   public void findPathDestinationNotFound() {
     Assertions.assertThrows(
+<<<<<<< HEAD
         NullPointerException.class, () -> Pathfinder.findPath("H12", "NonExistentNode"));
+=======
+        NullPointerException.class, () -> Pathfinder.findPath("H120000000", "NonExistentNode"));
+>>>>>>> algos-branch
   }
 
   /**
@@ -428,7 +460,11 @@ public class PathfinderMethodsTest {
   @Test
   public void findPathStartNodeHasNoEdges() {
     Assertions.assertThrows(
+<<<<<<< HEAD
         NullPointerException.class, () -> Pathfinder.findPath("NonExistentNode", "H12"));
+=======
+        NullPointerException.class, () -> Pathfinder.findPath("NonExistentNode", "H120000000"));
+>>>>>>> algos-branch
   }
 
   /**
@@ -439,8 +475,13 @@ public class PathfinderMethodsTest {
   public void findPathEndIsStartNode() {
     LinkedList<DbNode> actualPath = new LinkedList<DbNode>();
 
+<<<<<<< HEAD
     actualPath.add(dbController.getNode("H12"));
     Path testingPath = Pathfinder.findPath("H12", "H12");
+=======
+    actualPath.add(dbController.getNode("H120000000"));
+    Path testingPath = Pathfinder.findPath("H120000000", "H120000000");
+>>>>>>> algos-branch
 
     for (int i = 0; i < actualPath.size(); i++) {
       Assertions.assertEquals(

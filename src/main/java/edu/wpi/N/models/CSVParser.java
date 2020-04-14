@@ -19,10 +19,8 @@ public class CSVParser {
       // create csvReader object passing
       CSVReader csvReader = new CSVReader(new InputStreamReader(pathToFile, "UTF-8"));
 
-      String[] nextLine;
-
       // Read header
-      nextLine = csvReader.readNext();
+      String[] nextLine = csvReader.readNext();
 
       // Check if it is EdgeCSV
       if (nextLine[0].toLowerCase().equals("edgeid")
@@ -51,7 +49,7 @@ public class CSVParser {
    *
    * @param row: a row to parse data from
    */
-  static void parseEdgesRow(String[] row) throws Exception {
+  private static void parseEdgesRow(String[] row) throws Exception {
     // String edgeID = row[0];
     String startNodeId = row[1];
     String endNodeId = row[2];
@@ -64,7 +62,7 @@ public class CSVParser {
    *
    * @param row: a row to parse data from
    */
-  static void parseNodeRow(String[] row) throws Exception {
+  private static void parseNodeRow(String[] row) throws Exception {
     String nodeID = row[0];
     int xcoord = Integer.parseInt(row[1]);
     int ycoord = Integer.parseInt(row[2]);
@@ -73,7 +71,10 @@ public class CSVParser {
     String nodeType = row[5];
     String longName = row[6];
     String shortName = row[7];
-    char teamAssigned = row[8].charAt(0);
+    char teamAssigned = 'Z';
+    if (!row[8].isEmpty()) {
+      teamAssigned = row[8].charAt(0);
+    }
 
     dbController.addNode(
         nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName, teamAssigned);
@@ -85,15 +86,16 @@ public class CSVParser {
    * @param pathToFile full path to file
    * @throws FileNotFoundException
    */
-  public static void parseCSVfromPath(String pathToFile) {
+  public static void parseCSVfromPath(String pathToFile) throws FileNotFoundException {
     try {
       File initialFile = new File(pathToFile);
       InputStream input = new FileInputStream(initialFile);
 
       CSVParser csvParser = new CSVParser();
-      csvParser.parseCSV(input);
+      CSVParser.parseCSV(input);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
+      throw (e);
     }
   }
 }
