@@ -80,7 +80,7 @@ public class MapDisplayController {
     int size = pathNodes.size();
     DbNode firstNode;
     DbNode secondNode;
-    for (int i = 0; i < size - 2; i++) {
+    for (int i = 0; i < size - 1; i++) {
       firstNode = pathNodes.get(i);
       secondNode = pathNodes.get(i + 1);
       Line line =
@@ -89,6 +89,7 @@ public class MapDisplayController {
               firstNode.getY() * SCALE,
               secondNode.getX() * SCALE,
               secondNode.getY() * SCALE);
+
       pane_nodes.getChildren().add(line);
     }
   }
