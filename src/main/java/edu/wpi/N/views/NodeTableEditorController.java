@@ -5,6 +5,7 @@ import edu.wpi.N.database.DbNode;
 import edu.wpi.N.database.dbController;
 import edu.wpi.N.entities.TableNode;
 import edu.wpi.N.models.CSVParser;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import javafx.beans.property.IntegerProperty;
@@ -13,12 +14,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class NodeTableEditorController {
-  @FXML Button btn_saveChanges, btn_addNode, btn_delNode;
+  @FXML Button btn_saveChanges, btn_next, btn_back;
   @FXML TableView nodesTable;
   @FXML ChoiceBox menu_pickBuilding, menu_pickFloor, menu_pickNode;
   private LinkedList<String> buildings = new LinkedList<>();
@@ -29,17 +33,19 @@ public class NodeTableEditorController {
 
   @FXML
   private void initialize() throws java.io.IOException {
-    InputStream prototype = Main.class.getResourceAsStream("csv/TestNodes.csv");
+    InputStream prototype = Main.class.getResourceAsStream("csv/PrototypeNodes.csv");
     CSVParser.parseCSV(prototype);
 
     System.out.println(dbController.allNodes().size());
 
+    // refreshAllNodes();
+    // getBuildings();
     // fillTable();
   }
 
   @FXML
   public void onPickBuilding(MouseEvent event) {
-    // getFloorsInBuilding(currentBuilding);
+    getFloorsInBuilding(currentBuilding);
     getNodesOnFloor(currentBuilding, 1);
     fillTable();
   }
@@ -71,6 +77,18 @@ public class NodeTableEditorController {
       TableNode tn = new TableNode(dn);
       allNodes.add(tn);
     }
+  }
+
+  @FXML
+  private void onNextClicked(MouseEvent event) throws IOException {
+    Stage stage = (Stage) btn_next.getScene().getWindow();
+    Parent root = FXMLLoader.load(getClass().getResource("kioskHome.fxml"));
+  }
+
+  @FXML
+  private void onBackClicked(MouseEvent event) throws IOException {
+    Stage stage = (Stage) btn_back.getScene().getWindow();
+    Parent root = FXMLLoader.load(getClass().getResource("kioskHome.fxml"));
   }
 
   private void getBuildings() {
