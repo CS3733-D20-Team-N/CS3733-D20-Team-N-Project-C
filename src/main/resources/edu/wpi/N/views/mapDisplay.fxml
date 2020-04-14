@@ -5,6 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="816.0" prefWidth="1361.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.N.views.MapDisplayController">
    <children>
@@ -17,8 +18,14 @@
             </ImageView>
             <AnchorPane fx:id="pane_nodes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="816.0" prefWidth="1361.0" StackPane.alignment="TOP_LEFT">
                <children>
-                  <Button fx:id="btn_path" layoutX="141.0" layoutY="323.0" mnemonicParsing="false" onMouseClicked="#onFindPathClicked" prefHeight="43.0" prefWidth="121.0" text="Find Path" />
-                  <Button fx:id="btn_reset" layoutX="141.0" layoutY="377.0" mnemonicParsing="false" onMouseClicked="#onResetClicked" prefHeight="43.0" prefWidth="121.0" text="Reset" />
+                  <Button fx:id="btn_path" layoutX="141.0" layoutY="323.0" mnemonicParsing="false" onMouseClicked="#onFindPathClicked" prefHeight="43.0" prefWidth="121.0" text="Find Path">
+                     <font>
+                        <Font name="Calibri" size="18.0" />
+                     </font></Button>
+                  <Button fx:id="btn_reset" layoutX="141.0" layoutY="377.0" mnemonicParsing="false" onMouseClicked="#onResetClicked" prefHeight="43.0" prefWidth="121.0" text="Reset">
+                     <font>
+                        <Font name="Calibri" size="18.0" />
+                     </font></Button>
                </children></AnchorPane>
          </children>
       </StackPane>
