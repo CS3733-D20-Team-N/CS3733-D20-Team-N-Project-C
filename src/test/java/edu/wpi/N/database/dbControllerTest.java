@@ -39,7 +39,7 @@ public class dbControllerTest {
     DbNode n = dbController.getNode("NSEXY00103");
     assertEquals(123, n.getX());
     assertEquals("SEXY", n.getNodeType());
-    dbController.deleteNode("NSEXY00303");
+    dbController.deleteNode("NSEXY00103");
     dbController.addNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N');
   }
 
@@ -195,14 +195,13 @@ public class dbControllerTest {
 
   // Nick
   @Test
-  // TODO: fix
   public void testGetAdjacent() {
     dbController.addEdge("NHALL00104", "NHALL00204");
     dbController.addEdge("NHALL00104", "NDEPT00104");
     dbController.addEdge("NHALL00104", "NDEPT00204");
 
     LinkedList<DbNode> adj = dbController.getAdjacent("NHALL00104");
-    assertNotNull(adj); // error here
+    assertNotNull(adj);
 
     assertTrue(
         adj.contains(
@@ -225,12 +224,11 @@ public class dbControllerTest {
 
   // Nick
   @Test
-  // TODO: fix
   public void testAddEdge() {
     assertTrue(dbController.addEdge("NHALL00104", "NHALL00204"));
 
     LinkedList<DbNode> adj = dbController.getAdjacent("NHALL00204");
-    assertNotNull(adj); // error here
+    assertNotNull(adj);
     assertTrue(
         adj.contains(
             new DbNode("NHALL00104", 1250, 850, 4, "Faulkner", "HALL", "Hall 1", "Hall 1", 'N')));
@@ -246,14 +244,13 @@ public class dbControllerTest {
 
   // Nick
   @Test
-  // TODO: fix
   public void testRemoveEdge() {
     dbController.addEdge("NHALL00204", "NDEPT00104");
 
     assertTrue(dbController.removeEdge("NHALL00204", "NDEPT00104"));
 
     LinkedList<DbNode> adj = dbController.getAdjacent("NHALL00204");
-    assertNotNull(adj); // error here
+    assertNotNull(adj);
     assertFalse(
         adj.contains(
             new DbNode(
