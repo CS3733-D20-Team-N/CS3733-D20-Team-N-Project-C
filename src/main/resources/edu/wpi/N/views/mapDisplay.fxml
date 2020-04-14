@@ -17,8 +17,8 @@
             </ImageView>
             <AnchorPane fx:id="pane_nodes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="816.0" prefWidth="1361.0" StackPane.alignment="TOP_LEFT">
                <children>
-                  <Button fx:id="btn_path" layoutX="141.0" layoutY="323.0" mnemonicParsing="false" onMouseClicked="#onFindPathClicked" text="Find Path" />
-                  <Button fx:id="btn_reset" layoutX="148.0" layoutY="366.0" mnemonicParsing="false" onMouseClicked="#onResetClicked" text="Reset" />
+                  <Button fx:id="btn_path" layoutX="141.0" layoutY="323.0" mnemonicParsing="false" onMouseClicked="#onFindPathClicked" prefHeight="43.0" prefWidth="121.0" text="Find Path" />
+                  <Button fx:id="btn_reset" layoutX="141.0" layoutY="377.0" mnemonicParsing="false" onMouseClicked="#onResetClicked" prefHeight="43.0" prefWidth="121.0" text="Reset" />
                </children></AnchorPane>
          </children>
       </StackPane>
