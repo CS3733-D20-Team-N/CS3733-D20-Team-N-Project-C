@@ -75,11 +75,16 @@ public class MapDisplayController {
       System.out.println("Incorrect number of nodes");
       return;
     }
+
     DbNode firstNode = selectedNodes.get(0);
     DbNode secondNode = selectedNodes.get(1);
     Path mapPath = Pathfinder.findPath(firstNode.getNodeID(), secondNode.getNodeID());
     LinkedList<DbNode> pathNodes = mapPath.getPath();
     drawPath(pathNodes);
+    for (Map.Entry<Circle, DbNode> entry : masterNodes.entrySet()) {
+      Circle mapNode = entry.getKey();
+      mapNode.setDisable(true);
+    }
   }
 
   private void drawPath(LinkedList<DbNode> pathNodes) {
@@ -105,7 +110,9 @@ public class MapDisplayController {
     for (Map.Entry<Circle, DbNode> entry : masterNodes.entrySet()) {
       Circle mapNode = entry.getKey();
       mapNode.setFill(Color.PURPLE);
+      mapNode.setDisable(false);
     }
+    pane_nodes.getChildren().removeIf(node -> node instanceof Line);
     selectedNodes.clear();
   }
 }
