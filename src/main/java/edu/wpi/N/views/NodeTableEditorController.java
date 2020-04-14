@@ -16,6 +16,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -82,13 +83,19 @@ public class NodeTableEditorController {
   @FXML
   private void onNextClicked(MouseEvent event) throws IOException {
     Stage stage = (Stage) btn_next.getScene().getWindow();
-    Parent root = FXMLLoader.load(getClass().getResource("kioskHome.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("downloadMapCSVPage.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
   }
 
   @FXML
   private void onBackClicked(MouseEvent event) throws IOException {
     Stage stage = (Stage) btn_back.getScene().getWindow();
-    Parent root = FXMLLoader.load(getClass().getResource("kioskHome.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("dataEditor.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
   }
 
   private void getBuildings() {

@@ -36,6 +36,7 @@ public class KioskHomeController {
   @FXML Button btn_Submit;
   @FXML Button btn_import;
   @FXML Button btn_map;
+  @FXML Button btn_Prototype;
 
   @FXML
   private void storeData() throws IOException {
@@ -95,6 +96,9 @@ public class KioskHomeController {
       } else if (event.getSource() == btn_moreServices) {
         stage = (Stage) btn_moreServices.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("downloadMapCSVPage.fxml"));
+      } else if (event.getSource() == btn_Prototype) {
+        stage = (Stage) btn_Prototype.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("dataEditor.fxml"));
       } else {
         stage = (Stage) btn_goToTable.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("nodeTableEditor.fxml"));

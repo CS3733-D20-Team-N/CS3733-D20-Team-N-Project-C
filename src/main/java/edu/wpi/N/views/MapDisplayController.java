@@ -6,24 +6,31 @@ import edu.wpi.N.database.dbController;
 import edu.wpi.N.models.CSVParser;
 import edu.wpi.N.models.Path;
 import edu.wpi.N.models.Pathfinder;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.stage.Stage;
 
 public class MapDisplayController {
 
   @FXML AnchorPane pane_nodes;
   @FXML Button btn_path;
   @FXML Button btn_reset;
+  @FXML Button btn_previous;
+  @FXML Button btn_next;
   HashMap<Circle, DbNode> masterNodes;
   LinkedList<DbNode> nodesList;
   LinkedList<DbNode> selectedNodes;
@@ -114,5 +121,24 @@ public class MapDisplayController {
     }
     pane_nodes.getChildren().removeIf(node -> node instanceof Line);
     selectedNodes.clear();
+  }
+
+  @FXML
+  private void onNavClicked(MouseEvent event) throws IOException {
+    Stage stage = null;
+    Parent root = null;
+    if (event.getSource() == btn_previous) {
+      stage = (Stage) btn_previous.getScene().getWindow();
+      root = FXMLLoader.load(getClass().getResource("downloadMapCSVPage.fxml"));
+    } else {
+      stage = (Stage) btn_next.getScene().getWindow();
+      root = FXMLLoader.load(getClass().getResource("kioskHome.fxml"));
+    }
+
+    if (stage != null && root != null) {
+      Scene scene = new Scene(root);
+      stage.setScene(scene);
+      stage.show();
+    }
   }
 }
