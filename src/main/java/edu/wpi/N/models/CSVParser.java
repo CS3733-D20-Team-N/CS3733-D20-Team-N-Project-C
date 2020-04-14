@@ -71,7 +71,10 @@ public class CSVParser {
     String nodeType = row[5];
     String longName = row[6];
     String shortName = row[7];
-    char teamAssigned = row[8].charAt(0);
+    char teamAssigned = 'Z';
+    if (!row[8].isEmpty()) {
+      teamAssigned = row[8].charAt(0);
+    }
 
     dbController.addNode(
         nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName, teamAssigned);
