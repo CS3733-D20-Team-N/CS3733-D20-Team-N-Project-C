@@ -51,7 +51,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Text>
-            <SplitPane dividerPositions="0.4879518072289157" maxHeight="1.7976931348623157E308" prefHeight="186.0" prefWidth="500.0">
+            <SplitPane dividerPositions="0.488" maxHeight="1.7976931348623157E308" prefHeight="186.0" prefWidth="500.0">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
@@ -147,6 +147,11 @@
                <font>
                   <Font size="10.0" />
                </font>
+            </Button>
+            <Button fx:id="btn_Prototype" mnemonicParsing="false" onMouseClicked="#handleOnClick" text="View Prototype Application">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </Button>
          </children>
       </VBox>

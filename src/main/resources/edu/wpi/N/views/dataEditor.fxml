@@ -14,5 +14,6 @@
       <Button fx:id="btn_select_edges" layoutX="14.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#onSelectEdgesClicked" text="Select File" />
       <Label fx:id="lbl_filePath_edges" disable="true" layoutX="113.0" layoutY="200.0" prefHeight="25.0" prefWidth="368.0" style="-fx-border-color: BLACK;" text="File Path" />
       <Button fx:id="btn_default" layoutX="14.0" layoutY="260.0" mnemonicParsing="false" onMouseClicked="#onDefaultClicked" prefHeight="25.0" prefWidth="69.0" text="Default" />
+      <Button fx:id="btn_prototypeSwitch" layoutX="422.0" layoutY="260.0" mnemonicParsing="false" onMouseClicked="#onPrototypeClicked" text="Import and View Data Table" />
    </children>
 </AnchorPane>

@@ -26,6 +26,16 @@
                      <font>
                         <Font name="Calibri" size="18.0" />
                      </font></Button>
+                  <Button fx:id="btn_previous" layoutX="19.0" layoutY="452.0" mnemonicParsing="false" onMouseClicked="#onNavClicked" prefHeight="43.0" prefWidth="121.0" text="Back">
+                     <font>
+                        <Font name="Calibri" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn_next" layoutX="263.0" layoutY="452.0" mnemonicParsing="false" onMouseClicked="#onNavClicked" prefHeight="43.0" prefWidth="121.0" text="Next">
+                     <font>
+                        <Font name="Calibri" size="18.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
          </children>
       </StackPane>
