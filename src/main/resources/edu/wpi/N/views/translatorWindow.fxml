@@ -17,10 +17,10 @@
       <Label layoutX="106.0" layoutY="80.0" text="Location:" />
       <Label layoutX="40.0" layoutY="115.0" text="Laungage Requested:" />
       <Label layoutX="30.0" layoutY="154.0" text="Reason For Requesting:" />
-      <TextField layoutX="165.0" layoutY="76.0" prefWidth="200.0" />
-      <TextField layoutX="165.0" layoutY="111.0" prefWidth="200.0" />
+      <TextField fx:id="txt_location" layoutX="165.0" layoutY="76.0" prefWidth="200.0" />
+      <TextField fx:id="txt_langRequest" layoutX="165.0" layoutY="111.0" prefWidth="200.0" />
       <Button fx:id="btn_Home" layoutX="484.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#translatorClick" text="Return to Home" />
-      <TextArea layoutX="165.0" layoutY="154.0" prefHeight="100.0" prefWidth="200.0" />
-      <Button layoutX="419.0" layoutY="361.0" mnemonicParsing="false" text="Confirm" />
+      <TextArea fx:id="txt_reasonReq" layoutX="165.0" layoutY="154.0" prefHeight="100.0" prefWidth="200.0" />
+      <Button fx:id="btn_Confirm" layoutX="419.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#storeTranslatorData" text="Confirm" />
    </children>
 </Pane>
