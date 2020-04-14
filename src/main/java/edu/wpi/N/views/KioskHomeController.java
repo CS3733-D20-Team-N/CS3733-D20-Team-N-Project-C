@@ -25,6 +25,7 @@ public class KioskHomeController {
 
   // FXML Variable Initialization
   @FXML Button btn_goToMap;
+  @FXML Button btn_goToTable; // ** Remove
   @FXML Button btn_laundry;
   @FXML Button btn_translator;
   @FXML Button btn_moreServices;
@@ -90,9 +91,12 @@ public class KioskHomeController {
       } else if (event.getSource() == btn_laundry) {
         stage = (Stage) btn_laundry.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("popupWindow.fxml"));
-      } else {
+      } else if (event.getSource() == btn_moreServices) {
         stage = (Stage) btn_moreServices.getScene().getWindow();
         root = FXMLLoader.load(getClass().getResource("downloadMapCSVPage.fxml"));
+      } else {
+        stage = (Stage) btn_goToTable.getScene().getWindow();
+        root = FXMLLoader.load(getClass().getResource("nodeTableEditor.fxml"));
       }
       Scene scene = new Scene(root);
       stage.setScene(scene);

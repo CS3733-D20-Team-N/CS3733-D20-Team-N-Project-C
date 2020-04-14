@@ -74,6 +74,11 @@
                                     <Font size="15.0" />
                                  </font>
                               </Button>
+                              <Button fx:id="btn_goToTable" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#handleOnClick" text="Data table">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </VBox>
                      </children>
