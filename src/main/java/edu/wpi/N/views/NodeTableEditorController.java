@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.LinkedList;
 
 import edu.wpi.N.database.DbNode;
+import edu.wpi.N.database.dbController;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -55,7 +56,7 @@ public class NodeTableEditorController {
 
     private void refreshAllNodes() {
         allNodes.clear();
-        allNodes = new LinkedList<>();  // Load nodes from DB
+        allNodes = dbController.allNodes();
     }
 
     private void getBuildings() {
@@ -70,24 +71,37 @@ public class NodeTableEditorController {
     private void getFloorsInBuilding(String building) {
         totalFloorsInBuilding = 1;
         for (DbNode n : allNodes) {
-            totalFloorsInBuilding = Math.max(totalFloorsInBuilding, n.getFloor());
+            if (n.getBuilding().equals(building)) {
+                totalFloorsInBuilding = Math.max(totalFloorsInBuilding, n.getFloor());
+            }
         }
     }
 
     private void getNodesOnFloor (String building, int floor) {
         trashEdits();  // Undo unsaved changes to current floor
-        currentNodes.clear();  // Wipe current values
-        for (DbNode n : allNodes) {
-            if (n.getBuilding().equals(building) && n.getFloor() == floor) {
-                currentNodes.add(n);
-            }
-        }
+        currentNodes = dbController.floorNodes(floor, building);
     }
 
     private void fillTable () {
 
+        TableColumn<DbNode, String> nameCol = new TableColumn<>("Name");
+        TableColumn<DbNode, String> longNameCol = new TableColumn<>("Long Name");
+        TableColumn<DbNode, String> idCol = new TableColumn<>("ID");
+        TableColumn<DbNode, String> typeCol = new TableColumn<>("Type");
+        TableColumn<DbNode, Integer> xCol = new TableColumn<>("X");
+        TableColumn<DbNode, Integer> yCol = new TableColumn<>("Y");
+        TableColumn<DbNode, Integer> floorCol = new TableColumn<>("Floor");
+        TableColumn<DbNode, String> buildingCol = new TableColumn<>("Building");
+        TableColumn<DbNode, Character> teamCol = new TableColumn<>("Team");
+
+        //nameCol.setCellValueFactory();
+
+        nodesTable.getColumns().addAll(nameCol, longNameCol, idCol,
+                typeCol, xCol, yCol,
+                floorCol, buildingCol, teamCol);
+
         for (DbNode n : currentNodes) {
-            menu_pickNode.getItems().add("NodeName");
+            menu_pickNode.getItems().add(n.getShortName());
         }
 
     }
