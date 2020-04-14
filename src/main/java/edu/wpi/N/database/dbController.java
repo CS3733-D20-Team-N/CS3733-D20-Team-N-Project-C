@@ -542,14 +542,10 @@ public class dbController {
       System.out.println(query);
       statement.executeUpdate(query);
       query =
-<<<<<<< HEAD
-          "SELECT nodes.* FROM nodes "
-              + "JOIN connected_edges ON connected_edges.edge_nodeID = nodes.nodeID";
-=======
           "SELECT nodes.* FROM nodes, connected_edges "
               + "WHERE connected_edges.nodeID = nodes.NODEID";
       System.out.println(query);
->>>>>>> 1e3e7027ca2386f1852fd18958814d2e5c07e06d
+
       rs = statement.executeQuery(query);
       System.out.println("wait");
       while (rs.next()) {
