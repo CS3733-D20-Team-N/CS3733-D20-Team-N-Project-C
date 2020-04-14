@@ -1,9 +1,11 @@
 package edu.wpi.N.views;
 
+import edu.wpi.N.Main;
 import edu.wpi.N.database.dbController;
 import edu.wpi.N.models.CSVParser;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +23,16 @@ public class DataEditorController {
   @FXML Label lbl_filePath;
   @FXML Button btn_select_edges;
   @FXML Label lbl_filePath_edges;
+  @FXML Button btn_default;
+  final String DEFAULT_NODES = "csv/MapEnodes.csv";
+  final String DEFAULT_PATHS = "csv/MapEedges.csv";
+  final InputStream INPUT_NODES_DEFAULT = Main.class.getResourceAsStream(DEFAULT_NODES);;
+  final InputStream INPUT_EDGES_DEFAULT = Main.class.getResourceAsStream(DEFAULT_PATHS);
+
+  public void initialize() throws SQLException, ClassNotFoundException {
+    lbl_filePath.setText(DEFAULT_NODES);
+    lbl_filePath_edges.setText(DEFAULT_PATHS);
+  }
 
   public void onSelectClicked(MouseEvent event) {
     FileChooser fc = new FileChooser();
@@ -50,10 +62,21 @@ public class DataEditorController {
   public void onDoneClicked(MouseEvent event)
       throws SQLException, ClassNotFoundException, IOException {
     dbController.initDB();
+    // For nodes
     String path = lbl_filePath.getText();
-    CSVParser.parseCSVfromPath(path);
+    if (path.equals(DEFAULT_NODES)) {
+      CSVParser.parseCSV(INPUT_NODES_DEFAULT);
+    } else {
+      CSVParser.parseCSVfromPath(path);
+    }
+    // For paths
     String path_edges = lbl_filePath_edges.getText();
-    CSVParser.parseCSVfromPath(path_edges);
+    if (path_edges.equals(DEFAULT_PATHS)) {
+      CSVParser.parseCSV(INPUT_EDGES_DEFAULT);
+    } else {
+      CSVParser.parseCSVfromPath(path_edges);
+    }
+
     Stage stage;
     Parent root;
     stage = (Stage) btn_done.getScene().getWindow();
@@ -61,5 +84,11 @@ public class DataEditorController {
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
+  }
+
+  @FXML
+  public void onDefaultClicked(MouseEvent event) {
+    lbl_filePath.setText(DEFAULT_NODES);
+    lbl_filePath_edges.setText(DEFAULT_PATHS);
   }
 }
