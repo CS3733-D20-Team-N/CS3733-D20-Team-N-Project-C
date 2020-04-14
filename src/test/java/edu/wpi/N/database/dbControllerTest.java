@@ -37,7 +37,8 @@ public class dbControllerTest {
     dbController.modifyNode("NHALL00204", 123, 771, 3, "Faulkner", "DEPT", "DEPT 3", "Dept 3", 'N');
     dbTester.printDB();
     DbNode n = dbController.getNode("NDEPT00304");
-    assertTrue(n.getX() == 123 && n.getNodeType() == "DEPT");
+    assertEquals(123, n.getX());
+    assertEquals("DEPT", n.getNodeType());
     dbController.deleteNode("NDEPT00304");
     dbController.addNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N');
   }
