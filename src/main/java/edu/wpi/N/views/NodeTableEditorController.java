@@ -95,7 +95,7 @@ public class NodeTableEditorController {
   private void getBuildings() {
     buildings.clear();
     for (TableNode tn : allNodes) {
-      if (!buildings.contains(tn.buildingProperty())) {
+      if (!buildings.contains(tn.buildingProperty().getValue())) {
         buildings.add(tn.buildingProperty().getValue());
         menu_pickBuilding.getItems().add(tn.buildingProperty().getValue());
       }
@@ -105,7 +105,7 @@ public class NodeTableEditorController {
 
   private void getFloorsInBuilding(String building) {
     for (TableNode tn : allNodes) {
-      if (!buildings.contains(tn.floorProperty())) {
+      if (!buildings.contains(tn.floorProperty().getValue())) {
         floors.add(tn.floorProperty().getValue());
         menu_pickFloor.getItems().add(tn.floorProperty().getValue());
       }
