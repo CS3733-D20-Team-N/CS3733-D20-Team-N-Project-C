@@ -350,6 +350,7 @@ public class dbController {
    */
   // Nick
   public static LinkedList<DbNode> searchNode(String searchQuery) {
+    searchQuery = searchQuery.replaceAll("'", "\\'");
     String query = "SELECT * FROM nodes WHERE longName LIKE '%" + searchQuery + "%'";
     return getAllNodesSQL(query);
   }
@@ -422,8 +423,10 @@ public class dbController {
    * @return a list of all the nodes with the specified floor
    */
   public static LinkedList<DbNode> floorNodes(int floor, String building) {
+    building = building.replaceAll("'", "\\'");
+
     String query =
-        "SELECT * FROM nodes WHERE floor = " + floor + "AND building = '" + building + "'";
+        "SELECT * FROM nodes WHERE floor = " + floor + " AND building = '" + building + "'";
     return getAllNodesSQL(query);
   }
 
@@ -436,6 +439,8 @@ public class dbController {
    */
   // Nick
   public static LinkedList<DbNode> visNodes(int floor, String building) {
+    building = building.replaceAll("'", "\\'");
+
     String query =
         "SELECT * FROM nodes WHERE floor = "
             + floor
@@ -466,7 +471,8 @@ public class dbController {
   private static LinkedList<DbNode> getAllNodesSQL(String sqlquery) {
     try {
       LinkedList<DbNode> nodes = new LinkedList<DbNode>();
-      ResultSet rs = statement.executeQuery(sqlquery);
+      PreparedStatement st = con.prepareStatement(sqlquery);
+      ResultSet rs = st.executeQuery();
       while (rs.next()) {
         nodes.add(
             new DbNode(
