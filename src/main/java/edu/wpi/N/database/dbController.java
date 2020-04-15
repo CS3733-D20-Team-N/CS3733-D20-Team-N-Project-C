@@ -98,33 +98,23 @@ public class dbController {
           newID = teamAssigned + nodeType.toUpperCase() + nextAvailNum(nodeType) + "0" + floor;
         }
       } else newID = nodeID;
-      System.out.println(newID);
       String query =
-          "UPDATE nodes SET nodeID = '"
-              + newID
-              + "', xcoord = "
-              + x
-              + ", ycoord = "
-              + y
-              + ", floor = "
-              + floor
-              + ", building = '"
-              + building
-              + "', nodeType = '"
-              + nodeType
-              + "', "
-              + "longName = '"
-              + longName.replace("\'", "\\'")
-              + "', shortName = '"
-              + shortName.replace("\'", "\\'")
-              + "', teamAssigned = '"
-              + teamAssigned
-              + "'"
-              + "WHERE nodeID = '"
-              + nodeID
-              + "'";
-      statement.execute(query);
+          "UPDATE nodes SET nodeID = ?, xcoord = ?, ycoord = ?, floor = ?, building = ?,"
+              + " nodeType = ?, longName = ?, shortName = ?, teamAssigned = ? WHERE nodeID = ?";
+      PreparedStatement stmt = con.prepareStatement(query);
+      stmt.setString(1, newID);
+      stmt.setInt(2, x);
+      stmt.setInt(3, y);
+      stmt.setInt(4, floor);
+      stmt.setString(5, building);
+      stmt.setString(6, nodeType);
+      stmt.setString(7, longName);
+      stmt.setString(8, shortName);
+      stmt.setString(9, String.valueOf(teamAssigned));
+      stmt.setString(10, nodeID);
+      stmt.executeUpdate();
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
     return true;
@@ -575,6 +565,7 @@ public class dbController {
 
       return st.executeUpdate() > 0;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
@@ -605,6 +596,7 @@ public class dbController {
       st.setString(4, nodeID2);
       return st.executeUpdate() > 0;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
