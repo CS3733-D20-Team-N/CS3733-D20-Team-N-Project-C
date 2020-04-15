@@ -98,33 +98,23 @@ public class dbController {
           newID = teamAssigned + nodeType.toUpperCase() + nextAvailNum(nodeType) + "0" + floor;
         }
       } else newID = nodeID;
-      System.out.println(newID);
       String query =
-          "UPDATE nodes SET nodeID = '"
-              + newID
-              + "', xcoord = "
-              + x
-              + ", ycoord = "
-              + y
-              + ", floor = "
-              + floor
-              + ", building = '"
-              + building
-              + "', nodeType = '"
-              + nodeType
-              + "', "
-              + "longName = '"
-              + longName.replace("\'", "\\'")
-              + "', shortName = '"
-              + shortName.replace("\'", "\\'")
-              + "', teamAssigned = '"
-              + teamAssigned
-              + "'"
-              + "WHERE nodeID = '"
-              + nodeID
-              + "'";
-      statement.execute(query);
+          "UPDATE nodes SET nodeID = ?, xcoord = ?, ycoord = ?, floor = ?, building = ?,"
+              + " nodeType = ?, longName = ?, shortName = ?, teamAssigned = ? WHERE nodeID = ?";
+      PreparedStatement stmt = con.prepareStatement(query);
+      stmt.setString(1, newID);
+      stmt.setInt(2, x);
+      stmt.setInt(3, y);
+      stmt.setInt(4, floor);
+      stmt.setString(5, building);
+      stmt.setString(6, nodeType);
+      stmt.setString(7, longName);
+      stmt.setString(8, shortName);
+      stmt.setString(9, String.valueOf(teamAssigned));
+      stmt.setString(10, nodeID);
+      stmt.executeUpdate();
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
     return true;
@@ -549,30 +539,29 @@ public class dbController {
     try {
       // Look in to a more efficient way to do this, but it's probably OK for now
       String query =
-          "SELECT * FROM edges WHERE (node1 = ? AND node2 = ?) OR "
-                                  + "(node2 = ? AND node1 = ?)";
+          "SELECT * FROM edges WHERE (node1 = ? AND node2 = ?) OR " + "(node2 = ? AND node1 = ?)";
 
       PreparedStatement st = con.prepareStatement(query);
-      st.setNString(1, nodeID1);
-      st.setNString(2, nodeID2);
-      st.setNString(3, nodeID1);
-      st.setNString(4, nodeID2);
+      st.setString(1, nodeID1);
+      st.setString(2, nodeID2);
+      st.setString(3, nodeID1);
+      st.setString(4, nodeID2);
       ResultSet result = st.executeQuery();
 
       if (result.next()) {
         return false;
       }
 
-      query =
-          "INSERT INTO edges VALUES (?, ?, ?)";
+      query = "INSERT INTO edges VALUES (?, ?, ?)";
 
       st = con.prepareStatement(query);
-      st.setNString(1, edgeID);
-      st.setNString(2, nodeID1);
-      st.setNString(3, nodeID2);
+      st.setString(1, edgeID);
+      st.setString(2, nodeID1);
+      st.setString(3, nodeID2);
 
       return st.executeUpdate() > 0;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
@@ -595,15 +584,15 @@ public class dbController {
     // top method probably works, but is inefficient
     try {
       String query =
-          "DELETE FROM edges WHERE (node1 = ? AND node2 = ?) OR "
-                                + "(node2 = ? AND node1 = ?)";
+          "DELETE FROM edges WHERE (node1 = ? AND node2 = ?) OR (node2 = ? AND node1 = ?)";
       PreparedStatement st = con.prepareStatement(query);
-      st.setNString(1, nodeID1);
-      st.setNString(2, nodeID2);
-      st.setNString(3, nodeID1);
-      st.setNString(4, nodeID2);
+      st.setString(1, nodeID1);
+      st.setString(2, nodeID2);
+      st.setString(3, nodeID1);
+      st.setString(4, nodeID2);
       return st.executeUpdate() > 0;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
