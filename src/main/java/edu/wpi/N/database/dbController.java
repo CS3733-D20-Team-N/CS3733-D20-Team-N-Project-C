@@ -505,14 +505,13 @@ public class dbController {
 
       ResultSet rs = null;
       String query =
-          "SELECT nodes.* FROM nodes, edges "
-              + "WHERE (edges.node1 = '"
-              + nodeID
-              + "' AND nodes.nodeID = edges.node2) OR "
-              + "(edges.node2 = '"
-              + nodeID
-              + "' AND nodes.nodeID = edges.node1)";
-      rs = statement.executeQuery(query);
+          "SELECT nodes.* FROM nodes, edges WHERE (edges.node1 = ? AND nodes.nodeID = edges.node2) OR (edges.node2 = ? AND nodes.nodeID = edges.node1)";
+
+      PreparedStatement st = con.prepareStatement(query);
+      st.setString(1, nodeID);
+      st.setString(2, nodeID);
+      rs = st.executeQuery();
+
       while (rs.next()) {
         ret.add(
             new DbNode(
@@ -529,7 +528,6 @@ public class dbController {
       //      query = "DROP VIEW connected_edges";
       //      statement.executeUpdate(query);
     } catch (SQLException e) {
-      e.printStackTrace();
       return null;
     }
 
@@ -549,7 +547,7 @@ public class dbController {
     try {
       // Look in to a more efficient way to do this, but it's probably OK for now
       String query =
-          "SELECT * FROM edges WHERE (node1 = ? AND node2 = ?) OR " + "(node2 = ? AND node1 = ?)";
+          "SELECT * FROM edges WHERE (node1 = ? AND node2 = ?) OR (node2 = ? AND node1 = ?)";
 
       PreparedStatement st = con.prepareStatement(query);
       st.setString(1, nodeID1);
@@ -593,7 +591,7 @@ public class dbController {
     // top method probably works, but is inefficient
     try {
       String query =
-          "DELETE FROM edges WHERE (node1 = ? AND node2 = ?) OR " + "(node2 = ? AND node1 = ?)";
+          "DELETE FROM edges WHERE (node1 = ? AND node2 = ?) OR (node2 = ? AND node1 = ?)";
       PreparedStatement st = con.prepareStatement(query);
       st.setString(1, nodeID1);
       st.setString(2, nodeID2);
