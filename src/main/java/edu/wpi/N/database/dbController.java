@@ -3,6 +3,7 @@ package edu.wpi.N.database;
 import edu.wpi.N.models.Node;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class dbController {
@@ -81,7 +82,10 @@ public class dbController {
       String shortName,
       char teamAssigned) {
     String newID;
+    LinkedList<DbNode> edges = new LinkedList<DbNode>();
+    String query;
     try {
+      con.setAutoCommit(false);
       if (!(nodeID.substring(0, 5) + nodeID.substring(8))
           .equals(teamAssigned + nodeType.toUpperCase() + String.format("%02d", floor))) {
         if (nodeID.substring(1, 5).equals(nodeType)) {
@@ -90,7 +94,15 @@ public class dbController {
           newID = teamAssigned + nodeType.toUpperCase() + nextAvailNum(nodeType) + "0" + floor;
         }
       } else newID = nodeID;
-      String query =
+      if(newID.equals(nodeID)){
+        edges = getAdjacent(nodeID);
+        query = "DELTE FROM EDGES WHERE node1 = ? or node2 = ?";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, nodeID);
+        stmt.setString(2, nodeID);
+        stmt.executeUpdate();
+      }
+      query =
           "UPDATE nodes SET nodeID = ?, xcoord = ?, ycoord = ?, floor = ?, building = ?,"
               + " nodeType = ?, longName = ?, shortName = ?, teamAssigned = ? WHERE nodeID = ?";
       PreparedStatement stmt = con.prepareStatement(query);
@@ -105,11 +117,24 @@ public class dbController {
       stmt.setString(9, String.valueOf(teamAssigned));
       stmt.setString(10, nodeID);
       stmt.executeUpdate();
+      Iterator<DbNode> it = edges.iterator();
+      while(it.hasNext()){
+        addEdge(nodeID, it.next().getNodeID());
+      }
+      con.commit();
+      con.setAutoCommit(true);
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      try {
+        con.rollback();
+        con.setAutoCommit(true);
+      }catch(SQLException ex){
+        ex.printStackTrace();
+        return false;
+      }
       return false;
     }
-    return true;
   }
 
   /**
@@ -239,7 +264,7 @@ public class dbController {
               + "edgeID CHAR(21) NOT NULL PRIMARY KEY, "
               + "node1 CHAR(10) NOT NULL, "
               + "node2 CHAR(10) NOT NULL, "
-              + "FOREIGN KEY (node1) REFERENCES nodes(nodeID) ON DELETE CASCADE, "
+              + "FOREIGN KEY (node1) REFERENCES nodes(nodeID) ON DELETE CASCADE,"
               + "FOREIGN KEY (node2) REFERENCES nodes(nodeID) ON DELETE CASCADE"
               + ")";
       statement.execute(query);
