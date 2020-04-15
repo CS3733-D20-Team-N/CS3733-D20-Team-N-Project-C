@@ -36,30 +36,22 @@ public class dbController {
       String shortName,
       char teamAssigned) {
     try {
-      String query =
-          "INSERT INTO nodes VALUES ('"
-              + nodeID
-              + "', "
-              + x
-              + ","
-              + y
-              + ","
-              + floor
-              + ",'"
-              + building
-              + "','"
-              + nodeType
-              + "','"
-              + longName.replace("\'", "\\'")
-              + "','"
-              + shortName.replace("\'", "\\'")
-              + "','"
-              + teamAssigned
-              + "')";
-      statement.execute(query);
+      String query = "INSERT INTO  nodes VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      PreparedStatement stmt = con.prepareStatement(query);
+      stmt.setString(1, nodeID);
+      stmt.setInt(2, x);
+      stmt.setInt(3, y);
+      stmt.setInt(4, floor);
+      stmt.setString(5, building);
+      stmt.setString(6, nodeType);
+      stmt.setString(7, longName.replace("\'", "\\'"));
+      stmt.setString(8, shortName.replace("\'", "\\'"));
+      stmt.setString(9, String.valueOf(teamAssigned));
+      stmt.executeUpdate();
       // System.out.println("Values Inserted");
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
@@ -108,8 +100,8 @@ public class dbController {
       stmt.setInt(4, floor);
       stmt.setString(5, building);
       stmt.setString(6, nodeType);
-      stmt.setString(7, longName);
-      stmt.setString(8, shortName);
+      stmt.setString(7, longName.replace("\'", "\\'"));
+      stmt.setString(8, shortName.replace("\'", "\\'"));
       stmt.setString(9, String.valueOf(teamAssigned));
       stmt.setString(10, nodeID);
       stmt.executeUpdate();
@@ -131,17 +123,21 @@ public class dbController {
   // Noah
   public static boolean moveNode(String nodeID, int x, int y) {
     try {
-      String query =
-          "UPDATE nodes SET xcoord = " + x + ", ycoord = " + y + " WHERE nodeID = '" + nodeID + "'";
-      statement.execute(query);
+      String query = "UPDATE nodes SET xcoord = ?, ycoord = ? WHERE nodeID = ?";
+      PreparedStatement stmt = con.prepareStatement(query);
+      stmt.setInt(1, x);
+      stmt.setInt(2, y);
+      stmt.setString(3, nodeID);
+      stmt.executeUpdate();
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
 
   /**
-   * >>>>>>> 244323def286ea6969588df22b7d1d49bbce118f Deletes a node from the database
+   * Deletes a node from the database
    *
    * @param nodeID the nodeID of the node to be deleted
    * @return true if delete successful, false otherwise.
@@ -149,10 +145,13 @@ public class dbController {
   // Noah
   public static boolean deleteNode(String nodeID) {
     try {
-      String query = "DELETE FROM nodes WHERE (nodeID = '" + nodeID + "')";
-      statement.execute(query);
-      return statement.getUpdateCount() > 0;
+      String query = "DELETE FROM nodes WHERE (nodeID = ?)";
+      PreparedStatement stmt = con.prepareStatement(query);
+      stmt.setString(1, nodeID);
+      return stmt.executeUpdate() > 0;
+      // return statement.getUpdateCount() > 0;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
@@ -166,8 +165,10 @@ public class dbController {
   // Noah
   public static DbNode getNode(String nodeID) {
     try {
-      String query = "SELECT * FROM nodes WHERE (nodeID = '" + nodeID + "')";
-      ResultSet rs = statement.executeQuery(query);
+      String query = "SELECT * FROM nodes WHERE nodeID = ?";
+      PreparedStatement stmt = con.prepareStatement(query);
+      stmt.setString(1, nodeID);
+      ResultSet rs = stmt.executeQuery();
       DbNode sample = null;
       if (rs.next())
         sample =
@@ -183,6 +184,7 @@ public class dbController {
                 rs.getString("teamAssigned").charAt(0));
       return sample;
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
   }
@@ -255,8 +257,10 @@ public class dbController {
    */
   // Chris
   private static String nextAvailNum(String nodeType) throws SQLException {
-    String query = "SELECT nodeID FROM nodes WHERE nodeType = '" + nodeType + "'";
-    ResultSet rs = statement.executeQuery(query);
+    String query = "SELECT nodeID FROM nodes WHERE nodeType = ?";
+    PreparedStatement stmt = con.prepareStatement(query);
+    stmt.setString(1, nodeType);
+    ResultSet rs = stmt.executeQuery();
     ArrayList<Integer> nums = new ArrayList<Integer>();
     while (rs.next()) {
       try {
