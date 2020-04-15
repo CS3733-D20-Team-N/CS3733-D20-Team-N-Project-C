@@ -63,6 +63,11 @@ public class DataEditorController {
   public void onDoneClicked(MouseEvent event)
       throws SQLException, ClassNotFoundException, IOException {
     dbController.initDB();
+    //    LinkedList<DbNode> masterNodes = dbController.allNodes();
+    //    for (DbNode node : masterNodes) {
+    //      dbController.deleteNode(node.getNodeID());
+    //    }
+
     // For nodes
     String path = lbl_filePath.getText();
     if (path.equals(DEFAULT_NODES)) {

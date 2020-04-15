@@ -122,6 +122,7 @@ public class MapDisplayController {
 
   @FXML
   private void onNavClicked(MouseEvent event) throws IOException {
+
     Stage stage = null;
     Parent root = null;
     if (event.getSource() == btn_previous) {
