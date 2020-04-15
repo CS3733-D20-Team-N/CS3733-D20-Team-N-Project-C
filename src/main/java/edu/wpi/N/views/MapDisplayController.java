@@ -1,13 +1,10 @@
 package edu.wpi.N.views;
 
-import edu.wpi.N.Main;
 import edu.wpi.N.database.DbNode;
 import edu.wpi.N.database.dbController;
-import edu.wpi.N.models.CSVParser;
 import edu.wpi.N.models.Path;
 import edu.wpi.N.models.Pathfinder;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -37,10 +34,10 @@ public class MapDisplayController {
   final double SCALE = 0.55;
 
   public void initialize() {
-    InputStream inputNodes = Main.class.getResourceAsStream("csv/MapEnodes.csv");
-    InputStream inputEdges = Main.class.getResourceAsStream("csv/MapEedges.csv");
-    CSVParser.parseCSV(inputNodes);
-    CSVParser.parseCSV(inputEdges);
+    //    InputStream inputNodes = Main.class.getResourceAsStream("csv/MapEnodes.csv");
+    //    InputStream inputEdges = Main.class.getResourceAsStream("csv/MapEedges.csv");
+    //    CSVParser.parseCSV(inputNodes);
+    //    CSVParser.parseCSV(inputEdges);
     selectedNodes = new LinkedList<DbNode>();
     populateMap();
   }
@@ -129,7 +126,7 @@ public class MapDisplayController {
     Parent root = null;
     if (event.getSource() == btn_previous) {
       stage = (Stage) btn_previous.getScene().getWindow();
-      root = FXMLLoader.load(getClass().getResource("downloadMapCSVPage.fxml"));
+      root = FXMLLoader.load(getClass().getResource("DataEditor.fxml"));
     } else {
       stage = (Stage) btn_next.getScene().getWindow();
       root = FXMLLoader.load(getClass().getResource("kioskHome.fxml"));

@@ -37,6 +37,7 @@ public class KioskHomeController {
   @FXML Button btn_import;
   @FXML Button btn_map;
   @FXML Button btn_Prototype;
+  @FXML Button btn_table;
 
   @FXML
   private void storeData() throws IOException {
@@ -149,8 +150,19 @@ public class KioskHomeController {
   private void onDisplayMapClicked(MouseEvent event) throws Exception {
     Stage stage;
     Parent root;
-    stage = (Stage) btn_import.getScene().getWindow();
-    root = FXMLLoader.load(getClass().getResource("mapDisplay.fxml"));
+    stage = (Stage) btn_map.getScene().getWindow();
+    root = FXMLLoader.load(getClass().getResource("dataEditor.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  @FXML
+  private void onTableClicked(MouseEvent event) throws Exception {
+    Stage stage;
+    Parent root;
+    stage = (Stage) btn_table.getScene().getWindow();
+    root = FXMLLoader.load(getClass().getResource("nodeTableEditor.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.show();

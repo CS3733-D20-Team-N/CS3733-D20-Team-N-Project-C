@@ -81,35 +81,7 @@ public class DataEditorController {
     Stage stage;
     Parent root;
     stage = (Stage) btn_done.getScene().getWindow();
-    root = FXMLLoader.load(getClass().getResource("KioskHome.fxml"));
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.show();
-  }
-
-  @FXML
-  public void onPrototypeClicked(MouseEvent event)
-      throws SQLException, ClassNotFoundException, IOException {
-    dbController.initDB();
-    // For nodes
-    String path = lbl_filePath.getText();
-    if (path.equals(DEFAULT_NODES)) {
-      CSVParser.parseCSV(INPUT_NODES_DEFAULT);
-    } else {
-      CSVParser.parseCSVfromPath(path);
-    }
-    // For paths
-    String path_edges = lbl_filePath_edges.getText();
-    if (path_edges.equals(DEFAULT_PATHS)) {
-      CSVParser.parseCSV(INPUT_EDGES_DEFAULT);
-    } else {
-      CSVParser.parseCSVfromPath(path_edges);
-    }
-
-    Stage stage;
-    Parent root;
-    stage = (Stage) btn_done.getScene().getWindow();
-    root = FXMLLoader.load(getClass().getResource("nodeTableEditor.fxml"));
+    root = FXMLLoader.load(getClass().getResource("mapDisplay.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.show();

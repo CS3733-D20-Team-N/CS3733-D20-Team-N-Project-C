@@ -51,23 +51,34 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Text>
-            <SplitPane dividerPositions="0.488" maxHeight="1.7976931348623157E308" prefHeight="186.0" prefWidth="500.0">
+            <SplitPane dividerPositions="0.488" maxHeight="1.7976931348623157E308" prefHeight="242.0" prefWidth="727.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="223.0" prefWidth="394.0">
                      <children>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox alignment="CENTER" layoutX="-44.0" prefHeight="184.0" prefWidth="344.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-16.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Get Directions">
                                  <font>
                                     <Font size="22.0" />
                                  </font>
                               </Text>
-                              <Button fx:id="btn_goToTable" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#handleOnClick" text="Data table">
+                              <Button fx:id="btn_goToTable" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#handleOnClick" prefHeight="26.0" prefWidth="165.0" text="Prototype Application">
                                  <font>
-                                    <Font size="15.0" />
+                                    <Font size="13.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btn_map" mnemonicParsing="false" onMouseClicked="#onDisplayMapClicked" text="Display Map" />
+                              <Button fx:id="btn_map" mnemonicParsing="false" onMouseClicked="#onDisplayMapClicked" prefHeight="21.0" prefWidth="162.0" text="Pathfinding ">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font></Button>
+                              <Button fx:id="btn_login" mnemonicParsing="false" onMouseClicked="#handleOnClick" prefHeight="32.0" prefWidth="163.0" text="Admin Login">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </VBox>
                      </children>
@@ -139,20 +150,6 @@
                   <Insets bottom="40.0" top="20.0" />
                </VBox.margin>
             </SplitPane>
-            <Button fx:id="btn_import" mnemonicParsing="false" onMouseClicked="#onImportClicked" text="Import" />
-            <Button fx:id="btn_login" mnemonicParsing="false" onMouseClicked="#handleOnClick" prefHeight="11.0" prefWidth="71.0" text="Admin Login">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Button>
-            <Button fx:id="btn_Prototype" mnemonicParsing="false" onMouseClicked="#handleOnClick" text="View Prototype Application">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Button>
          </children>
       </VBox>
    </children>
