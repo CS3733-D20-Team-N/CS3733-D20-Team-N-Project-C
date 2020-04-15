@@ -241,8 +241,8 @@ public class dbController {
               + "edgeID CHAR(21) NOT NULL PRIMARY KEY, "
               + "node1 CHAR(10) NOT NULL, "
               + "node2 CHAR(10) NOT NULL, "
-              + "FOREIGN KEY (node1) REFERENCES nodes(nodeID), "
-              + "FOREIGN KEY (node2) REFERENCES nodes(nodeID)"
+              + "FOREIGN KEY (node1) REFERENCES nodes(nodeID) ON DELETE CASCADE, "
+              + "FOREIGN KEY (node2) REFERENCES nodes(nodeID) ON DELETE CASCADE"
               + ")";
       statement.execute(query);
     } catch (SQLException e) {
@@ -616,6 +616,21 @@ public class dbController {
     } catch (SQLException e) {
       e.printStackTrace();
       return false;
+    }
+  }
+
+  /**
+   * Clears all of the nodes and edges from the database
+   */
+  public static void clearNodes(){
+    try {
+      String query = "DELETE FROM nodes";
+      statement.executeUpdate(query);
+      query = "DELETE FROM edges";
+      statement.executeUpdate(query);
+    }
+    catch(SQLException e){
+      e.printStackTrace();
     }
   }
 }
