@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.N.views.NodeTableEditorController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.N.views.NodeTableViewerController">
    <children>
       <SplitPane dividerPositions="0.31605351170568563" focusTraversable="false" layoutX="-10.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -20,7 +20,7 @@
                <children>
                   <VBox alignment="TOP_CENTER" layoutY="63.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                      <children>
-                        <Label text="Node Editor" textFill="#4d4d4d">
+                        <Label text="Node Viewer" textFill="#4d4d4d">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -42,34 +42,7 @@
                               <ComboBox fx:id="menu_pickFloor" onAction="#onPickFloor" prefWidth="100.0" />
                            </children>
                         </HBox>
-                        <Line layoutX="137.0" layoutY="125.0" startX="-120.0" stroke="#bcbcbc" />
-                        <Label fx:id="lbl_changesSaved" text="Nothing loaded in database">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="btn_saveChanges" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#onSaveClicked" text="Save + Reload" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
                         <Line layoutX="176.0" layoutY="148.0" startX="-120.0" stroke="#bcbcbc" />
-                        <Label text="- Double click cells to edit, then press [Enter] key to store changes" textAlignment="CENTER" wrapText="true">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="33.0" layoutY="266.0" prefHeight="80.0" prefWidth="222.0" text="- Click &quot;Save + Reload&quot; to apply changes (unapplied changes will be discarded if you exit this page)" textAlignment="CENTER" wrapText="true">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="10.0" layoutY="319.0" text="- Be mindful of your formatting!" textAlignment="CENTER" wrapText="true">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Line layoutX="176.0" layoutY="229.0" startX="-120.0" stroke="#bcbcbc" />
                      </children>
                   </VBox>
                   <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">

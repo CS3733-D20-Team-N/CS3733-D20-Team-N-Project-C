@@ -73,16 +73,6 @@ public class DataEditorController {
   @FXML
   public void onDoneClicked(MouseEvent event)
       throws SQLException, ClassNotFoundException, IOException {
-    //    dbController.initDB();
-    //    LinkedList<DbNode> masterNodes = dbController.floorNodes(4, "Faulkner");
-    //    for (DbNode node1 : masterNodes) {
-    //      for (DbNode node2 : masterNodes) {
-    //        dbController.removeEdge(node1.getNodeID(), node2.getNodeID());
-    //      }
-    //    }
-    //    for (DbNode node : masterNodes) {
-    //      dbController.deleteNode(node.getNodeID());
-    //    }
     dbController.clearNodes();
 
     // For nodes
@@ -103,7 +93,7 @@ public class DataEditorController {
     Stage stage;
     Parent root;
     stage = (Stage) btn_done.getScene().getWindow();
-    root = FXMLLoader.load(getClass().getResource("nodeTableEditor.fxml"));
+    root = FXMLLoader.load(getClass().getResource("nodeTableViewer.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.show();

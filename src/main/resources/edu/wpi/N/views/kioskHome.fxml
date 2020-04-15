@@ -127,7 +127,7 @@
                                           <Font size="10.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btn_moreServices" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="44.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#handleOnClick" text="More..." textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                    <Button fx:id="btn_moreServices" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="10.0" layoutY="44.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#handleOnClick" text="More..." textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="10.0" />
                                        </font>

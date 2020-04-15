@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.CharacterStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
-public class NodeTableEditorController {
+public class NodeTableViewerController {
   @FXML Button btn_saveChanges, btn_next, btn_back;
   @FXML TableView<TableNode> nodesTable;
   @FXML ComboBox<String> menu_pickBuilding;
@@ -34,10 +34,9 @@ public class NodeTableEditorController {
       new LinkedList<>(); // Stores field changes until database is saved
   private String currentBuilding;
   private boolean editing;
-  private int currentFloor;
 
   @FXML
-  private void initialize() throws java.io.IOException {
+  private void initialize() throws IOException {
 
     // Set up table column parameters
 
@@ -65,7 +64,7 @@ public class NodeTableEditorController {
 
     // Set functions to be called when fields are edited
 
-    editing = true; // If there's no edit button, you can't edit!
+    editing = false; // If there's no edit button, you can't edit!
 
     if (editing == true) {
 
@@ -83,15 +82,12 @@ public class NodeTableEditorController {
             cacheEdit(t.getRowValue());
           });
 
-      /*
       idCol.setCellFactory(TextFieldTableCell.forTableColumn());
       idCol.setOnEditCommit(
           (TableColumn.CellEditEvent<TableNode, String> t) -> {
             t.getRowValue().SetNodeID(t.getNewValue());
             cacheEdit(t.getRowValue());
           });
-
-       */
 
       typeCol.setCellFactory(TextFieldTableCell.forTableColumn());
       typeCol.setOnEditCommit(
@@ -137,9 +133,9 @@ public class NodeTableEditorController {
     }
 
     // Place columns (separated to avoid compiler warning re. "unsafe" commands)
-    nodesTable.getColumns().add(idCol);
     nodesTable.getColumns().add(nameCol);
     nodesTable.getColumns().add(longNameCol);
+    nodesTable.getColumns().add(idCol);
     nodesTable.getColumns().add(typeCol);
     nodesTable.getColumns().add(xCol);
     nodesTable.getColumns().add(yCol);
@@ -159,24 +155,14 @@ public class NodeTableEditorController {
   // Called when user has changed which building they want to look at
   @FXML
   public void onPickBuilding(ActionEvent event) {
-    if (menu_pickFloor.getValue() != null) {
-      currentBuilding = menu_pickBuilding.getValue();
-    } else {
-      currentBuilding = menu_pickBuilding.getItems().get(0);
-      menu_pickBuilding.setValue(currentBuilding);
-    }
+    currentBuilding = menu_pickBuilding.getValue();
     getFloorsInBuilding(currentBuilding);
   }
 
   // Called when user has changed which floor they want to look at
   @FXML
   public void onPickFloor(ActionEvent event) {
-    if (menu_pickFloor.getValue() != null) {
-      currentFloor = menu_pickFloor.getValue();
-    } else {
-      currentFloor = 0; // menu_pickFloor.getItems().get(0);
-      menu_pickFloor.setValue(currentFloor);
-    }
+    int currentFloor = menu_pickFloor.getValue();
     getNodesOnFloor(currentBuilding, currentFloor);
   }
 
@@ -229,20 +215,15 @@ public class NodeTableEditorController {
   }
 
   private void getBuildings() {
-    if (allNodes.size() > 0) {
-      buildings.clear();
-      for (TableNode tn : allNodes) {
-        if (!buildings.contains(tn.getBuilding())) {
-          buildings.add(tn.getBuilding());
-        }
+    buildings.clear();
+    for (TableNode tn : allNodes) {
+      if (!buildings.contains(tn.getBuilding())) {
+        buildings.add(tn.getBuilding());
       }
-      menu_pickBuilding.getItems().setAll(buildings);
-      currentBuilding = buildings.getFirst();
-      menu_pickBuilding.setValue(currentBuilding);
-      getFloorsInBuilding(currentBuilding);
-    } else {
-      System.out.println();
     }
+    menu_pickBuilding.getItems().setAll(buildings);
+    menu_pickBuilding.setValue(buildings.getFirst());
+    getFloorsInBuilding(buildings.getFirst());
   }
 
   private void getFloorsInBuilding(String building) {
@@ -253,9 +234,9 @@ public class NodeTableEditorController {
       }
     }
     menu_pickFloor.getItems().setAll(floors);
-    currentFloor = floors.getFirst();
-    menu_pickFloor.setValue(currentFloor);
-    getNodesOnFloor(building, currentFloor);
+    menu_pickFloor.setValue(floors.getFirst());
+
+    getNodesOnFloor(building, floors.getFirst());
   }
 
   private void getNodesOnFloor(String building, int floor) {
