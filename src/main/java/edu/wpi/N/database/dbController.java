@@ -619,17 +619,14 @@ public class dbController {
     }
   }
 
-  /**
-   * Clears all of the nodes and edges from the database
-   */
-  public static void clearNodes(){
+  /** Clears all of the nodes and edges from the database */
+  public static void clearNodes() {
     try {
       String query = "DELETE FROM nodes";
       statement.executeUpdate(query);
       query = "DELETE FROM edges";
       statement.executeUpdate(query);
-    }
-    catch(SQLException e){
+    } catch (SQLException e) {
       e.printStackTrace();
     }
   }

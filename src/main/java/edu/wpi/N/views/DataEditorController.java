@@ -1,14 +1,12 @@
 package edu.wpi.N.views;
 
 import edu.wpi.N.Main;
-import edu.wpi.N.database.DbNode;
 import edu.wpi.N.database.dbController;
 import edu.wpi.N.models.CSVParser;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -76,15 +74,16 @@ public class DataEditorController {
   public void onDoneClicked(MouseEvent event)
       throws SQLException, ClassNotFoundException, IOException {
     //    dbController.initDB();
-    LinkedList<DbNode> masterNodes = dbController.floorNodes(4, "Faulkner");
-    for (DbNode node1 : masterNodes) {
-      for (DbNode node2 : masterNodes) {
-        dbController.removeEdge(node1.getNodeID(), node2.getNodeID());
-      }
-    }
-    for (DbNode node : masterNodes) {
-      dbController.deleteNode(node.getNodeID());
-    }
+    //    LinkedList<DbNode> masterNodes = dbController.floorNodes(4, "Faulkner");
+    //    for (DbNode node1 : masterNodes) {
+    //      for (DbNode node2 : masterNodes) {
+    //        dbController.removeEdge(node1.getNodeID(), node2.getNodeID());
+    //      }
+    //    }
+    //    for (DbNode node : masterNodes) {
+    //      dbController.deleteNode(node.getNodeID());
+    //    }
+    dbController.clearNodes();
 
     // For nodes
     String path = lbl_filePath.getText();
