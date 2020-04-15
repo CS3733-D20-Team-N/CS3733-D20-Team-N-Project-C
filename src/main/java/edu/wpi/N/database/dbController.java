@@ -326,9 +326,9 @@ public class dbController {
               + "','"
               + nodeType
               + "','"
-              + longName.replace("\'", "\\'")
+              + longName.replace("'", "\\'")
               + "','"
-              + shortName.replace("\'", "\\'")
+              + shortName.replace("'", "\\'")
               + "','I')";
       statement.execute(query);
       return getNode(nodeID);
@@ -367,10 +367,10 @@ public class dbController {
    */
   // Chris
   public static Node getGNode(String nodeID) {
-    ResultSet rs = null;
-    int x = 0;
-    int y = 0;
-    String id = "";
+    ResultSet rs;
+    int x;
+    int y;
+    String id;
 
     try {
       rs =
