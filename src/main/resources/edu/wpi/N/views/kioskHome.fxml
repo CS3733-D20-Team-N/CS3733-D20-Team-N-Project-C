@@ -67,10 +67,6 @@
                                     <Font size="13.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="btn_map" mnemonicParsing="false" onMouseClicked="#onDisplayMapClicked" prefHeight="21.0" prefWidth="162.0" text="Pathfinding ">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font></Button>
                               <Button fx:id="btn_login" mnemonicParsing="false" onMouseClicked="#handleOnClick" prefHeight="32.0" prefWidth="163.0" text="Admin Login">
                                  <VBox.margin>
                                     <Insets top="10.0" />

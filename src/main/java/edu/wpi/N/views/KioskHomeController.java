@@ -102,7 +102,7 @@ public class KioskHomeController {
         root = FXMLLoader.load(getClass().getResource("dataEditor.fxml"));
       } else {
         stage = (Stage) btn_goToTable.getScene().getWindow();
-        root = FXMLLoader.load(getClass().getResource("nodeTableEditor.fxml"));
+        root = FXMLLoader.load(getClass().getResource("dataEditor.fxml"));
       }
       Scene scene = new Scene(root);
       stage.setScene(scene);

@@ -192,7 +192,7 @@ public class NodeTableEditorController {
   private void onBackClicked(MouseEvent event) throws IOException {
     trashEdits();
     Stage stage = (Stage) btn_back.getScene().getWindow();
-    Parent root = FXMLLoader.load(getClass().getResource("kioskHome.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("dataEditor.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.show();

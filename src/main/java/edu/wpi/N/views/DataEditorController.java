@@ -1,12 +1,14 @@
 package edu.wpi.N.views;
 
 import edu.wpi.N.Main;
+import edu.wpi.N.database.DbNode;
 import edu.wpi.N.database.dbController;
 import edu.wpi.N.models.CSVParser;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +26,7 @@ public class DataEditorController {
   @FXML Button btn_select_edges;
   @FXML Label lbl_filePath_edges;
   @FXML Button btn_default;
+  @FXML Button btn_back;
   @FXML Button btn_prototypeSwitcher;
   final String DEFAULT_NODES = "csv/MapEnodes.csv";
   final String DEFAULT_PATHS = "csv/MapEedges.csv";
@@ -47,6 +50,16 @@ public class DataEditorController {
     }
   }
 
+  public void onBackClicked(MouseEvent event) throws IOException {
+    Stage stage;
+    Parent root;
+    stage = (Stage) btn_done.getScene().getWindow();
+    root = FXMLLoader.load(getClass().getResource("kioskHome.fxml"));
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
+  }
+
   public void onSelectEdgesClicked(MouseEvent event) {
     FileChooser fc = new FileChooser();
     fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
@@ -62,11 +75,16 @@ public class DataEditorController {
   @FXML
   public void onDoneClicked(MouseEvent event)
       throws SQLException, ClassNotFoundException, IOException {
-    dbController.initDB();
-    //    LinkedList<DbNode> masterNodes = dbController.allNodes();
-    //    for (DbNode node : masterNodes) {
-    //      dbController.deleteNode(node.getNodeID());
-    //    }
+    //    dbController.initDB();
+    LinkedList<DbNode> masterNodes = dbController.floorNodes(4, "Faulkner");
+    for (DbNode node1 : masterNodes) {
+      for (DbNode node2 : masterNodes) {
+        dbController.removeEdge(node1.getNodeID(), node2.getNodeID());
+      }
+    }
+    for (DbNode node : masterNodes) {
+      dbController.deleteNode(node.getNodeID());
+    }
 
     // For nodes
     String path = lbl_filePath.getText();
@@ -86,7 +104,7 @@ public class DataEditorController {
     Stage stage;
     Parent root;
     stage = (Stage) btn_done.getScene().getWindow();
-    root = FXMLLoader.load(getClass().getResource("mapDisplay.fxml"));
+    root = FXMLLoader.load(getClass().getResource("nodeTableEditor.fxml"));
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
