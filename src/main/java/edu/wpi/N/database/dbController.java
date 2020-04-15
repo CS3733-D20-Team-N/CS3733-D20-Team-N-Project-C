@@ -350,9 +350,18 @@ public class dbController {
    */
   // Nick
   public static LinkedList<DbNode> searchNode(String searchQuery) {
-    searchQuery = searchQuery.replaceAll("'", "\\'");
-    String query = "SELECT * FROM nodes WHERE longName LIKE '%" + searchQuery + "%'";
-    return getAllNodesSQL(query);
+
+    String query = "SELECT * FROM nodes WHERE longName LIKE ?";
+
+    try {
+      PreparedStatement st = con.prepareStatement(query);
+
+      st.setString(1, "%" + searchQuery + "%");
+
+      return getAllNodesSQL(st);
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   /**
@@ -423,11 +432,18 @@ public class dbController {
    * @return a list of all the nodes with the specified floor
    */
   public static LinkedList<DbNode> floorNodes(int floor, String building) {
-    building = building.replaceAll("'", "\\'");
+    String query = "SELECT * FROM nodes WHERE floor = ? AND building = ?";
 
-    String query =
-        "SELECT * FROM nodes WHERE floor = " + floor + " AND building = '" + building + "'";
-    return getAllNodesSQL(query);
+    try {
+      PreparedStatement st = con.prepareStatement(query);
+
+      st.setInt(1, floor);
+      st.setString(2, building);
+
+      return getAllNodesSQL(st);
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   /**
@@ -439,15 +455,20 @@ public class dbController {
    */
   // Nick
   public static LinkedList<DbNode> visNodes(int floor, String building) {
-    building = building.replaceAll("'", "\\'");
+    LinkedList<DbNode> ret = new LinkedList<DbNode>();
 
-    String query =
-        "SELECT * FROM nodes WHERE floor = "
-            + floor
-            + " AND building = '"
-            + building
-            + "' AND NOT nodeType = 'HALL'";
-    return getAllNodesSQL(query);
+    String query = "SELECT * FROM nodes WHERE floor = ? AND building = ? AND NOT nodeType = 'HALL'";
+
+    try {
+      PreparedStatement st = con.prepareStatement(query);
+
+      st.setInt(1, floor);
+      st.setString(2, building);
+
+      return getAllNodesSQL(st);
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   /**
@@ -458,20 +479,24 @@ public class dbController {
   public static LinkedList<DbNode> allNodes() {
     LinkedList<DbNode> nodes = new LinkedList<DbNode>();
     String query = "SELECT * FROM nodes";
-    return getAllNodesSQL(query);
+    try {
+      return getAllNodesSQL(con.prepareStatement(query));
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   /**
    * Gets all nodes that match a particular sql query returns them as a linked list
    *
-   * @param sqlquery the sql query to select nodes with
+   * @param st the PreparedStatement to select nodes with
    * @return a linked list of all the DbNodes which match the sql query
    */
   // Nick
-  private static LinkedList<DbNode> getAllNodesSQL(String sqlquery) {
+  private static LinkedList<DbNode> getAllNodesSQL(PreparedStatement st) {
+    LinkedList<DbNode> nodes = new LinkedList<DbNode>();
+
     try {
-      LinkedList<DbNode> nodes = new LinkedList<DbNode>();
-      PreparedStatement st = con.prepareStatement(sqlquery);
       ResultSet rs = st.executeQuery();
       while (rs.next()) {
         nodes.add(
