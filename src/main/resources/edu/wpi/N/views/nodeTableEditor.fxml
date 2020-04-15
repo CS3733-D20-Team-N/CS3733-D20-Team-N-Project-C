@@ -18,7 +18,7 @@
         <items>
           <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0">
                <children>
-                  <VBox alignment="TOP_CENTER" layoutY="63.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <VBox alignment="TOP_CENTER" layoutY="63.0" prefWidth="100.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                      <children>
                         <Label text="Node Editor" textFill="#4d4d4d">
                            <font>
@@ -32,14 +32,14 @@
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin></Label>
-                              <ComboBox fx:id="menu_pickBuilding" disable="true" maxWidth="1.7976931348623157E308" onAction="#onPickBuilding" prefWidth="90.0" />
+                              <ComboBox fx:id="menu_pickBuilding" disable="true" maxWidth="1.7976931348623157E308" onAction="#onPickBuilding" prefWidth="90.0" promptText="ALL" />
                            </children>
                         </HBox>
                         <Line layoutX="137.0" layoutY="53.0" startX="-120.0" stroke="#bcbcbc" />
                         <HBox alignment="CENTER" layoutX="10.0" layoutY="66.0" spacing="5.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" text="Floor:" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
-                              <ComboBox fx:id="menu_pickFloor" disable="true" onAction="#onPickFloor" prefWidth="100.0" />
+                              <ComboBox fx:id="menu_pickFloor" disable="true" onAction="#onPickFloor" prefWidth="100.0" promptText="ALL" />
                            </children>
                         </HBox>
                         <Line layoutX="137.0" layoutY="125.0" startX="-120.0" stroke="#bcbcbc" />
@@ -54,16 +54,18 @@
                            </font>
                         </Button>
                         <Line layoutX="176.0" layoutY="148.0" startX="-120.0" stroke="#bcbcbc" />
-                        <Label text="- Double click cells to edit, then press [Enter] key to store changes" textAlignment="CENTER" wrapText="true">
+                        <Label text="- Double click cells to edit, then press [Enter] key to store changes" textAlignment="CENTER" wrapText="true" VBox.vgrow="ALWAYS">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="33.0" layoutY="266.0" prefHeight="80.0" prefWidth="222.0" text="- Click &quot;Save + Reload&quot; to apply changes (unapplied changes will be discarded if you exit this page)" textAlignment="CENTER" wrapText="true">
+                        <Line layoutX="176.0" layoutY="229.0" startX="-120.0" stroke="#bcbcbc" />
+                        <Label layoutX="33.0" layoutY="266.0" text="- Click &quot;Save + Reload&quot; to apply changes (unapplied changes will be discarded if you exit this page)" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <Line layoutX="176.0" layoutY="290.0" startX="-120.0" stroke="#bcbcbc" />
                         <Label layoutX="10.0" layoutY="319.0" text="- Be mindful of your formatting!" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="14.0" />

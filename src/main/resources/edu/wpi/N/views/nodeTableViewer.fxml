@@ -32,14 +32,14 @@
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin></Label>
-                              <ComboBox fx:id="menu_pickBuilding" maxWidth="1.7976931348623157E308" onAction="#onPickBuilding" prefWidth="90.0" />
+                              <ComboBox fx:id="menu_pickBuilding" disable="true" maxWidth="1.7976931348623157E308" onAction="#onPickBuilding" prefWidth="90.0" promptText="ALL"/>
                            </children>
                         </HBox>
                         <Line layoutX="137.0" layoutY="53.0" startX="-120.0" stroke="#bcbcbc" />
                         <HBox alignment="CENTER" layoutX="10.0" layoutY="66.0" spacing="5.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" text="Floor:" textAlignment="CENTER" HBox.hgrow="ALWAYS" />
-                              <ComboBox fx:id="menu_pickFloor" onAction="#onPickFloor" prefWidth="100.0" />
+                              <ComboBox fx:id="menu_pickFloor" disable="true" onAction="#onPickFloor" prefWidth="100.0" promptText="ALL"/>
                            </children>
                         </HBox>
                         <Line layoutX="176.0" layoutY="148.0" startX="-120.0" stroke="#bcbcbc" />

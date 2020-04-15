@@ -146,7 +146,8 @@ public class NodeTableViewerController {
     // Get nodes from database and fill table
     refreshAllNodes();
     if (allNodes.size() > 0) {
-      getBuildings();
+      // getBuildings();
+      fillTable();
     }
   }
 
@@ -155,15 +156,30 @@ public class NodeTableViewerController {
   // Called when user has changed which building they want to look at
   @FXML
   public void onPickBuilding(ActionEvent event) {
-    currentBuilding = menu_pickBuilding.getValue();
+    /*
+    if (menu_pickFloor.getValue() != null) {
+      currentBuilding = menu_pickBuilding.getValue();
+    } else {
+      currentBuilding = menu_pickBuilding.getItems().get(0);
+      menu_pickBuilding.setValue(currentBuilding);
+    }
     getFloorsInBuilding(currentBuilding);
+    */
   }
 
   // Called when user has changed which floor they want to look at
   @FXML
   public void onPickFloor(ActionEvent event) {
-    int currentFloor = menu_pickFloor.getValue();
+    /*
+    if (menu_pickFloor.getValue() != null) {
+      currentFloor = menu_pickFloor.getValue();
+    } else {
+      currentFloor = 0; // menu_pickFloor.getItems().get(0);
+      menu_pickFloor.setValue(currentFloor);
+    }
     getNodesOnFloor(currentBuilding, currentFloor);
+
+     */
   }
 
   // Called when user clicks "Save" button
@@ -213,44 +229,52 @@ public class NodeTableViewerController {
       allNodes.add(tn);
     }
   }
+  /*
+   private void getBuildings() {
+     if (allNodes.size() > 0) {
+       buildings.clear();
+       for (TableNode tn : allNodes) {
+         if (!buildings.contains(tn.getBuilding())) {
+           buildings.add(tn.getBuilding());
+         }
+       }
+       menu_pickBuilding.getItems().setAll(buildings);
+       currentBuilding = buildings.getFirst();
+       menu_pickBuilding.setValue(currentBuilding);
+       getFloorsInBuilding(currentBuilding);
+     } else {
+       System.out.println();
+     }
+   }
 
-  private void getBuildings() {
-    buildings.clear();
-    for (TableNode tn : allNodes) {
-      if (!buildings.contains(tn.getBuilding())) {
-        buildings.add(tn.getBuilding());
-      }
-    }
-    menu_pickBuilding.getItems().setAll(buildings);
-    menu_pickBuilding.setValue(buildings.getFirst());
-    getFloorsInBuilding(buildings.getFirst());
-  }
+   private void getFloorsInBuilding(String building) {
+     floors.clear();
+     for (TableNode tn : allNodes) {
+       if (!floors.contains(tn.getFloor()) && tn.getBuilding().equals(building)) {
+         floors.add(tn.getFloor());
+       }
+     }
+     menu_pickFloor.getItems().setAll(floors);
+     currentFloor = floors.getFirst();
+     menu_pickFloor.setValue(currentFloor);
+     getNodesOnFloor(building, currentFloor);
+   }
 
-  private void getFloorsInBuilding(String building) {
-    floors.clear();
-    for (TableNode tn : allNodes) {
-      if (!floors.contains(tn.getFloor()) && tn.getBuilding().equals(building)) {
-        floors.add(tn.getFloor());
-      }
-    }
-    menu_pickFloor.getItems().setAll(floors);
-    menu_pickFloor.setValue(floors.getFirst());
+   private void getNodesOnFloor(String building, int floor) {
+     trashEdits(); // Undo unsaved changes to current floor
+     currentNodes.clear();
+     for (TableNode tn : allNodes) {
+       if (tn.getFloor() == floor && tn.getBuilding().equals(building)) {
+         currentNodes.add(tn);
+       }
+     }
+     fillTable();
+   }
 
-    getNodesOnFloor(building, floors.getFirst());
-  }
-
-  private void getNodesOnFloor(String building, int floor) {
-    trashEdits(); // Undo unsaved changes to current floor
-    currentNodes.clear();
-    for (TableNode tn : allNodes) {
-      if (tn.getFloor() == floor && tn.getBuilding().equals(building)) {
-        currentNodes.add(tn);
-      }
-    }
-    fillTable();
-  }
+  */
 
   private void fillTable() {
+    currentNodes.setAll(allNodes);
     nodesTable.setItems(currentNodes);
   }
 
@@ -274,7 +298,8 @@ public class NodeTableViewerController {
       }
       trashEdits(); // Clear list of edits
       refreshAllNodes(); // Re-load nodes from DB, just in case
-      getBuildings(); // Update menu items
+      // getBuildings();
+      fillTable(); // Update menu items
     }
   }
 
