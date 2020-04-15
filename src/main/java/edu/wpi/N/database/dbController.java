@@ -24,6 +24,7 @@ public class dbController {
    * @param teamAssigned The team assigned to the Node
    * @return True if valid and inserted properly, false otherwise.
    */
+  // Noah
   public static boolean addNode(
       String nodeID,
       int x,
@@ -76,6 +77,7 @@ public class dbController {
    * @param teamAssigned The new team assigned to the Node
    * @return
    */
+  // Noah
   public static boolean modifyNode(
       String nodeID,
       int x,
@@ -136,6 +138,7 @@ public class dbController {
    * @param y The new y value that you want to move the node to
    * @return True if valid and successful, false otherwise.
    */
+  // Noah
   public static boolean moveNode(String nodeID, int x, int y) {
     try {
       String query =
@@ -153,6 +156,7 @@ public class dbController {
    * @param nodeID the nodeID of the node to be deleted
    * @return true if delete successful, false otherwise.
    */
+  // Noah
   public static boolean deleteNode(String nodeID) {
     try {
       String query = "DELETE FROM nodes WHERE (nodeID = '" + nodeID + "')";
@@ -169,6 +173,7 @@ public class dbController {
    * @param nodeID nodeID of the node
    * @return the specified node
    */
+  // Noah
   public static DbNode getNode(String nodeID) {
     try {
       String query = "SELECT * FROM nodes WHERE (nodeID = '" + nodeID + "')";
@@ -193,6 +198,7 @@ public class dbController {
   }
 
   /** Initializes the database, should be run before interfacing with it. */
+  // Chris
   public static void initDB() throws ClassNotFoundException, SQLException {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
     String URL;
@@ -257,6 +263,7 @@ public class dbController {
    * @return A formatted string with three digits and leading zeros for the next available number
    * @throws SQLException if something goes wrong with the sql
    */
+  // Chris
   private static String nextAvailNum(String nodeType) throws SQLException {
     String query = "SELECT nodeID FROM nodes WHERE nodeType = '" + nodeType + "'";
     ResultSet rs = statement.executeQuery(query);
@@ -304,6 +311,7 @@ public class dbController {
    * @param shortName The node's shortName
    * @return True if valid and inserted properly, false otherwise.
    */
+  // Chris
   public static DbNode addNode(
       int x,
       int y,
@@ -346,6 +354,7 @@ public class dbController {
    * @param searchQuery The string with which to search the nodes
    * @return A list of all nodes with a long name containing the searchQuery
    */
+  // Nick
   public static LinkedList<DbNode> searchNode(String searchQuery) {
     String query = "SELECT * FROM nodes WHERE longName LIKE '%" + searchQuery + "%'";
     return getAllNodesSQL(query);
@@ -357,6 +366,7 @@ public class dbController {
    * @param nodeID the nodeID of the node to fetch
    * @return the specified graph-style Node
    */
+  // Chris
   public static Node getGNode(String nodeID) {
     ResultSet rs = null;
     int x = 0;
@@ -384,6 +394,7 @@ public class dbController {
    * @param nodeID
    * @return
    */
+  // Chris
   public static LinkedList<Node> getGAdjacent(String nodeID) {
     LinkedList<Node> ret = new LinkedList<Node>();
     try {
@@ -429,6 +440,7 @@ public class dbController {
    * @param building
    * @return
    */
+  // Nick
   public static LinkedList<DbNode> visNodes(int floor, String building) {
     String query =
         "SELECT * FROM nodes WHERE floor = "
@@ -456,6 +468,7 @@ public class dbController {
    * @param sqlquery the sql query to select nodes with
    * @return a linked list of all the DbNodes which match the sql query
    */
+  // Nick
   private static LinkedList<DbNode> getAllNodesSQL(String sqlquery) {
     try {
       LinkedList<DbNode> nodes = new LinkedList<DbNode>();
@@ -485,6 +498,7 @@ public class dbController {
    * @param nodeID The nodeID of the node for which you want the edges
    * @return All the nodes directly connected to the passed-in one
    */
+  // Nick
   public static LinkedList<DbNode> getAdjacent(String nodeID) {
     LinkedList<DbNode> ret = new LinkedList<DbNode>();
     try {
@@ -529,6 +543,7 @@ public class dbController {
    * @param nodeID2 the nodeID of the second edge
    * @return True if valid and successful, false otherwise
    */
+  // Nick
   public static boolean addEdge(String nodeID1, String nodeID2) {
     String edgeID = nodeID1 + "_" + nodeID2;
     try {
@@ -569,6 +584,7 @@ public class dbController {
    * @param nodeID2 the nodeID of the second node
    * @return True if valid and successful, false otherwise
    */
+  // Nick
   public static boolean removeEdge(String nodeID1, String nodeID2) {
     //    String query = "SELECT * FROM edges WHERE edgeID = '" + edgeID + "'";
     //    ResultSet result = statement.executeQuery(query);
