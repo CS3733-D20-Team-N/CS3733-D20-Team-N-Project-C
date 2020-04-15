@@ -32,7 +32,7 @@ public class DownloadMapController {
       root = FXMLLoader.load(getClass().getResource("nodeTableEditor.fxml"));
     } else {
       stage = (Stage) btn_next.getScene().getWindow();
-      root = FXMLLoader.load(getClass().getResource("mapDisplay.fxml"));
+      root = FXMLLoader.load(getClass().getResource("dataEditor.fxml"));
     }
 
     if (stage != null && root != null) {
