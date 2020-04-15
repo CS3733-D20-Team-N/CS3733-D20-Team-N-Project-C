@@ -190,7 +190,7 @@ public class dbController {
   }
 
   /** Initializes the database, should be run before interfacing with it. */
-  // Chris
+  // doesn't need to use prepared statements since it takes no user input
   public static void initDB() throws ClassNotFoundException, SQLException {
     Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
     String URL;
