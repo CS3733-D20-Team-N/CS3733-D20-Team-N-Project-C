@@ -100,6 +100,7 @@ public class dbController {
         stmt.setString(1, nodeID);
         stmt.setString(2, nodeID);
         stmt.executeUpdate();
+        con.commit();
       }
       query =
           "UPDATE nodes SET nodeID = ?, xcoord = ?, ycoord = ?, floor = ?, building = ?,"
