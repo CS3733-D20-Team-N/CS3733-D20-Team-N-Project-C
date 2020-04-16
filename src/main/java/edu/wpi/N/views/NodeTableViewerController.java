@@ -59,9 +59,9 @@ public class NodeTableViewerController {
     teamCol.setCellValueFactory(new PropertyValueFactory<>("TeamAssigned"));
 
     // Place columns (separated to avoid compiler warning re. "unsafe" commands)
+    nodesTable.getColumns().add(idCol);
     nodesTable.getColumns().add(nameCol);
     nodesTable.getColumns().add(longNameCol);
-    nodesTable.getColumns().add(idCol);
     nodesTable.getColumns().add(typeCol);
     nodesTable.getColumns().add(xCol);
     nodesTable.getColumns().add(yCol);

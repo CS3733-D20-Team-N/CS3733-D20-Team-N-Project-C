@@ -127,7 +127,7 @@ public class MapDisplayController {
     Parent root = null;
     if (event.getSource() == btn_previous) {
       stage = (Stage) btn_previous.getScene().getWindow();
-      root = FXMLLoader.load(getClass().getResource("DataEditor.fxml"));
+      root = FXMLLoader.load(getClass().getResource("nodeTableEditor.fxml"));
     } else {
       stage = (Stage) btn_next.getScene().getWindow();
       root = FXMLLoader.load(getClass().getResource("kioskHome.fxml"));
