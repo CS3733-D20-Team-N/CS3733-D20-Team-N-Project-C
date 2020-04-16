@@ -34,6 +34,7 @@ public class dbControllerTest {
   // Noah
   @Test
   public void testModifyNode() {
+    dbController.addEdge("NHALL00204", "NHALL00104");
     dbController.modifyNode("NHALL00204", 123, 771, 3, "Faulkner", "SEXY", "DEPT 3", "Dept 3", 'N');
     dbTester.printDB();
     DbNode n = dbController.getNode("NSEXY00103");
