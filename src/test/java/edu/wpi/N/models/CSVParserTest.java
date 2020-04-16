@@ -44,6 +44,7 @@ public class CSVParserTest {
     // Compare last
     Assertions.assertTrue(
         new ReflectionEquals(dbController.getNode("H130000000")).matches(lastActual));
+    dbController.clearNodes();
   }
 
   /**
@@ -72,6 +73,7 @@ public class CSVParserTest {
     // Compare last
     Assertions.assertTrue(
         new ReflectionEquals(dbController.getNode("H130000000")).matches(lastActual));
+    dbController.clearNodes();
   }
 
   /**
@@ -96,6 +98,7 @@ public class CSVParserTest {
 
     Assertions.assertTrue(
         new ReflectionEquals(expectedH9).matches(dbController.getAdjacent("H900000000")));
+    dbController.clearNodes();
   }
 
   /**
@@ -108,6 +111,7 @@ public class CSVParserTest {
     String path = f.getAbsolutePath();
 
     Assertions.assertThrows(Exception.class, () -> CSVParser.parseCSVfromPath(path));
+    dbController.clearNodes();
   }
 
   /** Tests that parceCSVfromPath successfully parses Prototype Node file */
@@ -133,5 +137,6 @@ public class CSVParserTest {
     // Compare with first
     Assertions.assertTrue(
         new ReflectionEquals(dbController.getNode("BCONF00102")).matches(firstExpected));
+    dbController.clearNodes();
   }
 }
