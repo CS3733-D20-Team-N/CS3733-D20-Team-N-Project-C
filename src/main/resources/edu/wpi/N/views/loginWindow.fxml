@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane onKeyPressed="#keyPressSubmission" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.wpi.N.views.KioskHomeController">
+   <children>
+      <Label layoutX="161.0" layoutY="6.0" text="Login">
+         <font>
+            <Font name="Calibri" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="72.0" layoutY="72.0" text="Username:">
+         <font>
+            <Font name="Calibri" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txt_User" layoutX="152.0" layoutY="68.0" promptText="Username" />
+      <Label layoutX="75.0" layoutY="122.0" text="Password:">
+         <font>
+            <Font name="Calibri" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="btn_Submit" layoutX="334.0" layoutY="161.0" mnemonicParsing="false" onMouseClicked="#storeData" text="Submit">
+         <font>
+            <Font name="Calibri" size="12.0" />
+         </font></Button>
+      <Button fx:id="btn_Home" layoutX="275.0" layoutY="161.0" mnemonicParsing="false" onMouseClicked="#handleOnClick" text="Home">
+         <font>
+            <Font name="Calibri" size="12.0" />
+         </font></Button>
+      <PasswordField fx:id="pf_Pass" layoutX="152.0" layoutY="118.0" promptText="Password" />
+      <Button fx:id="btn_SignUp" layoutX="14.0" layoutY="161.0" mnemonicParsing="false" text="Sign Up">
+         <font>
+            <Font name="Calibri" size="12.0" />
+         </font>
+      </Button>
+      <Line endX="100.0" layoutX="200.0" layoutY="54.0" startX="-100.0" />
+   </children>
+</AnchorPane>
