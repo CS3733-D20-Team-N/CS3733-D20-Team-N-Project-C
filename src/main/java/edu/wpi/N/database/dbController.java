@@ -3,6 +3,7 @@ package edu.wpi.N.database;
 import edu.wpi.N.models.Node;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class dbController {
@@ -51,7 +52,6 @@ public class dbController {
       // System.out.println("Values Inserted");
       return true;
     } catch (SQLException e) {
-      e.printStackTrace();
       return false;
     }
   }
@@ -67,7 +67,7 @@ public class dbController {
    * @param longName The new node's longName
    * @param shortName The new node's shortName
    * @param teamAssigned The new team assigned to the Node
-   * @return
+   * @return true if the node was modified, false otherwise
    */
   // Noah
   public static boolean modifyNode(
@@ -81,7 +81,10 @@ public class dbController {
       String shortName,
       char teamAssigned) {
     String newID;
+    LinkedList<DbNode> edges = new LinkedList<DbNode>();
+    String query;
     try {
+      con.setAutoCommit(false);
       if (!(nodeID.substring(0, 5) + nodeID.substring(8))
           .equals(teamAssigned + nodeType.toUpperCase() + String.format("%02d", floor))) {
         if (nodeID.substring(1, 5).equals(nodeType)) {
@@ -90,7 +93,15 @@ public class dbController {
           newID = teamAssigned + nodeType.toUpperCase() + nextAvailNum(nodeType) + "0" + floor;
         }
       } else newID = nodeID;
-      String query =
+      if (newID.equals(nodeID)) {
+        edges = getAdjacent(nodeID);
+        query = "DELETE FROM EDGES WHERE node1 = ? or node2 = ?";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, nodeID);
+        stmt.setString(2, nodeID);
+        stmt.executeUpdate();
+      }
+      query =
           "UPDATE nodes SET nodeID = ?, xcoord = ?, ycoord = ?, floor = ?, building = ?,"
               + " nodeType = ?, longName = ?, shortName = ?, teamAssigned = ? WHERE nodeID = ?";
       PreparedStatement stmt = con.prepareStatement(query);
@@ -105,11 +116,24 @@ public class dbController {
       stmt.setString(9, String.valueOf(teamAssigned));
       stmt.setString(10, nodeID);
       stmt.executeUpdate();
+      Iterator<DbNode> it = edges.iterator();
+      while (it.hasNext()) {
+        addEdge(nodeID, it.next().getNodeID());
+      }
+      con.commit();
+      con.setAutoCommit(true);
+      return true;
     } catch (SQLException e) {
       e.printStackTrace();
+      try {
+        con.rollback();
+        con.setAutoCommit(true);
+      } catch (SQLException ex) {
+        ex.printStackTrace();
+        return false;
+      }
       return false;
     }
-    return true;
   }
 
   /**
@@ -131,15 +155,15 @@ public class dbController {
       stmt.executeUpdate();
       return true;
     } catch (SQLException e) {
-      e.printStackTrace();
       return false;
     }
   }
 
   /**
-   * <<<<<<< HEAD <<<<<<< HEAD >>>>>>> db-branch Deletes a node from the database ======= >>>>>>>
-   * 244323def286ea6969588df22b7d1d49bbce118f Deletes a node from the database >>>>>>> db-branch
-   * ======= Deletes a node from the database >>>>>>> db-branch
+   * <<<<<<< HEAD <<<<<<< HEAD <<<<<<< HEAD >>>>>>> db-branch Deletes a node from the database
+   * ======= >>>>>>> 244323def286ea6969588df22b7d1d49bbce118f Deletes a node from the database
+   * >>>>>>> db-branch ======= Deletes a node from the database >>>>>>> db-branch ======= Deletes a
+   * node from the database >>>>>>> algos-branch
    *
    * @param nodeID the nodeID of the node to be deleted
    * @return true if delete successful, false otherwise.
@@ -153,7 +177,6 @@ public class dbController {
       return stmt.executeUpdate() > 0;
       // return statement.getUpdateCount() > 0;
     } catch (SQLException e) {
-      e.printStackTrace();
       return false;
     }
   }
@@ -186,7 +209,6 @@ public class dbController {
                 rs.getString("teamAssigned").charAt(0));
       return sample;
     } catch (SQLException e) {
-      e.printStackTrace();
       return null;
     }
   }
@@ -241,7 +263,7 @@ public class dbController {
               + "edgeID CHAR(21) NOT NULL PRIMARY KEY, "
               + "node1 CHAR(10) NOT NULL, "
               + "node2 CHAR(10) NOT NULL, "
-              + "FOREIGN KEY (node1) REFERENCES nodes(nodeID) ON DELETE CASCADE, "
+              + "FOREIGN KEY (node1) REFERENCES nodes(nodeID) ON DELETE CASCADE,"
               + "FOREIGN KEY (node2) REFERENCES nodes(nodeID) ON DELETE CASCADE"
               + ")";
       statement.execute(query);
@@ -334,9 +356,9 @@ public class dbController {
               + "','"
               + nodeType
               + "','"
-              + longName.replace("\'", "\\'")
+              + longName.replace("'", "\\'")
               + "','"
-              + shortName.replace("\'", "\\'")
+              + shortName.replace("'", "\\'")
               + "','I')";
       statement.execute(query);
       return getNode(nodeID);
@@ -353,10 +375,17 @@ public class dbController {
    */
   // Nick
   public static LinkedList<DbNode> searchNode(String searchQuery) {
-    searchQuery = searchQuery.replaceAll("'", "\\'");
-    String query = "SELECT * FROM nodes WHERE longName LIKE '%" + searchQuery + "%'";
+    String query = "SELECT * FROM nodes WHERE longName LIKE ?";
 
-    return getAllNodesSQL(query);
+    try {
+      PreparedStatement st = con.prepareStatement(query);
+
+      st.setString(1, "%" + searchQuery + "%");
+
+      return getAllNodesSQL(st);
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   /**
@@ -367,10 +396,10 @@ public class dbController {
    */
   // Chris
   public static Node getGNode(String nodeID) {
-    ResultSet rs = null;
-    int x = 0;
-    int y = 0;
-    String id = "";
+    ResultSet rs;
+    int x;
+    int y;
+    String id;
 
     try {
       rs =
@@ -392,8 +421,9 @@ public class dbController {
   /**
    * Gets the graph-style nodes of all nodes adjacent to the specified Node
    *
-   * @param nodeID
-   * @return
+   * @param nodeID The ID of the specified node
+   * @return A LinkedList containing all graph-style nodes adjacent to the specified node, or null
+   *     if there was an issue retrieving the nodes
    */
   // Chris
   public static LinkedList<Node> getGAdjacent(String nodeID) {
@@ -414,7 +444,6 @@ public class dbController {
         ret.add(new Node(rs.getInt("xcoord"), rs.getInt("ycoord"), rs.getString("nodeID")));
       }
     } catch (SQLException e) {
-      e.printStackTrace();
       return null;
     }
 
@@ -426,66 +455,77 @@ public class dbController {
    *
    * @param floor the floor from which you want to get all the nodes
    * @param building the building which has the floor from which you want to get all the nodes
-   * @return a list of all the nodes with the specified floor
+   * @return a LinkedList of all the nodes with the specified floor
    */
   public static LinkedList<DbNode> floorNodes(int floor, String building) {
-    building = building.replaceAll("'", "\\'");
+    String query = "SELECT * FROM nodes WHERE floor = ? AND building = ?";
 
-    String query =
-        "SELECT * FROM nodes WHERE floor = " + floor + " AND building = '" + building + "'";
-    return getAllNodesSQL(query);
+    try {
+      PreparedStatement st = con.prepareStatement(query);
+
+      st.setInt(1, floor);
+      st.setString(2, building);
+
+      return getAllNodesSQL(st);
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   /**
    * Gets a list of all the nodes on a floor except for invisible (HALL) nodes
    *
-   * @param floor
-   * @param building
-   * @return
+   * @param floor The floor from which to get the nodes
+   * @param building The building from which to get the nodes
+   * @return a LinkedList containing the nodes, or null if there was an issue with retrieving the
+   *     nodes
    */
   // Nick
   public static LinkedList<DbNode> visNodes(int floor, String building) {
-    building = building.replaceAll("'", "\\'");
+    LinkedList<DbNode> ret = new LinkedList<DbNode>();
 
-    String query =
-        "SELECT * FROM nodes WHERE floor = "
-            + floor
-            + " AND building = '"
-            + building
-            + "' AND NOT nodeType = 'HALL'";
-    return getAllNodesSQL(query);
+    String query = "SELECT * FROM nodes WHERE floor = ? AND building = ? AND NOT nodeType = 'HALL'";
+
+    try {
+      PreparedStatement st = con.prepareStatement(query);
+
+      st.setInt(1, floor);
+      st.setString(2, building);
+
+      return getAllNodesSQL(st);
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   /**
    * Gets a list of all the nodes in the database.
    *
-   * @param floor the floor from which you want to get all the nodes
-   * @param building the building which has the floor from which you want to get all the nodes
-   * @return a list of all the nodes with the specified floor
-   */
-
-  /*
-   * @return A linked list of all the nodes in the database
+   * @return A LinkedList of all the nodes in the database
    */
   public static LinkedList<DbNode> allNodes() {
     LinkedList<DbNode> nodes = new LinkedList<DbNode>();
 
     String query = "SELECT * FROM nodes";
 
-    return getAllNodesSQL(query);
+    try {
+      return getAllNodesSQL(con.prepareStatement(query));
+    } catch (SQLException e) {
+      return null;
+    }
   }
 
   /**
    * Gets all nodes that match a particular sql query returns them as a linked list
    *
-   * @param sqlquery the sql query to select nodes with
-   * @return a linked list of all the DbNodes which match the sql query
+   * @param st the PreparedStatement to select nodes with
+   * @return a LinkedList of all the DbNodes which match the sql query
    */
   // Nick
-  private static LinkedList<DbNode> getAllNodesSQL(String sqlquery) {
+  private static LinkedList<DbNode> getAllNodesSQL(PreparedStatement st) {
+    LinkedList<DbNode> nodes = new LinkedList<DbNode>();
+
     try {
-      LinkedList<DbNode> nodes = new LinkedList<DbNode>();
-      PreparedStatement st = con.prepareStatement(sqlquery);
       ResultSet rs = st.executeQuery();
       while (rs.next()) {
         nodes.add(
@@ -583,7 +623,6 @@ public class dbController {
 
       return st.executeUpdate() > 0;
     } catch (SQLException e) {
-      e.printStackTrace();
       return false;
     }
   }
@@ -614,7 +653,6 @@ public class dbController {
       st.setString(4, nodeID2);
       return st.executeUpdate() > 0;
     } catch (SQLException e) {
-      e.printStackTrace();
       return false;
     }
   }

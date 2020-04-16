@@ -70,8 +70,6 @@ public class Pathfinder {
           // calculate and update the Score of nextNode
           double priority = newCost + heuristic(nextNode, end);
 
-          nextNode = dbController.getGNode(nextNodeID);
-
           nextNode.score = priority;
           // add to the priority queue
           frontier.add(nextNode);
