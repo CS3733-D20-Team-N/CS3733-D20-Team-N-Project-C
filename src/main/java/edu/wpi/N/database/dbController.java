@@ -94,14 +94,13 @@ public class dbController {
           newID = teamAssigned + nodeType.toUpperCase() + nextAvailNum(nodeType) + "0" + floor;
         }
       } else newID = nodeID;
-      if (newID.equals(nodeID)) {
+      if (!newID.equals(nodeID)) {
         edges = getAdjacent(nodeID);
-        query = "DELETE FROM EDGES WHERE node1 = ? or node2 = ?";
+        query = "DELETE FROM EDGES WHERE node1 = ? OR node2 = ?";
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, nodeID);
         stmt.setString(2, nodeID);
         stmt.executeUpdate();
-        con.commit();
       }
       query =
           "UPDATE nodes SET nodeID = ?, xcoord = ?, ycoord = ?, floor = ?, building = ?,"
