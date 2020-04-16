@@ -94,9 +94,9 @@ public class dbController {
           newID = teamAssigned + nodeType.toUpperCase() + nextAvailNum(nodeType) + "0" + floor;
         }
       } else newID = nodeID;
-      if(newID.equals(nodeID)){
+      if (newID.equals(nodeID)) {
         edges = getAdjacent(nodeID);
-        query = "DELTE FROM EDGES WHERE node1 = ? or node2 = ?";
+        query = "DELETE FROM EDGES WHERE node1 = ? or node2 = ?";
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, nodeID);
         stmt.setString(2, nodeID);
@@ -118,7 +118,7 @@ public class dbController {
       stmt.setString(10, nodeID);
       stmt.executeUpdate();
       Iterator<DbNode> it = edges.iterator();
-      while(it.hasNext()){
+      while (it.hasNext()) {
         addEdge(nodeID, it.next().getNodeID());
       }
       con.commit();
@@ -129,7 +129,7 @@ public class dbController {
       try {
         con.rollback();
         con.setAutoCommit(true);
-      }catch(SQLException ex){
+      } catch (SQLException ex) {
         ex.printStackTrace();
         return false;
       }
@@ -630,17 +630,14 @@ public class dbController {
     }
   }
 
-  /**
-   * Clears all of the nodes and edges from the database
-   */
-  public static void clearNodes(){
+  /** Clears all of the nodes and edges from the database */
+  public static void clearNodes() {
     try {
       String query = "DELETE FROM nodes";
       statement.executeUpdate(query);
       query = "DELETE FROM edges";
       statement.executeUpdate(query);
-    }
-    catch(SQLException e){
+    } catch (SQLException e) {
       e.printStackTrace();
     }
   }
