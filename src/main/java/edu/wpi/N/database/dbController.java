@@ -52,6 +52,7 @@ public class dbController {
       // System.out.println("Values Inserted");
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
@@ -156,6 +157,7 @@ public class dbController {
       stmt.executeUpdate();
       return true;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
@@ -175,6 +177,7 @@ public class dbController {
       return stmt.executeUpdate() > 0;
       // return statement.getUpdateCount() > 0;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
@@ -207,6 +210,7 @@ public class dbController {
                 rs.getString("teamAssigned").charAt(0));
       return sample;
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
   }
@@ -360,6 +364,7 @@ public class dbController {
       statement.execute(query);
       return getNode(nodeID);
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
   }
@@ -382,6 +387,7 @@ public class dbController {
 
       return getAllNodesSQL(st);
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
   }
@@ -408,6 +414,7 @@ public class dbController {
       y = rs.getInt("ycoord");
       id = rs.getString("nodeID");
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
 
@@ -440,6 +447,7 @@ public class dbController {
         ret.add(new Node(rs.getInt("xcoord"), rs.getInt("ycoord"), rs.getString("nodeID")));
       }
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
 
@@ -464,6 +472,7 @@ public class dbController {
 
       return getAllNodesSQL(st);
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
   }
@@ -490,6 +499,7 @@ public class dbController {
 
       return getAllNodesSQL(st);
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
   }
@@ -505,6 +515,7 @@ public class dbController {
     try {
       return getAllNodesSQL(con.prepareStatement(query));
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
   }
@@ -536,6 +547,7 @@ public class dbController {
       }
       return nodes;
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
   }
@@ -576,6 +588,7 @@ public class dbController {
       //      query = "DROP VIEW connected_edges";
       //      statement.executeUpdate(query);
     } catch (SQLException e) {
+      e.printStackTrace();
       return null;
     }
 
@@ -617,6 +630,7 @@ public class dbController {
 
       return st.executeUpdate() > 0;
     } catch (SQLException e) {
+      e.printStackTrace();
       return false;
     }
   }
