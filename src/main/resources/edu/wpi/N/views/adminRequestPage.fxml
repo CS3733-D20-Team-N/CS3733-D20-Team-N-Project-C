@@ -17,7 +17,7 @@
       </Label>
       <Button layoutX="722.0" layoutY="635.0" mnemonicParsing="false" text="Deny" AnchorPane.rightAnchor="25.0" />
       <Button layoutX="656.0" layoutY="635.0" mnemonicParsing="false" text="Accept" AnchorPane.rightAnchor="94.0" />
-      <Button layoutX="39.0" layoutY="635.0" mnemonicParsing="false" text="Logout" AnchorPane.leftAnchor="25.0" />
+      <Button fx:id="btn_logout" layoutX="39.0" layoutY="635.0" mnemonicParsing="false" onMouseClicked="#logoutFunction" text="Logout" AnchorPane.leftAnchor="25.0" />
       <TableView layoutX="43.0" layoutY="128.0" prefHeight="500.0" prefWidth="450.0" AnchorPane.leftAnchor="319.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="60.0">
         <columns>
           <TableColumn prefWidth="75.0" text="Time" />
