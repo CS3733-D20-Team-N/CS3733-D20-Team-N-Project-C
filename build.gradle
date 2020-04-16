@@ -68,7 +68,10 @@ def codeCoverageExcludes = [
         'edu.wpi.N.Main',
         'edu.wpi.N.models.AlgosMainCanIgnore',
         // delete later
-        'edu.wpi.N.*'
+        'edu.wpi.N.database.dbTester',
+        'edu.wpi.N.entities.TableNode',
+        'edu.wpi.N.models.Path',
+        'edu.wpi.N.views.*'
 ]
 
 jacoco {

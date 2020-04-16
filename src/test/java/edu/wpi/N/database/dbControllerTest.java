@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import edu.wpi.N.models.Node;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -249,5 +250,10 @@ public class dbControllerTest {
     assertFalse(
         adj.contains(
             new DbNode("NHALL00204", 1350, 1250, 4, "Faulkner", "HALL", "Hall 2", "Hall 2", 'N')));
+  }
+
+  @AfterAll
+  public static void clearDB() {
+    dbController.clearNodes();
   }
 }
