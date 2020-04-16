@@ -119,7 +119,7 @@ public class dbController {
       stmt.executeUpdate();
       Iterator<DbNode> it = edges.iterator();
       while (it.hasNext()) {
-        addEdge(nodeID, it.next().getNodeID());
+        addEdge(newID, it.next().getNodeID());
       }
       con.commit();
       con.setAutoCommit(true);
