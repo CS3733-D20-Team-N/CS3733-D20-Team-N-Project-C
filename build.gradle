@@ -64,7 +64,8 @@ jar {
 def codeCoverageExcludes = [
         'edu.wpi.N.App',
         'edu.wpi.N.Main',
-        'edu.wpi.N.models.AlgosMainCanIgnore'
+        'edu.wpi.N.models.AlgosMainCanIgnore',
+        'edu.wpi.N.database.DbNode'
 ]
 
 jacoco {
