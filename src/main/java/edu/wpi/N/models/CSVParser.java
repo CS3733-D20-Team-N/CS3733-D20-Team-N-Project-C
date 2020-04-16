@@ -19,13 +19,12 @@ public class CSVParser {
       // create csvReader object passing
       CSVReader csvReader = new CSVReader(new InputStreamReader(pathToFile, "UTF-8"));
 
-      String[] nextLine;
-
       // Read header
-      nextLine = csvReader.readNext();
+      String[] nextLine = csvReader.readNext();
 
       // Check if it is EdgeCSV
-      if ((nextLine[0].toLowerCase() == "edgeid") || nextLine[1].toLowerCase() == "startnode") {
+      if (nextLine[0].toLowerCase().equals("edgeid")
+          || nextLine[1].toLowerCase().equals("startnode")) {
         isNodeCSV = false;
       }
 
@@ -46,59 +45,57 @@ public class CSVParser {
   }
 
   /**
-   * Parse data from a given row: add Node to the database
-   *
-   * @param row: a row to parse data from
-   */
-  static void parseNodeRow(String[] row) {
-    try {
-      String nodeID = row[0];
-      int xcoord = Integer.parseInt(row[1]);
-      int ycoord = Integer.parseInt(row[2]);
-      int floor = Integer.parseInt(row[3]);
-      String building = row[4];
-      String nodeType = row[5];
-      String longName = row[6];
-      String shortName = row[7];
-      char teamAssigned = 'i';
-
-      dbController.addNode(
-          nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName, teamAssigned);
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  /**
    * Parse data from a given row: add Edge to the database
    *
    * @param row: a row to parse data from
    */
-  static void parseEdgesRow(String[] row) {
-    try {
-      String edgeID = row[0];
-      String startNodeId = row[1];
-      String endNodeId = row[2];
+  private static void parseEdgesRow(String[] row) throws Exception {
+    // String edgeID = row[0];
+    String startNodeId = row[1];
+    String endNodeId = row[2];
 
-      dbController.addEdge(startNodeId, endNodeId);
-
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    dbController.addEdge(startNodeId, endNodeId);
   }
 
   /**
-   * @param pathToFile
-   * @return
+   * Parse data from a given row: add Node to the database
+   *
+   * @param row: a row to parse data from
+   */
+  private static void parseNodeRow(String[] row) throws Exception {
+    String nodeID = row[0];
+    int xcoord = Integer.parseInt(row[1]);
+    int ycoord = Integer.parseInt(row[2]);
+    int floor = Integer.parseInt(row[3]);
+    String building = row[4];
+    String nodeType = row[5];
+    String longName = row[6];
+    String shortName = row[7];
+    char teamAssigned = 'Z';
+    if (row.length == 9) {
+      teamAssigned = row[8].charAt(0);
+    }
+
+    dbController.addNode(
+        nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName, teamAssigned);
+  }
+
+  /**
+   * Parses CSV file from a given Full Path to file
+   *
+   * @param pathToFile full path to file
    * @throws FileNotFoundException
    */
   public static void parseCSVfromPath(String pathToFile) throws FileNotFoundException {
+    try {
+      File initialFile = new File(pathToFile);
+      InputStream input = new FileInputStream(initialFile);
 
-    File initialFile = new File(pathToFile);
-    InputStream input = new FileInputStream(initialFile);
-
-    CSVParser csvParser = new CSVParser();
-    csvParser.parseCSV(input);
+      CSVParser csvParser = new CSVParser();
+      CSVParser.parseCSV(input);
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+      throw (e);
+    }
   }
 }
