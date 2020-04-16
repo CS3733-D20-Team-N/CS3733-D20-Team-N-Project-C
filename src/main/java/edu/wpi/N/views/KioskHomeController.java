@@ -13,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javax.swing.*;
 
 public class KioskHomeController {
 
@@ -38,6 +39,7 @@ public class KioskHomeController {
   @FXML Button btn_map;
   @FXML Button btn_Prototype;
   @FXML Button btn_table;
+  @FXML Button btn_logout;
 
   @FXML
   private void storeData() throws IOException {
@@ -166,5 +168,18 @@ public class KioskHomeController {
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
+  }
+
+  @FXML
+  private void logoutFunction(MouseEvent e) throws IOException {
+    if (e.getSource() == btn_logout) {
+      Stage stage;
+      Parent root;
+      stage = (Stage) btn_logout.getScene().getWindow();
+      root = FXMLLoader.load(getClass().getResource("adminRequestPage.fxml"));
+      Scene scene = new Scene(root);
+      stage.setScene(scene);
+      stage.close();
+    }
   }
 }
