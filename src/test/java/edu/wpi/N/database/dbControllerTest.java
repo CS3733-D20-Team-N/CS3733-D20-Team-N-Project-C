@@ -109,12 +109,6 @@ public class dbControllerTest {
 
     LinkedList<Node> adjList = dbController.getGAdjacent("NHALL00104");
     assertNotNull(adjList); // error here
-    // assertNotNull(adjList); // error here
-    /*
-
-    assertTrue(adjList.get(0).getNodeID().equals("NHALL00204"));
-    assertTrue(adjList.get(1).getNodeID().equals("NDEPT00104"));
-    assertTrue(adjList.get(2).getNodeID().equals("NDEPT00204"));*/
 
     assertTrue(adjList.contains(new Node(1350, 1250, "NHALL00204")));
     assertTrue(adjList.contains(new Node(1350, 950, "NDEPT00104")));
